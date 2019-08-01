@@ -1,0 +1,59 @@
+buildscript {
+
+    ext {
+        junitVersion = '5.3.2'
+        springVersion = '5.1.8.RELEASE'
+        seleniumVersion = '3.141.59'
+        chromeWebriverPath = '../chromedriver/chromedriver'
+        cucumberVersion = '4.7.1'
+    }
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+repositories {
+    jcenter()
+}
+
+
+configurations.all {
+    resolutionStrategy {
+        cacheDynamicVersionsFor 0, 'seconds'
+    }
+}
+
+dependencies {
+    implementation "com.google.guava:guava:27.0.1-jre"
+    implementation "org.springframework:spring-context:${springVersion}"
+    implementation "org.springframework:spring-beans:${springVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+    testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
+
+    testImplementation "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
+    //testImplementation "org.assert:assertj-core:3.11.1"
+    testImplementation "org.springframework:spring-test:${springVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-spring:${cucumberVersion}"
+
+}
+
+test {
+    systemProperty "webdriver.chrome.driver", "../chromedriver/chromedriver"
+    useJUnitPlatform()
+    reports {
+        junitXml.enabled = false
+        html.enabled = true
+    }
+}
+
