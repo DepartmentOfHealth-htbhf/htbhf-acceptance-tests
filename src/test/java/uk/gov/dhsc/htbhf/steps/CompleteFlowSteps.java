@@ -4,6 +4,7 @@ import io.cucumber.java.en.When;
 import uk.gov.dhsc.htbhf.page.*;
 
 import static uk.gov.dhsc.htbhf.steps.Constants.*;
+import static uk.gov.dhsc.htbhf.utils.NinoGenerator.generateEligibleNino;
 
 /**
  * Steps used when testing the complete application flow.
@@ -18,6 +19,8 @@ public class CompleteFlowSteps extends BaseSteps {
     private AreYouPregnantPage areYouPregnantPage;
     private EnterNamePage enterNamePage;
     private EnterNinoPage enterNinoPage;
+    private ManualAddressPage manualAddressPage;
+    private PhoneNumberPage phoneNumberPage;
 
     //TODO MRS 2019-08-01: Keep building this up...
     @When("^I complete the application with valid details for a pregnant woman")
@@ -30,8 +33,26 @@ public class CompleteFlowSteps extends BaseSteps {
         enterTwoChildrensDatesOfBirth();
         selectYesOnPregnancyPage();
         enterName();
+        enterNino();
+        enterManualAddress();
+        phoneNumberPage = new PhoneNumberPage(webDriver, baseUrl, webDriverWait);
+        phoneNumberPage.waitForPageToLoad();
+    }
+
+    private void enterManualAddress() {
+        manualAddressPage = new ManualAddressPage(webDriver, baseUrl, webDriverWait);
+        manualAddressPage.enterAddressLine1(ADDRESS_LINE_1);
+        manualAddressPage.enterAddressLine2(ADDRESS_LINE_2);
+        manualAddressPage.enterTownOrCity(TOWN);
+        manualAddressPage.enterPostcode(POSTCODE);
+        manualAddressPage.clickContinue();
+    }
+
+    private void enterNino() {
         enterNinoPage = new EnterNinoPage(webDriver, baseUrl, webDriverWait);
         enterNinoPage.waitForPageToLoad();
+        enterNinoPage.enterNino(generateEligibleNino());
+        enterNinoPage.clickContinue();
     }
 
     private void enterName() {
