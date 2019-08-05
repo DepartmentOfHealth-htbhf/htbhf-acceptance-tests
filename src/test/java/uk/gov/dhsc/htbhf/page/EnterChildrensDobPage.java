@@ -4,21 +4,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.InputField;
-import uk.gov.dhsc.htbhf.page.component.SubmitButton;
 
 import java.time.LocalDate;
 
 /**
  * Page object for the Enter Children's Dates of Birth page.
  */
-public class EnterChildrensDobPage extends BasePage {
+public class EnterChildrensDobPage extends SubmittablePage {
 
     private int childIndex = 1;
-    private SubmitButton submitButton;
 
     public EnterChildrensDobPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.submitButton = new SubmitButton(webDriver);
     }
 
     @Override
@@ -34,10 +31,6 @@ public class EnterChildrensDobPage extends BasePage {
     @Override
     String getPageTitle() {
         return "GOV.UK - Enter your children’s dates of birth";
-    }
-
-    public void clickContinue() {
-        submitButton.click();
     }
 
     public void clickAddAnotherChild() {

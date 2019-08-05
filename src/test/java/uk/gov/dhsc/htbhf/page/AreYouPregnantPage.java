@@ -4,14 +4,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.InputField;
 import uk.gov.dhsc.htbhf.page.component.RadioButton;
-import uk.gov.dhsc.htbhf.page.component.SubmitButton;
 
 import java.time.LocalDate;
 
 /**
  * Page object for the Are You Pregnant? page.
  */
-public class AreYouPregnantPage extends BasePage {
+public class AreYouPregnantPage extends SubmittablePage {
 
     private static final String DAY_INPUT_FIELD_ID = "expectedDeliveryDate-day";
     private static final String MONTH_INPUT_FIELD_ID = "expectedDeliveryDate-month";
@@ -22,7 +21,6 @@ public class AreYouPregnantPage extends BasePage {
     private InputField yearInputField;
     private RadioButton yesRadioButton;
     private RadioButton noRadioButton;
-    private SubmitButton submitButton;
 
     public AreYouPregnantPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
@@ -31,7 +29,6 @@ public class AreYouPregnantPage extends BasePage {
         this.yearInputField = new InputField(webDriver, YEAR_INPUT_FIELD_ID);
         this.yesRadioButton = new RadioButton(webDriver, RadioButton.YES);
         this.noRadioButton = new RadioButton(webDriver, RadioButton.NO);
-        this.submitButton = new SubmitButton(webDriver);
     }
 
     @Override
@@ -55,10 +52,6 @@ public class AreYouPregnantPage extends BasePage {
 
     public void selectNo() {
         yesRadioButton.select();
-    }
-
-    public void clickContinue() {
-        submitButton.click();
     }
 
     public void enterExpectedDeliveryDate(int incrementMonth) {

@@ -6,7 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * Page object for the enter your national insurance number page.
  */
-public class EnterNinoPage extends BasePage {
+public class EnterNinoPage extends SubmittablePage {
 
     public EnterNinoPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
