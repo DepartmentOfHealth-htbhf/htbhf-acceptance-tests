@@ -17,12 +17,12 @@ public abstract class BasePage extends BaseComponent {
     private static final String RADIO_ITEM_CLASSNAME = "govuk-radios__item";
     private static final String RADIO_LABEL_CLASSNAME = "govuk-label govuk-radios__label";
 
-    private final WebDriver webDriver;
+    protected final WebDriver webDriver;
 
     private final String baseUrl;
     private final WebDriverWait wait;
 
-    public BasePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+    BasePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver);
         this.webDriver = webDriver;
         this.baseUrl = baseUrl;
