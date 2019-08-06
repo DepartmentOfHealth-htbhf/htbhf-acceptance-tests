@@ -21,6 +21,8 @@ public class CompleteFlowSteps extends BaseSteps {
     private EnterNinoPage enterNinoPage;
     private ManualAddressPage manualAddressPage;
     private PhoneNumberPage phoneNumberPage;
+    private EmailAddressPage emailAddressPage;
+    private SendCodePage sendCodePage;
 
     //TODO MRS 2019-08-01: Keep building this up...
     @When("^I complete the application with valid details for a pregnant woman")
@@ -35,8 +37,24 @@ public class CompleteFlowSteps extends BaseSteps {
         enterName();
         enterNino();
         enterManualAddress();
+        enterPhoneNumber();
+        enterEmailAddress();
+        sendCodePage = new SendCodePage(webDriver, baseUrl, webDriverWait);
+        sendCodePage.waitForPageToLoad();
+    }
+
+    private void enterEmailAddress() {
+        emailAddressPage = new EmailAddressPage(webDriver, baseUrl, webDriverWait);
+        emailAddressPage.waitForPageToLoad();
+        emailAddressPage.enterEmailAddress(EMAIL_ADDRESS);
+        emailAddressPage.clickContinue();
+    }
+
+    private void enterPhoneNumber() {
         phoneNumberPage = new PhoneNumberPage(webDriver, baseUrl, webDriverWait);
         phoneNumberPage.waitForPageToLoad();
+        phoneNumberPage.enterPhoneNumber(PHONE_NUMBER);
+        phoneNumberPage.clickContinue();
     }
 
     private void enterManualAddress() {
