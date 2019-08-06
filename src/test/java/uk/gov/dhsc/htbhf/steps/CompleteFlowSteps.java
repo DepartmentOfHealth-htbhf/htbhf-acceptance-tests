@@ -107,9 +107,9 @@ public class CompleteFlowSteps extends BaseSteps {
     private void enterDateOfBirthAndSubmit() {
         enterDobPage = new EnterDobPage(webDriver, baseUrl, webDriverWait);
         enterDobPage.waitForPageToLoad();
-        enterDobPage.getDayInputField().enterValue(DAY);
-        enterDobPage.getMonthInputField().enterValue(MONTH);
-        enterDobPage.getYearInputField().enterValue(YEAR);
+        enterDobPage.getDayInputField().enterValue(DOB_DAY);
+        enterDobPage.getMonthInputField().enterValue(DOB_MONTH);
+        enterDobPage.getYearInputField().enterValue(DOB_YEAR);
         enterDobPage.clickContinue();
     }
 

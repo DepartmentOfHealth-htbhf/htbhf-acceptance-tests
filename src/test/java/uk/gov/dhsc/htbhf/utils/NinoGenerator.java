@@ -2,6 +2,8 @@ package uk.gov.dhsc.htbhf.utils;
 
 import com.google.common.base.Strings;
 
+import java.util.Random;
+
 /**
  * Utility methods to generate random NINOs.
  */
@@ -15,18 +17,20 @@ public class NinoGenerator {
     private static final String ELIGIBLE_CHAR = "E";
     private static final String NINO_SUFFIX_CHARS = "ABC";
 
+    private static final Random RANDOM = new Random();
+
     public static String generateEligibleNino() {
         return randomEligibleTwoChars() + CHILDREN_NUMBER + randomFourDigitInteger() + randomCharAtoC();
     }
 
     private static String randomFourDigitInteger() {
-        int number = (int) Math.floor((Math.random() * (9999)) + 1);
+        int number = RANDOM.nextInt(9999);
         return Strings.padStart(String.valueOf(number), 4, '0');
     }
 
     private static char randomCharFromChars(String allChars) {
-        double randomCharPosition = Math.floor(Math.random() * allChars.length());
-        return allChars.charAt((int) randomCharPosition);
+        int randomCharPosition = RANDOM.nextInt(allChars.length());
+        return allChars.charAt(randomCharPosition);
     }
 
     /**

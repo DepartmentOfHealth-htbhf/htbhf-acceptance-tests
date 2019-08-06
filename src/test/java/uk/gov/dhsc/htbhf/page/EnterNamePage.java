@@ -10,7 +10,7 @@ import uk.gov.dhsc.htbhf.page.component.InputField;
 public class EnterNamePage extends SubmittablePage {
 
     private static final String FIRST_NAME_INPUT_ID = "first-name";
-    private static final String LAST_NAME_IUNPUT_ID = "last-name";
+    private static final String LAST_NAME_INPUT_ID = "last-name";
 
     private InputField firstNameInputField;
     private InputField lastNameInputField;
@@ -18,7 +18,7 @@ public class EnterNamePage extends SubmittablePage {
     public EnterNamePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
         this.firstNameInputField = new InputField(webDriver, FIRST_NAME_INPUT_ID);
-        this.lastNameInputField = new InputField(webDriver, LAST_NAME_IUNPUT_ID);
+        this.lastNameInputField = new InputField(webDriver, LAST_NAME_INPUT_ID);
     }
 
     @Override

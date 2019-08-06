@@ -51,7 +51,7 @@ public class AreYouPregnantPage extends SubmittablePage {
     }
 
     public void selectNo() {
-        yesRadioButton.select();
+        noRadioButton.select();
     }
 
     public void enterExpectedDeliveryDate(int incrementMonth) {

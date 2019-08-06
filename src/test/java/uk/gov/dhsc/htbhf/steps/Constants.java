@@ -2,9 +2,9 @@ package uk.gov.dhsc.htbhf.steps;
 
 public class Constants {
 
-    public static final String DAY = "30";
-    public static final String MONTH = "12";
-    public static final String YEAR = "1980";
+    public static final String DOB_DAY = "30";
+    public static final String DOB_MONTH = "12";
+    public static final String DOB_YEAR = "1980";
     public static final String FIRST_NAME = "Lisa";
     public static final String LAST_NAME = "Simpson";
     public static final String ADDRESS_LINE_1 = "Flat b";

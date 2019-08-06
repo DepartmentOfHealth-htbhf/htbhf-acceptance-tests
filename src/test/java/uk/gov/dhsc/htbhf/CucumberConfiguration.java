@@ -22,7 +22,7 @@ public class CucumberConfiguration {
             case "firefox":
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.setHeadless(headless);
-                webdriver = new FirefoxDriver();
+                webdriver = new FirefoxDriver(firefoxOptions);
                 break;
 
             case "chrome":
