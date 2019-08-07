@@ -21,4 +21,7 @@ public abstract class BaseSteps {
     @Value("${base.url}")
     protected String baseUrl;
 
+    @Value("${session.details.url}")
+    protected String sessionDetailsUrl;
+
 }

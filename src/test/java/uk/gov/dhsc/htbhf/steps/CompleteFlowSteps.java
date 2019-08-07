@@ -23,6 +23,9 @@ public class CompleteFlowSteps extends BaseSteps {
     private PhoneNumberPage phoneNumberPage;
     private EmailAddressPage emailAddressPage;
     private SendCodePage sendCodePage;
+    private EnterCodePage enterCodePage;
+    private ConfirmationCodePage confirmationCodePage;
+    private CheckDetailsPage checkDetailsPage;
 
     //TODO MRS 2019-08-01: Keep building this up...
     @When("^I complete the application with valid details for a pregnant woman")
@@ -39,8 +42,27 @@ public class CompleteFlowSteps extends BaseSteps {
         enterManualAddress();
         enterPhoneNumber();
         enterEmailAddress();
+        selectTextOnSendCode();
+        enterConfirmationCodeAndSubmit();
+        checkDetailsPage = new CheckDetailsPage(webDriver, baseUrl, webDriverWait);
+        checkDetailsPage.waitForPageToLoad();
+    }
+
+    private void enterConfirmationCodeAndSubmit() {
+        enterCodePage = new EnterCodePage(webDriver, baseUrl, webDriverWait);
+        enterCodePage.waitForPageToLoad();
+        confirmationCodePage = new ConfirmationCodePage(webDriver, sessionDetailsUrl);
+        String confirmationCode = confirmationCodePage.getConfirmationCodeForSession();
+        enterCodePage.open();
+        enterCodePage.enterCode(confirmationCode);
+        enterCodePage.clickContinue();
+    }
+
+    private void selectTextOnSendCode() {
         sendCodePage = new SendCodePage(webDriver, baseUrl, webDriverWait);
         sendCodePage.waitForPageToLoad();
+        sendCodePage.selectText();
+        sendCodePage.clickContinue();
     }
 
     private void enterEmailAddress() {
@@ -62,6 +84,7 @@ public class CompleteFlowSteps extends BaseSteps {
         manualAddressPage.enterAddressLine1(ADDRESS_LINE_1);
         manualAddressPage.enterAddressLine2(ADDRESS_LINE_2);
         manualAddressPage.enterTownOrCity(TOWN);
+        manualAddressPage.enterCounty(COUNTY);
         manualAddressPage.enterPostcode(POSTCODE);
         manualAddressPage.clickContinue();
     }
