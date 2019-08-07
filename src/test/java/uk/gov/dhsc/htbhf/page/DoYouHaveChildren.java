@@ -3,22 +3,19 @@ package uk.gov.dhsc.htbhf.page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.RadioButton;
-import uk.gov.dhsc.htbhf.page.component.SubmitButton;
 
 /**
  * Page object for the Do You Have Children page.
  */
-public class DoYouHaveChildren extends BasePage {
+public class DoYouHaveChildren extends SubmittablePage {
 
     private RadioButton yesRadioButton;
     private RadioButton noRadioButton;
-    private SubmitButton submitButton;
 
     public DoYouHaveChildren(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
         this.yesRadioButton = new RadioButton(webDriver, RadioButton.YES);
         this.noRadioButton = new RadioButton(webDriver, RadioButton.NO);
-        this.submitButton = new SubmitButton(webDriver);
     }
 
     @Override
@@ -42,9 +39,5 @@ public class DoYouHaveChildren extends BasePage {
 
     public void selectNoRadioButton() {
         noRadioButton.select();
-    }
-
-    public void clickContinue() {
-        submitButton.click();
     }
 }
