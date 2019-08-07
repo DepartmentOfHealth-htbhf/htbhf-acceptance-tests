@@ -11,7 +11,7 @@ import static uk.gov.dhsc.htbhf.utils.NinoGenerator.generateEligibleNino;
  */
 public class CompleteFlowSteps extends BaseSteps {
 
-    private OverviewPage overviewPage;
+    private GuidancePage guidancePage;
     private DoYouLiveInScotlandPage doYouLiveInScotlandPage;
     private EnterDobPage enterDobPage;
     private DoYouHaveChildren doYouHaveChildren;
@@ -30,8 +30,8 @@ public class CompleteFlowSteps extends BaseSteps {
     //TODO MRS 2019-08-01: Keep building this up...
     @When("^I complete the application with valid details for a pregnant woman")
     public void completeTheApplicationAsAPregnantWoman() {
-        overviewPage = new OverviewPage(webDriver, baseUrl, webDriverWait);
-        overviewPage.clickStartButton();
+        guidancePage = new GuidancePage(webDriver, baseUrl, webDriverWait);
+        guidancePage.clickStartButton();
         enterDoYouLiveInScotlandNoAndSubmit();
         enterDateOfBirthAndSubmit();
         enterDoYouHaveChildrenYesAndSubmit();
