@@ -10,6 +10,7 @@ public class Constants {
     public static final String ADDRESS_LINE_1 = "Flat b";
     public static final String ADDRESS_LINE_2 = "123 Fake street";
     public static final String TOWN = "Springfield";
+    public static final String COUNTY = "Devon";
     public static final String POSTCODE = "AA11BB";
     public static final String PHONE_NUMBER = "07123456789";
     public static final String PHONE_NUMBER_2 = "07111111111";
