@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 /**
  * Contains functions for all components on a page.
  */
@@ -25,5 +27,9 @@ public abstract class BaseComponent {
 
     public WebElement findById(String id) {
         return webDriver.findElement(By.id(id));
+    }
+
+    public List<WebElement> findAllByCss(String cssSelector) {
+        return webDriver.findElements(By.cssSelector(cssSelector));
     }
 }

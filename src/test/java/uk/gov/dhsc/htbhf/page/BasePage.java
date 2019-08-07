@@ -53,4 +53,20 @@ public abstract class BasePage extends BaseComponent {
         return webDriver.findElements(By.className(RADIO_LABEL_CLASSNAME));
     }
 
+    public WebElement findH1() {
+        return findByCss("h1");
+    }
+
+    public String getH1Text() {
+        return findH1().getText();
+    }
+
+    public WebElement findH2() {
+        return findByCss("h2");
+    }
+
+    public String getH2Text() {
+        return findH2().getText();
+    }
+
 }
