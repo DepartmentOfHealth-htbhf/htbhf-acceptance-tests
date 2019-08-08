@@ -11,8 +11,6 @@ public class RadioButton extends BaseComponent {
 
     public static final String YES = "yes";
     public static final String NO = "no";
-    public static final String TEXT = "text";
-    public static final String EMAIL = "email";
     private String option;
 
     public RadioButton(WebDriver webDriver, String option) {

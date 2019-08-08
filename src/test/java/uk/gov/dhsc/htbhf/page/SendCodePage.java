@@ -4,14 +4,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.RadioButton;
 
-import static uk.gov.dhsc.htbhf.page.component.RadioButton.EMAIL;
-import static uk.gov.dhsc.htbhf.page.component.RadioButton.TEXT;
-
 /**
  * Page object for the send code page
  */
 public class SendCodePage extends SubmittablePage {
 
+    private static final String TEXT = "text";
+    private static final String EMAIL = "email";
     private RadioButton selectTextRadioButton;
     private RadioButton selectEmailRadioButton;
 
