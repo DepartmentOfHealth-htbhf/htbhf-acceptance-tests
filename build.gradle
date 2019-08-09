@@ -14,9 +14,17 @@ buildscript {
     }
 }
 
+plugins {
+    id 'io.franzbecker.gradle-lombok' version '1.14'
+}
 apply plugin: 'java'
 sourceCompatibility = 1.11
 targetCompatibility = 1.11
+
+lombok {
+    version = '1.18.4'
+    sha256 = ""
+}
 
 repositories {
     jcenter()
@@ -45,6 +53,7 @@ dependencies {
     testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
     testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
     testImplementation "io.cucumber:cucumber-spring:${cucumberVersion}"
+    testImplementation "org.assertj:assertj-core:3.13.2"
 }
 
 test {

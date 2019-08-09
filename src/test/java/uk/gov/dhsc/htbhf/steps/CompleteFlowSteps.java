@@ -27,7 +27,6 @@ public class CompleteFlowSteps extends BaseSteps {
     private ConfirmationCodePage confirmationCodePage;
     private CheckDetailsPage checkDetailsPage;
 
-    //TODO MRS 2019-08-01: Keep building this up...
     @When("^I complete the application with valid details for a pregnant woman")
     public void completeTheApplicationAsAPregnantWoman() {
         guidancePage = new GuidancePage(webDriver, baseUrl, webDriverWait);
@@ -44,8 +43,6 @@ public class CompleteFlowSteps extends BaseSteps {
         enterEmailAddress();
         selectTextOnSendCode();
         enterConfirmationCodeAndSubmit();
-        checkDetailsPage = new CheckDetailsPage(webDriver, baseUrl, webDriverWait);
-        checkDetailsPage.waitForPageToLoad();
     }
 
     private void enterConfirmationCodeAndSubmit() {
