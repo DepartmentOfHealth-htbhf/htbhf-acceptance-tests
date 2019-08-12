@@ -9,14 +9,14 @@ import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aValidClai
 import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aValidClaimResponseWithoutVoucherEntitlement;
 
 /**
- * Manages all interaction with wiremock
+ * Manages all interaction with WireMock
  */
 public class WireMockManager {
 
-    public static final String CLAIMS_ENDPOINT = "/v2/claims";
-    public static final String REQUEST_ID_HEADER = "X-Request-ID";
-    public static final String SESSION_ID_HEADER = "X-Session-ID";
-    public static final String ID_HEADERS_REGEX = "([A-Za-z0-9_-])+";
+    private static final String CLAIMS_ENDPOINT = "/v2/claims";
+    private static final String REQUEST_ID_HEADER = "X-Request-ID";
+    private static final String SESSION_ID_HEADER = "X-Session-ID";
+    private static final String ID_HEADERS_REGEX = "([A-Za-z0-9_-])+";
 
     private Map<String, Integer> ELIGIBILITY_RESPONSE_MAPPINGS = Map.of(
             "ELIGIBLE", 201,
@@ -48,7 +48,6 @@ public class WireMockManager {
     public void setupWireMockMappingsWithStatus(String eligibilityStatus) {
         String wireMockBody = (eligibilityStatus.equals("ELIGIBLE") ?
                 aValidClaimResponseWithVoucherEntitlement(eligibilityStatus) : aValidClaimResponseWithoutVoucherEntitlement(eligibilityStatus));
-        System.out.println("Wiremock body: " + wireMockBody);
         stubFor(post(urlEqualTo(CLAIMS_ENDPOINT))
                 .withHeader(REQUEST_ID_HEADER, matching(ID_HEADERS_REGEX))
                 .withHeader(SESSION_ID_HEADER, matching(ID_HEADERS_REGEX))
