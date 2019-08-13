@@ -1,6 +1,7 @@
 package uk.gov.dhsc.htbhf.steps;
 
 import io.cucumber.java.en.Then;
+import org.apache.commons.lang3.StringUtils;
 import uk.gov.dhsc.htbhf.page.ConfirmationPage;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,8 +24,8 @@ public class ConfirmDetailsSteps extends BaseSteps {
     @Then("/^my entitlement is 12.40 per week with a first payment of 49.60$/")
     public void myEntitlementIsShownCorrectly() {
         String totalVoucherValue = confirmationPage.getPanelBodyText();
-        assertThat(totalVoucherValue).as("Entitlement amount should be shown correctly on the confirmation page")
-                .isEqualTo("You’re entitled to\n£12.40 a week. Your first payment\nwill be £49.60.");
+        assertThat(StringUtils.normalizeSpace(totalVoucherValue)).as("Entitlement amount should be shown correctly on the confirmation page")
+                .isEqualTo("You’re entitled to £12.40 a week. Your first payment will be £49.60.");
     }
 
     private void checkAllPageContentIsPresentAndCorrect() {
