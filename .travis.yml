@@ -1,0 +1,39 @@
+language: java
+
+jdk:
+  - openjdk11
+
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - bin/
+
+
+deploy:
+  # publish test results to github pages
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_WRITE_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep-history: true
+  local-dir: build/reports
+  on:
+    branch: master
+
+#don't build tags
+branches:
+  except:
+  - /^v\d/
+
+#Build and perform release (if needed)
+script:
+- ./ci_scripts/prepare_for_tests.sh ./gradlew clean build
+
+
+env:
+  global:
+    - CHROMEDRIVER_VERSION=77.0.3865.10
+    - CHROMEDRIVER_URL=https://chromedriver.storage.googleapis.com/77.0.3865.10/chromedriver_linux64.zip
