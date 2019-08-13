@@ -25,11 +25,10 @@ public class CompleteFlowSteps extends BaseSteps {
     private SendCodePage sendCodePage;
     private EnterCodePage enterCodePage;
     private ConfirmationCodePage confirmationCodePage;
-    private CheckDetailsPage checkDetailsPage;
 
     @When("^I complete the application with valid details for a pregnant woman")
     public void completeTheApplicationAsAPregnantWoman() {
-        guidancePage = new GuidancePage(webDriver, baseUrl, webDriverWait);
+        guidancePage = GuidancePage.buildApplyGuidancePage(webDriver, baseUrl, webDriverWait);
         guidancePage.clickStartButton();
         enterDoYouLiveInScotlandNoAndSubmit();
         enterDateOfBirthAndSubmit();
