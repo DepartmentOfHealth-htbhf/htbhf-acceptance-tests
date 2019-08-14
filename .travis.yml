@@ -30,7 +30,7 @@ branches:
 
 #Build and perform release (if needed)
 script:
-- ./ci_scripts/prepare_for_tests.sh ./gradlew clean build
+- ./ci_scripts/prepare_for_tests.sh && ./gradlew clean build
 
 
 env:

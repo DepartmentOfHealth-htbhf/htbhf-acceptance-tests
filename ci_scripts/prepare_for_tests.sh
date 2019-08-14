@@ -26,7 +26,6 @@ download_chromedriver(){
     fi
 }
 
-
 download_web_ui(){
     echo "Downloading latest release of web ui for tests"
     rm -rf ${WEB_UI_DIR}
@@ -41,5 +40,19 @@ download_web_ui(){
     rm web-tests-tmp.zip
 }
 
+start_web_ui(){
+    cd ${WEB_UI_DIR}
+    cp sample.env .env
+    echo "Running npm install"
+    npm install
+    echo "Starting web app"
+    npm start &
+    echo "Starting session details app"
+    npm run test:session-details &
+    cd ${WORKING_DIR}
+}
+
+
 download_chromedriver
 download_web_ui
+start_web_ui
