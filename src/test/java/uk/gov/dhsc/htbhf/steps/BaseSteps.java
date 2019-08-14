@@ -28,4 +28,7 @@ public abstract class BaseSteps {
     @Value("${session.details.url}")
     protected String sessionDetailsUrl;
 
+    @Value("${spring.profiles.active}")
+    protected String activeProfile;
+
 }
