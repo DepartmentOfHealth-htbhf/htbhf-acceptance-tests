@@ -19,6 +19,7 @@ addons:
   chrome: stable
 
 before_install:
+  - google-chrome-stable --version
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 
 deploy:
@@ -36,12 +37,12 @@ branches:
   except:
   - /^v\d/
 
-#Build and perform release (if needed)
+#start web-ui and run tests
 script:
-- ./ci_scripts/prepare_for_tests.sh && ./gradlew clean build
+- ./ci_scripts/prepare_for_tests.sh && ./gradlew clean build --info
 
 
 env:
   global:
-    - CHROMEDRIVER_VERSION=77.0.3865.10
-    - CHROMEDRIVER_URL=https://chromedriver.storage.googleapis.com/77.0.3865.10/chromedriver_linux64.zip
+    - CHROMEDRIVER_VERSION=76.0.3809.68
+    - CHROMEDRIVER_URL=https://chromedriver.storage.googleapis.com/76.0.3809.68/chromedriver_linux64.zip
