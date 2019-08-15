@@ -19,7 +19,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 
 @Configuration
 @PropertySource("classpath:application-local.properties")
-@Profile("local")
+@Profile("!browserstack")
 public class LocalConfiguration {
 
     @Bean(destroyMethod = "close")
