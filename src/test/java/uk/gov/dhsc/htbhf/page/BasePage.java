@@ -69,4 +69,9 @@ public abstract class BasePage extends BaseComponent {
         return findH2().getText();
     }
 
+    public WebElement findLinkForHref(String href) {
+        String linkCss = String.format("a[href=\"%s\"]", href);
+        return findByCss(linkCss);
+    }
+
 }

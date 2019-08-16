@@ -58,8 +58,19 @@ dependencies {
     testImplementation "org.apache.commons:commons-lang3:3.9"
 }
 
+// Run with -Pcompatibility to just run compatibility tests and none of the other unit tests or acceptance tests.
 test {
-    systemProperty "webdriver.chrome.driver", "./bin/chromedriver"
+    if (project.hasProperty('compatibility')) {
+        filter {
+            systemProperty "spring.profiles.active", "browserstack"
+            includeTestsMatching "uk.gov.dhsc.htbhf.RunCompatibilityTests"
+        }
+    } else {
+        systemProperty "webdriver.chrome.driver", "./bin/chromedriver"
+        filter {
+            excludeTestsMatching "uk.gov.dhsc.htbhf.RunCompatibilityTests"
+        }
+    }
     useJUnitPlatform()
     reports {
         junitXml.enabled = false

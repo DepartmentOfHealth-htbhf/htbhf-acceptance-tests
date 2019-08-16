@@ -3,43 +3,44 @@ package uk.gov.dhsc.htbhf.page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * Page object for the guidance pages of the application
  */
-public class GuidancePage {
+public class GuidancePage extends BasePage {
 
-    private static final String APPLY_PAGE = "Apply for Healthy Start";
+    public static final String APPLY_PAGE = "Apply for Healthy Start";
 
-    //TODO MRS 2019-08-07: Guidance page enum? Look into this when guidance-pages.feature is done
-    private static final Map<String, String> GUIDANCE_PAGES = Map.of(
-            "How it works", "/",
-            "Eligibility", "/eligibility",
-            "What you’ll get", "/what-you-get",
-            "What you can buy", "/buy",
-            "Using your card", "/using-your-card",
-            APPLY_PAGE, "/apply",
-            "Report a change", "/report-a-change"
-    );
+    private GuidancePageMetadata currentPage;
 
-    private WebDriver webDriver;
-    private String baseUrl;
-    private WebDriverWait wait;
-
-    public GuidancePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
-        this.webDriver = webDriver;
-        this.baseUrl = baseUrl;
-        this.wait = wait;
+    public GuidancePage(WebDriver webDriver, String baseUrl, WebDriverWait wait, String pageName) {
+        super(webDriver, baseUrl, wait);
+        this.currentPage = GuidancePageMetadata.findByName(pageName);
     }
 
-    public void openGuidancePage(String pageName) {
-        String path = GUIDANCE_PAGES.get(pageName);
-        webDriver.get(baseUrl + path);
-        wait.until(ExpectedConditions.titleIs(getPageTitleForPath(pageName)));
+    public static GuidancePage buildApplyGuidancePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+        return new GuidancePage(webDriver, baseUrl, wait, APPLY_PAGE);
+    }
+
+    @Override
+    String getPath() {
+        return currentPage.getPagePath();
+    }
+
+    @Override
+    String getPageName() {
+        return currentPage.getPageName();
+    }
+
+    @Override
+    String getPageTitle() {
+        return "GOV.UK - " + currentPage.getPageName();
     }
 
     public void clickStartButton() {
@@ -47,11 +48,35 @@ public class GuidancePage {
         startButton.click();
     }
 
-    public void openApplyPage() {
-        openGuidancePage(APPLY_PAGE);
+    public boolean shouldHavePreviousLink() {
+        return !GuidancePageMetadata.getFirst().equals(currentPage);
     }
 
-    private String getPageTitleForPath(String pageName) {
-        return "GOV.UK - " + pageName;
+    public boolean shouldHaveNextLink() {
+        return !GuidancePageMetadata.getLast().equals(currentPage);
     }
+
+    // Find links in the contents section, which should be for all the pages except the current page
+    public List<WebElement> getContentsLinks() {
+        return Arrays.stream(GuidancePageMetadata.values())
+                .filter(page -> !page.equals(currentPage))
+                .map(page -> findLinkForHref(page.getPagePath()))
+                .collect(toList());
+    }
+
+    public WebElement findPreviousLinkForCurrentPage() {
+        int previous = currentPage.ordinal() - 1;
+        return getLinkForGuidancePageByOrder(previous);
+    }
+
+    public WebElement findNextLinkForCurrentPage() {
+        int next = currentPage.ordinal() + 1;
+        return getLinkForGuidancePageByOrder(next);
+    }
+
+    private WebElement getLinkForGuidancePageByOrder(int order) {
+        GuidancePageMetadata page = GuidancePageMetadata.getPageByOrder(order);
+        return this.findLinkForHref(page.getPagePath());
+    }
+
 }
