@@ -13,6 +13,7 @@ export WEB_UI_DIR=${WORKING_DIR}/tmp-web-ui
 
 check_variable_is_set CHROMEDRIVER_VERSION
 check_variable_is_set CHROMEDRIVER_URL
+check_variable_is_set NOTIFY_API_KEY
 
 
 download_chromedriver(){
