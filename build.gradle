@@ -4,7 +4,7 @@ buildscript {
         junitVersion = '5.3.2'
         springVersion = '5.1.8.RELEASE'
         seleniumVersion = '3.141.59'
-        chromeWebriverPath = '../chromedriver/chromedriver'
+        chromeWebriverPath = './bin/chromedriver'
         cucumberVersion = '4.7.1'
     }
 
@@ -66,7 +66,7 @@ test {
             includeTestsMatching "uk.gov.dhsc.htbhf.RunCompatibilityTests"
         }
     } else {
-        systemProperty "webdriver.chrome.driver", "../chromedriver/chromedriver"
+        systemProperty "webdriver.chrome.driver", "./bin/chromedriver"
         filter {
             excludeTestsMatching "uk.gov.dhsc.htbhf.RunCompatibilityTests"
         }
@@ -81,10 +81,10 @@ test {
 private def setBrowserStackSystemProperties(requiredOsKey, requiredDeviceName) {
     loadProperties()
     println "Looking for BrowserStack config: [$requiredOsKey - $requiredDeviceName]"
-    config.eachWithIndex { def osTests, int i ->
+    config.each { def osTests ->
         if(osTests.key == requiredOsKey) {
             def testsForOs = osTests.value
-            testsForOs.eachWithIndex { def deviceTests, int j ->
+            testsForOs.each { def deviceTests ->
                 def deviceName = deviceTests.key
                 if(deviceName == requiredDeviceName) {
                     storePropertiesForOsAndDevice(deviceTests)
@@ -97,7 +97,7 @@ private def setBrowserStackSystemProperties(requiredOsKey, requiredDeviceName) {
 
 private def storePropertiesForOsAndDevice(deviceTests) {
     def deviceCapabilities = deviceTests.value
-    deviceCapabilities.eachWithIndex { def capabilities, int k ->
+    deviceCapabilities.each { def capabilities ->
         def capabilitiesName = capabilities.key
         def capabilitiesValue = capabilities.value
         println "Capability: $capabilitiesName - $capabilitiesValue"

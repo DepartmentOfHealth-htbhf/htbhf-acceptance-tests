@@ -19,7 +19,7 @@ public class BrowserStackCapabilities {
 
     /**
      * Get the browser stack properties from the System Properties provided, which should have been populated
-     * by the Grale build file all prefixed with BROWSERSTACK.TEST
+     * by the Gradle build file all prefixed with BROWSERSTACK.TEST
      *
      * @param systemProperties The system properties to use
      * @return A Map of the filtered properties without the prefix attached
