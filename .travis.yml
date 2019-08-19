@@ -46,3 +46,5 @@ env:
   global:
     - CHROMEDRIVER_VERSION=76.0.3809.68
     - CHROMEDRIVER_URL=https://chromedriver.storage.googleapis.com/76.0.3809.68/chromedriver_linux64.zip
+#   - WEB_UI_BRANCH=foo/bar
+# set WEB_UI_BRANCH if this version of the acceptance tests only works against a specific branch of web-ui
