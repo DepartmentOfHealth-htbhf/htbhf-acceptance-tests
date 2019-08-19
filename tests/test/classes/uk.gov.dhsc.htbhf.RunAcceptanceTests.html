@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - RunAcceptanceTests</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>RunAcceptanceTests</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/uk.gov.dhsc.htbhf.html">uk.gov.dhsc.htbhf</a> &gt; RunAcceptanceTests</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">8</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">11.834s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+<li>
+<a href="#tab2">Standard error</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">The guidance pages are present and navigable</td>
+<td class="success">0.826s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">The guidance pages are present and navigable</td>
+<td class="success">0.300s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">The guidance pages are present and navigable</td>
+<td class="success">0.387s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">The guidance pages are present and navigable</td>
+<td class="success">0.284s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">The guidance pages are present and navigable</td>
+<td class="success">0.276s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">The guidance pages are present and navigable</td>
+<td class="success">0.257s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">The guidance pages are present and navigable</td>
+<td class="success">0.249s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Valid application details can be checked</td>
+<td class="success">9.255s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>Feature: Guidance pages
+  Before applying for the  Apply for Healthy Start programme
+  As a potential claimant
+  I want to see the guidance pages before I start the application process
+
+  Scenario Outline: The guidance pages are present and navigable ?[90m# src/test/resources/features/acceptance/guidance-pages.feature:6?[0m
+    ?[36mGiven I open the &lt;page&gt; guidance page?[0m
+    ?[36mThen all the &lt;page&gt; guidance page content is present?[0m
+
+    Examples: 
+
+  Scenario Outline: The guidance pages are present and navigable ?[90m# src/test/resources/features/acceptance/guidance-pages.feature:11?[0m
+    ?[32mGiven ?[0m?[32mI open the ?[0m?[32m?[1mHow it works?[0m?[32m guidance page?[0m                  ?[90m# GuidanceSteps.openGuidancePage(String)?[0m
+    ?[32mThen ?[0m?[32mall the ?[0m?[32m?[1mHow it works?[0m?[32m guidance page content is present?[0m   ?[90m# GuidanceSteps.allTheGuidancePageContentIsPresent(String)?[0m
+
+  Scenario Outline: The guidance pages are present and navigable ?[90m# src/test/resources/features/acceptance/guidance-pages.feature:12?[0m
+    ?[32mGiven ?[0m?[32mI open the ?[0m?[32m?[1mEligibility?[0m?[32m guidance page?[0m                   ?[90m# GuidanceSteps.openGuidancePage(String)?[0m
+    ?[32mThen ?[0m?[32mall the ?[0m?[32m?[1mEligibility?[0m?[32m guidance page content is present?[0m    ?[90m# GuidanceSteps.allTheGuidancePageContentIsPresent(String)?[0m
+
+  Scenario Outline: The guidance pages are present and navigable  ?[90m# src/test/resources/features/acceptance/guidance-pages.feature:13?[0m
+    ?[32mGiven ?[0m?[32mI open the ?[0m?[32m?[1mWhat you’ll get?[0m?[32m guidance page?[0m                ?[90m# GuidanceSteps.openGuidancePage(String)?[0m
+    ?[32mThen ?[0m?[32mall the ?[0m?[32m?[1mWhat you’ll get?[0m?[32m guidance page content is present?[0m ?[90m# GuidanceSteps.allTheGuidancePageContentIsPresent(String)?[0m
+
+  Scenario Outline: The guidance pages are present and navigable   ?[90m# src/test/resources/features/acceptance/guidance-pages.feature:14?[0m
+    ?[32mGiven ?[0m?[32mI open the ?[0m?[32m?[1mWhat you can buy?[0m?[32m guidance page?[0m                ?[90m# GuidanceSteps.openGuidancePage(String)?[0m
+    ?[32mThen ?[0m?[32mall the ?[0m?[32m?[1mWhat you can buy?[0m?[32m guidance page content is present?[0m ?[90m# GuidanceSteps.allTheGuidancePageContentIsPresent(String)?[0m
+
+  Scenario Outline: The guidance pages are present and navigable  ?[90m# src/test/resources/features/acceptance/guidance-pages.feature:15?[0m
+    ?[32mGiven ?[0m?[32mI open the ?[0m?[32m?[1mUsing your card?[0m?[32m guidance page?[0m                ?[90m# GuidanceSteps.openGuidancePage(String)?[0m
+    ?[32mThen ?[0m?[32mall the ?[0m?[32m?[1mUsing your card?[0m?[32m guidance page content is present?[0m ?[90m# GuidanceSteps.allTheGuidancePageContentIsPresent(String)?[0m
+
+  Scenario Outline: The guidance pages are present and navigable          ?[90m# src/test/resources/features/acceptance/guidance-pages.feature:16?[0m
+    ?[32mGiven ?[0m?[32mI open the ?[0m?[32m?[1mApply for Healthy Start?[0m?[32m guidance page?[0m                ?[90m# GuidanceSteps.openGuidancePage(String)?[0m
+    ?[32mThen ?[0m?[32mall the ?[0m?[32m?[1mApply for Healthy Start?[0m?[32m guidance page content is present?[0m ?[90m# GuidanceSteps.allTheGuidancePageContentIsPresent(String)?[0m
+
+  Scenario Outline: The guidance pages are present and navigable  ?[90m# src/test/resources/features/acceptance/guidance-pages.feature:17?[0m
+    ?[32mGiven ?[0m?[32mI open the ?[0m?[32m?[1mReport a change?[0m?[32m guidance page?[0m                ?[90m# GuidanceSteps.openGuidancePage(String)?[0m
+    ?[32mThen ?[0m?[32mall the ?[0m?[32m?[1mReport a change?[0m?[32m guidance page content is present?[0m ?[90m# GuidanceSteps.allTheGuidancePageContentIsPresent(String)?[0m
+
+Feature: Complete application journey
+  In order to apply for the Apply for Healthy Start programme
+  As a potential claimant
+  I want to enter my details and complete the application journey
+
+  Scenario: Valid application details can be checked                        ?[90m# src/test/resources/features/compatibility/apply-success.feature:6?[0m
+    ?[32mGiven ?[0m?[32mI am on the first page of the application?[0m                         ?[90m# GuidanceSteps.givenIAmOnTheFirstPageOfTheApplication()?[0m
+    ?[32mWhen ?[0m?[32mI complete the application with valid details for a pregnant woman?[0m ?[90m# CompleteFlowSteps.completeTheApplicationAsAPregnantWoman()?[0m
+    ?[32mThen ?[0m?[32mI am shown the check details page with correct page content?[0m        ?[90m# CheckDetailsSteps.verifyCheckDetailsPageCorrect()?[0m
+    ?[32mAnd ?[0m?[32mI accept the terms and conditions and submit my application?[0m         ?[90m# TermsAndConditionsSteps.acceptTermsAndConditionsAndSubmitApplication()?[0m
+    ?[32mAnd ?[0m?[32mI am shown a successful confirmation page?[0m                           ?[90m# ConfirmDetailsSteps.iAmShownASuccessfulConfirmationPage()?[0m
+    ?[32mAnd ?[0m?[32mmy entitlement is 12.40 per week with a first payment of 49.60?[0m      ?[90m# ConfirmDetailsSteps.myEntitlementIsShownCorrectly()?[0m
+</pre>
+</span>
+</div>
+<div id="tab2" class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>Aug 19, 2019 4:48:48 PM cucumber.runtime.java.ObjectFactoryLoader loadSingleObjectFactory
+INFO: Loading ObjectFactory via service loader: io.cucumber.spring.SpringFactory
+SLF4J: Failed to load class &quot;org.slf4j.impl.StaticLoggerBinder&quot;.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Starting ChromeDriver 76.0.3809.68 (420c9498db8ce8fcd190a954d51297672c1515d5-refs/branch-heads/3809@{#864}) on port 32062
+Only local connections are allowed.
+Please protect ports used by ChromeDriver and related test frameworks to prevent access by malicious code.
+[1566233330.350][SEVERE]: bind() failed: Cannot assign requested address (99)
+Aug 19, 2019 4:48:50 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: W3C
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 5.4.1</a> at Aug 19, 2019, 4:49:04 PM</p>
+</div>
+</div>
+</body>
+</html>
