@@ -4,7 +4,7 @@ buildscript {
         junitVersion = '5.3.2'
         springVersion = '5.1.8.RELEASE'
         seleniumVersion = '3.141.59'
-        chromeWebriverPath = '../chromedriver/chromedriver'
+        chromeWebriverPath = './bin/chromedriver'
         cucumberVersion = '4.7.1'
     }
 
@@ -66,7 +66,7 @@ test {
             includeTestsMatching "uk.gov.dhsc.htbhf.RunCompatibilityTests"
         }
     } else {
-        systemProperty "webdriver.chrome.driver", "../chromedriver/chromedriver"
+        systemProperty "webdriver.chrome.driver", "./bin/chromedriver"
         filter {
             excludeTestsMatching "uk.gov.dhsc.htbhf.RunCompatibilityTests"
         }

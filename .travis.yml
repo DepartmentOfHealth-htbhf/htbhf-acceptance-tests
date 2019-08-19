@@ -1,0 +1,48 @@
+language: java
+
+jdk:
+  - openjdk11
+
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - bin/
+
+services:
+  - redis-server
+
+addons:
+  chrome: stable
+
+before_install:
+  - google-chrome-stable --version
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+
+deploy:
+  # publish test results to github pages
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_WRITE_TOKEN  # Set in the settings page of your repository, as a secure variable
+  keep-history: true
+  local-dir: build/reports
+  on:
+    branch: master
+
+#don't build tags
+branches:
+  except:
+  - /^v\d/
+
+#start web-ui and run tests
+script:
+- ./ci_scripts/prepare_for_tests.sh && ./gradlew clean build --info
+
+
+env:
+  global:
+    - CHROMEDRIVER_VERSION=76.0.3809.68
+    - CHROMEDRIVER_URL=https://chromedriver.storage.googleapis.com/76.0.3809.68/chromedriver_linux64.zip
