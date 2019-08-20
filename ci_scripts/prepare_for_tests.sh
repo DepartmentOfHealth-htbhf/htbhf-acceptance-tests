@@ -28,17 +28,25 @@ download_chromedriver(){
 }
 
 download_web_ui(){
-    echo "Downloading latest release of web ui for tests"
     rm -rf ${WEB_UI_DIR}
     mkdir ${WEB_UI_DIR}
-    curl -s https://api.github.com/repos/DepartmentOfHealth-htbhf/htbhf-applicant-web-ui/releases/latest \
-        | grep zipball_url \
-        | cut -d'"' -f4 \
-        | wget -qO web-tests-tmp.zip -i -
+    rm -rf wget_tmp
+    mkdir wget_tmp
+    cd wget_tmp
+    if [[ -z "${WEB_UI_BRANCH}" ]]; then
+        echo "Downloading latest release of web ui for tests (WEB_UI_BRANCH environment variable is not set)"
+        curl -s https://api.github.com/repos/DepartmentOfHealth-htbhf/htbhf-applicant-web-ui/releases/latest \
+            | grep zipball_url \
+            | cut -d'"' -f4 \
+            | wget -qO web-tests-tmp.zip -i -
+    else
+        echo "Downloading  web ui branch '${WEB_UI_BRANCH}' for tests"
+        wget -qO web-tests-tmp.zip https://github.com/DepartmentOfHealth-htbhf/htbhf-acceptance-tests/archive/${WEB_UI_BRANCH}.zip
+    fi
     unzip web-tests-tmp.zip
-    mv -f DepartmentOfHealth-htbhf-htbhf-applicant-web-ui-*/* ${WEB_UI_DIR}
-    rm -rf DepartmentOfHealth-htbhf-htbhf-applicant-web-ui-*
-    rm web-tests-tmp.zip
+    mv -f */* ${WEB_UI_DIR}
+    cd ..
+    rm -rf wget_tmp
 }
 
 start_web_ui(){
