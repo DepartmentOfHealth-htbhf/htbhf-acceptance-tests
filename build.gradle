@@ -48,7 +48,6 @@ dependencies {
     testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
 
     testImplementation "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
-    //testImplementation "org.assert:assertj-core:3.11.1"
     testImplementation "org.springframework:spring-test:${springVersion}"
     testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
     testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
@@ -60,7 +59,8 @@ dependencies {
 
 // Run with -Pcompatibility to just run compatibility tests and none of the other unit tests or acceptance tests.
 test {
-    if (project.hasProperty('compatibility')) {
+    if (project.hasProperty("compatibility")) {
+        setBrowserStackSystemProperties("windows", "win10Chrome")
         filter {
             systemProperty "spring.profiles.active", "browserstack"
             includeTestsMatching "uk.gov.dhsc.htbhf.RunCompatibilityTests"
@@ -78,3 +78,35 @@ test {
     }
 }
 
+private def setBrowserStackSystemProperties(requiredOsKey, requiredDeviceName) {
+    loadProperties()
+    println "Looking for BrowserStack config: [$requiredOsKey - $requiredDeviceName]"
+    config.each { def osTests ->
+        if(osTests.key == requiredOsKey) {
+            def testsForOs = osTests.value
+            testsForOs.each { def deviceTests ->
+                def deviceName = deviceTests.key
+                if(deviceName == requiredDeviceName) {
+                    storePropertiesForOsAndDevice(deviceTests)
+                }
+            }
+
+        }
+    }
+}
+
+private def storePropertiesForOsAndDevice(deviceTests) {
+    def deviceCapabilities = deviceTests.value
+    deviceCapabilities.each { def capabilities ->
+        def capabilitiesName = capabilities.key
+        def capabilitiesValue = capabilities.value
+        println "Capability: $capabilitiesName - $capabilitiesValue"
+        test.systemProperty "BROWSERSTACK.TEST.$capabilitiesName", "$capabilitiesValue"
+    }
+}
+
+private def loadProperties() {
+    def configFile = file('browserstack.config')
+    def config = new ConfigSlurper().parse(configFile.toURI().toURL())
+    project.ext.config = config
+}
