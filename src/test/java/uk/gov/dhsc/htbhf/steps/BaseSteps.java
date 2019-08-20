@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import uk.gov.dhsc.htbhf.WebDriverWrapper;
 import uk.gov.dhsc.htbhf.utils.WireMockManager;
 
 /**
@@ -14,10 +15,7 @@ import uk.gov.dhsc.htbhf.utils.WireMockManager;
 public abstract class BaseSteps {
 
     @Autowired
-    protected WebDriver webDriver;
-
-    @Autowired
-    protected WebDriverWait webDriverWait;
+    protected WebDriverWrapper webDriverWrapper;
 
     @Autowired
     protected WireMockManager wireMockManager;
@@ -30,5 +28,13 @@ public abstract class BaseSteps {
 
     @Value("${spring.profiles.active}")
     protected String activeProfile;
+
+    protected WebDriver getWebDriver() {
+        return webDriverWrapper.getWebDriver();
+    }
+
+    protected WebDriverWait getWebDriverWait() {
+        return webDriverWrapper.getWebDriverWait();
+    }
 
 }

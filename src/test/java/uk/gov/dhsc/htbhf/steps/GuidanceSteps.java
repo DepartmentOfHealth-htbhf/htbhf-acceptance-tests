@@ -19,13 +19,13 @@ public class GuidanceSteps extends BaseSteps {
 
     @Given("^I am on the first page of the application")
     public void givenIAmOnTheFirstPageOfTheApplication() {
-        guidancePage = GuidancePage.buildApplyGuidancePage(webDriver, baseUrl, webDriverWait);
+        guidancePage = GuidancePage.buildApplyGuidancePage(getWebDriver(), baseUrl, getWebDriverWait());
         guidancePage.open();
     }
 
     @When("^I open the (.*) guidance page$")
     public void openGuidancePage(String pageName) {
-        guidancePage = new GuidancePage(webDriver, baseUrl, webDriverWait, pageName);
+        guidancePage = new GuidancePage(getWebDriver(), baseUrl, getWebDriverWait(), pageName);
         guidancePage.open();
     }
 
