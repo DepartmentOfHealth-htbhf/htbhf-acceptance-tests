@@ -2,11 +2,6 @@ package uk.gov.dhsc.htbhf;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,27 +17,25 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @Profile("!browserstack")
 public class LocalConfiguration {
 
-    @Bean(destroyMethod = "close")
-    public WebDriver localWebDriver(@Value("${test.browser}") String browser, @Value("${test.headless}") boolean headless) {
-        WebDriver webdriver = null;
-        switch (browser) {
-            case "firefox":
-                FirefoxOptions firefoxOptions = new FirefoxOptions();
-                firefoxOptions.setHeadless(headless);
-                webdriver = new FirefoxDriver(firefoxOptions);
-                break;
+    @Value("${test.browser}")
+    private String browser;
 
-            case "chrome":
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.setHeadless(headless);
-                webdriver = new ChromeDriver(chromeOptions);
-                break;
-        }
-        return webdriver;
+    @Value("${test.headless}")
+    private boolean headless;
+
+    @Value("${wait.timeout.seconds}")
+    private int waitTimeoutInSeconds;
+
+    @Value("${wiremock.port}")
+    private int wiremockPort;
+
+    @Bean(destroyMethod = "closeDriver")
+    public WebDriverWrapper localWebDriverWrapper() {
+        return new LocalWebDriverWrapper(browser, headless, waitTimeoutInSeconds);
     }
 
     @Bean(destroyMethod = "stop")
-    public WireMockServer wireMockServer(@Value("${wiremock.port}") int wiremockPort) {
+    public WireMockServer wireMockServer() {
         WireMockServer wireMockServer = new WireMockServer(wireMockConfig().port(wiremockPort));
         wireMockServer.start();
         //Configure the WireMock client to use the same port configured for the server.

@@ -28,7 +28,7 @@ public class CompleteFlowSteps extends BaseSteps {
 
     @When("^I complete the application with valid details for a pregnant woman")
     public void completeTheApplicationAsAPregnantWoman() {
-        guidancePage = GuidancePage.buildApplyGuidancePage(webDriver, baseUrl, webDriverWait);
+        guidancePage = GuidancePage.buildApplyGuidancePage(getWebDriver(), baseUrl, getWebDriverWait());
         guidancePage.clickStartButton();
         enterDoYouLiveInScotlandNoAndSubmit();
         enterDateOfBirthAndSubmit();
@@ -45,9 +45,9 @@ public class CompleteFlowSteps extends BaseSteps {
     }
 
     private void enterConfirmationCodeAndSubmit() {
-        enterCodePage = new EnterCodePage(webDriver, baseUrl, webDriverWait);
+        enterCodePage = new EnterCodePage(getWebDriver(), baseUrl, getWebDriverWait());
         enterCodePage.waitForPageToLoad();
-        confirmationCodePage = new ConfirmationCodePage(webDriver, sessionDetailsUrl);
+        confirmationCodePage = new ConfirmationCodePage(getWebDriver(), sessionDetailsUrl);
         String confirmationCode = confirmationCodePage.getConfirmationCodeForSession();
         enterCodePage.open();
         enterCodePage.enterCode(confirmationCode);
@@ -55,28 +55,28 @@ public class CompleteFlowSteps extends BaseSteps {
     }
 
     private void selectTextOnSendCode() {
-        sendCodePage = new SendCodePage(webDriver, baseUrl, webDriverWait);
+        sendCodePage = new SendCodePage(getWebDriver(), baseUrl, getWebDriverWait());
         sendCodePage.waitForPageToLoad();
         sendCodePage.selectText();
         sendCodePage.clickContinue();
     }
 
     private void enterEmailAddress() {
-        emailAddressPage = new EmailAddressPage(webDriver, baseUrl, webDriverWait);
+        emailAddressPage = new EmailAddressPage(getWebDriver(), baseUrl, getWebDriverWait());
         emailAddressPage.waitForPageToLoad();
         emailAddressPage.enterEmailAddress(EMAIL_ADDRESS);
         emailAddressPage.clickContinue();
     }
 
     private void enterPhoneNumber() {
-        phoneNumberPage = new PhoneNumberPage(webDriver, baseUrl, webDriverWait);
+        phoneNumberPage = new PhoneNumberPage(getWebDriver(), baseUrl, getWebDriverWait());
         phoneNumberPage.waitForPageToLoad();
         phoneNumberPage.enterPhoneNumber(PHONE_NUMBER);
         phoneNumberPage.clickContinue();
     }
 
     private void enterManualAddress() {
-        manualAddressPage = new ManualAddressPage(webDriver, baseUrl, webDriverWait);
+        manualAddressPage = new ManualAddressPage(getWebDriver(), baseUrl, getWebDriverWait());
         manualAddressPage.enterAddressLine1(ADDRESS_LINE_1);
         manualAddressPage.enterAddressLine2(ADDRESS_LINE_2);
         manualAddressPage.enterTownOrCity(TOWN);
@@ -86,21 +86,21 @@ public class CompleteFlowSteps extends BaseSteps {
     }
 
     private void enterNino() {
-        enterNinoPage = new EnterNinoPage(webDriver, baseUrl, webDriverWait);
+        enterNinoPage = new EnterNinoPage(getWebDriver(), baseUrl, getWebDriverWait());
         enterNinoPage.waitForPageToLoad();
         enterNinoPage.enterNino(generateEligibleNino());
         enterNinoPage.clickContinue();
     }
 
     private void enterName() {
-        enterNamePage = new EnterNamePage(webDriver, baseUrl, webDriverWait);
+        enterNamePage = new EnterNamePage(getWebDriver(), baseUrl, getWebDriverWait());
         enterNamePage.waitForPageToLoad();
         enterNamePage.enterName(FIRST_NAME, LAST_NAME);
         enterNamePage.clickContinue();
     }
 
     private void selectYesOnPregnancyPage() {
-        areYouPregnantPage = new AreYouPregnantPage(webDriver, baseUrl, webDriverWait);
+        areYouPregnantPage = new AreYouPregnantPage(getWebDriver(), baseUrl, getWebDriverWait());
         areYouPregnantPage.waitForPageToLoad();
         areYouPregnantPage.selectYes();
         areYouPregnantPage.enterExpectedDeliveryDate(2);
@@ -108,7 +108,7 @@ public class CompleteFlowSteps extends BaseSteps {
     }
 
     private void enterTwoChildrensDatesOfBirth() {
-        enterChildrensDobPage = new EnterChildrensDobPage(webDriver, baseUrl, webDriverWait);
+        enterChildrensDobPage = new EnterChildrensDobPage(getWebDriver(), baseUrl, getWebDriverWait());
         enterChildrensDobPage.waitForPageToLoad();
         enterChildrensDobPage.enterChild3OrUnderDetails(1);
         enterChildrensDobPage.clickAddAnotherChild();
@@ -117,14 +117,14 @@ public class CompleteFlowSteps extends BaseSteps {
     }
 
     private void enterDoYouHaveChildrenYesAndSubmit() {
-        doYouHaveChildren = new DoYouHaveChildren(webDriver, baseUrl, webDriverWait);
+        doYouHaveChildren = new DoYouHaveChildren(getWebDriver(), baseUrl, getWebDriverWait());
         doYouHaveChildren.waitForPageToLoad();
         doYouHaveChildren.selectYesRadioButton();
         doYouHaveChildren.clickContinue();
     }
 
     private void enterDateOfBirthAndSubmit() {
-        enterDobPage = new EnterDobPage(webDriver, baseUrl, webDriverWait);
+        enterDobPage = new EnterDobPage(getWebDriver(), baseUrl, getWebDriverWait());
         enterDobPage.waitForPageToLoad();
         enterDobPage.getDayInputField().enterValue(DOB_DAY);
         enterDobPage.getMonthInputField().enterValue(DOB_MONTH);
@@ -133,7 +133,7 @@ public class CompleteFlowSteps extends BaseSteps {
     }
 
     private void enterDoYouLiveInScotlandNoAndSubmit() {
-        doYouLiveInScotlandPage = new DoYouLiveInScotlandPage(webDriver, baseUrl, webDriverWait);
+        doYouLiveInScotlandPage = new DoYouLiveInScotlandPage(getWebDriver(), baseUrl, getWebDriverWait());
         doYouLiveInScotlandPage.waitForPageToLoad();
         doYouLiveInScotlandPage.selectNoRadioButton();
         doYouLiveInScotlandPage.clickContinue();
