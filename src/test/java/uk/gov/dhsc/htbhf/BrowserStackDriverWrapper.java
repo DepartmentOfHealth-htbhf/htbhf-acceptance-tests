@@ -35,7 +35,6 @@ public class BrowserStackDriverWrapper implements WebDriverWrapper {
     public BrowserStackDriverWrapper(String browserStackUser, String browserStackKey, int waitTimeoutInSeconds) {
         Validate.notBlank(browserStackUser, "BrowserStack user must be provided, set the BROWSER_STACK_USER environment variable");
         Validate.notBlank(browserStackKey, "BrowserStack key must be provided, set the BROWSER_STACK_KEY environment variable");
-        log.info("Using login: {} {}", browserStackUser, browserStackKey);
         this.waitTimeoutInSeconds = waitTimeoutInSeconds;
         Map<String, String> browserStackCapabilities = getBrowserStackCapabilities(System.getProperties());
         log.info("Using capabilities: {}", browserStackCapabilities);
