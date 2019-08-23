@@ -1,13 +1,15 @@
 package uk.gov.dhsc.htbhf;
 
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
+
+import static uk.gov.dhsc.htbhf.BrowserStackLauncher.BROWSER_STACK_TEST_NAME;
 
 /**
  * Retrieves and builds the BrowserStack capabilities from the system properties provided by Gradle
@@ -15,25 +17,26 @@ import java.util.Properties;
 @Slf4j
 public class BrowserStackCapabilities {
 
-    public static final String BROWSER_STACK_PREFIX = "BROWSERSTACK.TEST.";
-
     /**
-     * Get the browser stack properties from the System Properties provided, which should have been populated
-     * by the Gradle build file all prefixed with BROWSERSTACK.TEST
+     * Get the browser stack properties from a Properties file for the test specified from the
+     * the BROWSERSTACK.TEST.NAME System property.
      *
-     * @param systemProperties The system properties to use
-     * @return A Map of the filtered properties without the prefix attached
+     * @param systemProperties The system properties to find the test name from
+     * @return A Map of the properties for the requested test
      */
     public static Map<String, String> getBrowserStackCapabilities(Properties systemProperties) {
-        Map<String, String> browserStackCapabilities = new HashMap<>();
-        systemProperties.stringPropertyNames().stream()
-                .filter(propertyName -> propertyName.startsWith(BROWSER_STACK_PREFIX))
-                .forEach(browserStackProperty -> {
-                    String browserStackCapabilityKey = StringUtils.substringAfter(browserStackProperty, BROWSER_STACK_PREFIX);
-                    String capabilityValue = systemProperties.getProperty(browserStackProperty);
-                    browserStackCapabilities.put(browserStackCapabilityKey, capabilityValue);
-                });
-        return browserStackCapabilities;
+        String testName = systemProperties.getProperty(BROWSER_STACK_TEST_NAME);
+        Properties properties = new Properties();
+
+        try {
+            String capabilitiesFileName = testName + ".properties";
+            log.info("Loading BrowserStack capabilities from: {}", capabilitiesFileName);
+            properties.load(BrowserStackCapabilities.class.getClassLoader().getResourceAsStream(capabilitiesFileName));
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to load capabilities from file: " + testName, e);
+        }
+
+        return Maps.fromProperties(properties);
     }
 
     /**
