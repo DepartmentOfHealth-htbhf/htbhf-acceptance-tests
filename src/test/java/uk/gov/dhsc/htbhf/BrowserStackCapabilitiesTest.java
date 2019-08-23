@@ -8,7 +8,6 @@ import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
-import static uk.gov.dhsc.htbhf.BrowserStackCapabilities.BROWSER_STACK_PREFIX;
 
 class BrowserStackCapabilitiesTest {
 
@@ -16,18 +15,16 @@ class BrowserStackCapabilitiesTest {
     void shouldGetBrowserStackCapabilities() {
         //Given
         Properties properties = new Properties();
-        properties.put(BROWSER_STACK_PREFIX + "abc", "elephant");
-        properties.put(BROWSER_STACK_PREFIX + "def", "badger");
-        properties.put("anythingElse", "egg");
-        properties.put(BROWSER_STACK_PREFIX + "ghijk", "camel");
+        properties.put("BROWSERSTACK.TEST.NAME", "mobile-ios-iphone8");
         //When
         Map<String, String> result = BrowserStackCapabilities.getBrowserStackCapabilities(properties);
         //Then
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(4);
         assertThat(result).containsOnly(
-                entry("abc", "elephant"),
-                entry("def", "badger"),
-                entry("ghijk", "camel")
+                entry("browserName", "iPhone"),
+                entry("device", "iPhone 8 Plus"),
+                entry("realMobile", "true"),
+                entry("os_version", "11")
         );
     }
 
