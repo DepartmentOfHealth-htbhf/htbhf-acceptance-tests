@@ -5,38 +5,42 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
-import static uk.gov.dhsc.htbhf.BrowserStackLauncher.BROWSER_STACK_TEST_NAME;
+import static uk.gov.dhsc.htbhf.BrowserStackLauncher.getTestName;
 
 /**
- * Retrieves and builds the BrowserStack capabilities from the system properties provided by Gradle
+ * Retrieves and builds the BrowserStack capabilities from the values stored in the capabilities files
+ * in src/test/resources/browserstack
  */
 @Slf4j
 public class BrowserStackCapabilities {
 
+    private static final String BROWSERSTACK_DIRECTORY = "browserstack/";
+
     /**
      * Get the browser stack properties from a Properties file for the test specified from the
-     * the BROWSERSTACK.TEST.NAME System property.
+     * the test name stored in the ThreadLocal variable from the BrowserStack TestLauncher.
      *
-     * @param systemProperties The system properties to find the test name from
      * @return A Map of the properties for the requested test
      */
-    public static Map<String, String> getBrowserStackCapabilities(Properties systemProperties) {
-        String testName = systemProperties.getProperty(BROWSER_STACK_TEST_NAME);
+    public static Map<String, String> getBrowserStackCapabilities() {
         Properties properties = new Properties();
+        String capabilitiesFileName = buildTestFileName();
 
         try {
-            String capabilitiesFileName = testName + ".properties";
             log.info("Loading BrowserStack capabilities from: {}", capabilitiesFileName);
             properties.load(BrowserStackCapabilities.class.getClassLoader().getResourceAsStream(capabilitiesFileName));
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to load capabilities from file: " + testName, e);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to load capabilities from file: " + capabilitiesFileName, e);
         }
 
         return Maps.fromProperties(properties);
+    }
+
+    private static String buildTestFileName() {
+        return BROWSERSTACK_DIRECTORY + getTestName() + ".properties";
     }
 
     /**
@@ -52,13 +56,19 @@ public class BrowserStackCapabilities {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilitiesMap.forEach((key, value) -> {
             //Sadly if we pass a "true" or "false" String into here it doesn't get treated as a boolean so we must convert it.
-            Object valueToSet = ("true".equals(value) || "false".equals(value)) ? BooleanUtils.toBooleanObject(value) : value;
+            Object valueToSet = isTrueOrFalseString(value) ? BooleanUtils.toBooleanObject(value) : value;
             capabilities.setCapability(key, valueToSet);
         });
         capabilities.setCapability("browserstack.user", browserStackUsername);
         capabilities.setCapability("browserstack.key", browserStackKey);
         capabilities.setCapability("browserstack.use_w3c", true);
+        //TODO MRS 2019-08-23: Remove this when the REST API is called after the test to set the status.
+        capabilities.setCapability("name", "Compatibility test - Valid application details can be checked");
         return capabilities;
+    }
+
+    private static boolean isTrueOrFalseString(String value) {
+        return "true".equals(value) || "false".equals(value);
     }
 
 }

@@ -24,7 +24,7 @@ public class BrowserStackConfiguration {
     @Value("${wait.timeout.seconds}")
     private int waitTimeoutInSeconds;
 
-    @Bean(destroyMethod = "closeDriver")
+    @Bean
     public WebDriverWrapper browserStackDriverBuilder() {
         return new BrowserStackDriverWrapper(browserStackUser, browserStackKey, waitTimeoutInSeconds);
     }
