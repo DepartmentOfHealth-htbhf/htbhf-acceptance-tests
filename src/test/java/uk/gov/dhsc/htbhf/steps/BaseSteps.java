@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import uk.gov.dhsc.htbhf.TestResultHandler;
 import uk.gov.dhsc.htbhf.WebDriverWrapper;
 import uk.gov.dhsc.htbhf.utils.WireMockManager;
 
@@ -19,6 +20,9 @@ public abstract class BaseSteps {
 
     @Autowired
     protected WireMockManager wireMockManager;
+
+    @Autowired
+    protected TestResultHandler testResultHandler;
 
     @Value("${base.url}")
     protected String baseUrl;

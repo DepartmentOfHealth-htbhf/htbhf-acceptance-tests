@@ -1,8 +1,11 @@
 package uk.gov.dhsc.htbhf.steps;
 
+import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import uk.gov.dhsc.htbhf.TestResult;
 
 @Slf4j
 public class Hooks extends BaseSteps {
@@ -21,15 +24,25 @@ public class Hooks extends BaseSteps {
      * We need to always quit the WebDriver for BrowserStack tests.
      */
     @After
-    public void quitDriver() {
+    public void finaliseTest(Scenario scenario) {
         if (isBrowserStackProfile()) {
-            log.info("Calling quit on WebDriver, active profile is: {}", activeProfile);
-            webDriverWrapper.quitDriver();
-            //TODO MRS 2019-08-23: Need to add an extra after hook here to upload the results from the test to BrowserStack.
+            try {
+                String sessionId = getSessionId();
+                log.info("Uploading results for test with sessionId: {}", sessionId);
+                TestResult sessionDetails = new TestResult(scenario);
+                testResultHandler.handleResults(sessionDetails, sessionId);
+            } finally {
+                webDriverWrapper.quitDriver();
+            }
         }
     }
 
     private boolean isBrowserStackProfile() {
         return "browserstack".equals(activeProfile);
+    }
+
+    private String getSessionId() {
+        RemoteWebDriver remoteWebDriver = (RemoteWebDriver) getWebDriver();
+        return remoteWebDriver.getSessionId().toString();
     }
 }
