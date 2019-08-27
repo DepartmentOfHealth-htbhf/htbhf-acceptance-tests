@@ -25,6 +25,7 @@ public class Hooks extends BaseSteps {
         if (isBrowserStackProfile()) {
             log.info("Calling quit on WebDriver, active profile is: {}", activeProfile);
             webDriverWrapper.quitDriver();
+            //TODO MRS 2019-08-23: Need to add an extra after hook here to upload the results from the test to BrowserStack.
         }
     }
 

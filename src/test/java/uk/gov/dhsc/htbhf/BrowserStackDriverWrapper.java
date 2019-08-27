@@ -30,9 +30,9 @@ public class BrowserStackDriverWrapper implements WebDriverWrapper {
 
     private final URL browserStackUrl;
 
-    private WebDriver webDriver;
+    private ThreadLocal<WebDriver> webDriver = new ThreadLocal<>();
 
-    private WebDriverWait webDriverWait;
+    private ThreadLocal<WebDriverWait> webDriverWait = new ThreadLocal<>();
 
     public BrowserStackDriverWrapper(String browserStackUser, String browserStackKey, int waitTimeoutInSeconds) {
         Validate.notBlank(browserStackUser, "BrowserStack user must be provided, set the BROWSER_STACK_USER environment variable");
@@ -45,31 +45,31 @@ public class BrowserStackDriverWrapper implements WebDriverWrapper {
 
     @Override
     public WebDriver getWebDriver() {
-        return webDriver;
+        return webDriver.get();
     }
 
     @Override
     public WebDriverWait getWebDriverWait() {
-        return webDriverWait;
+        return webDriverWait.get();
     }
 
     @Override
     public void initDriver() {
-        Map<String, String> browserStackCapabilities = getBrowserStackCapabilities(System.getProperties());
+        Map<String, String> browserStackCapabilities = getBrowserStackCapabilities();
         log.info("Using capabilities: {}", browserStackCapabilities);
         DesiredCapabilities desiredCapabilities = buildDesiredCapabilities(browserStackCapabilities, browserStackUser, browserStackKey);
-        this.webDriver = buildWebDriver(desiredCapabilities);
-        this.webDriverWait = buildWebDriverWait();
+        this.webDriver.set(buildWebDriver(desiredCapabilities));
+        this.webDriverWait.set(buildWebDriverWait());
     }
 
     @Override
     public void quitDriver() {
-        webDriver.quit();
+        getWebDriver().quit();
     }
 
     @Override
     public void closeDriver() {
-        webDriver.close();
+        getWebDriver().close();
     }
 
     //Simply to deal with the checked Exception
@@ -82,7 +82,7 @@ public class BrowserStackDriverWrapper implements WebDriverWrapper {
     }
 
     private WebDriverWait buildWebDriverWait() {
-        return new WebDriverWait(webDriver, waitTimeoutInSeconds);
+        return new WebDriverWait(getWebDriver(), waitTimeoutInSeconds);
     }
 
     private RemoteWebDriver buildWebDriver(DesiredCapabilities desiredCapabilities) {

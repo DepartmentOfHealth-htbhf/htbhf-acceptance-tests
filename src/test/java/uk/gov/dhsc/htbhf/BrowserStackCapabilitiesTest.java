@@ -4,20 +4,19 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Map;
-import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static uk.gov.dhsc.htbhf.BrowserStackLauncher.setTestName;
 
 class BrowserStackCapabilitiesTest {
 
     @Test
     void shouldGetBrowserStackCapabilities() {
         //Given
-        Properties properties = new Properties();
-        properties.put("BROWSERSTACK.TEST.NAME", "mobile-ios-iphone8");
+        setTestName("mobile-ios-iphone8");
         //When
-        Map<String, String> result = BrowserStackCapabilities.getBrowserStackCapabilities(properties);
+        Map<String, String> result = BrowserStackCapabilities.getBrowserStackCapabilities();
         //Then
         assertThat(result).hasSize(4);
         assertThat(result).containsOnly(
