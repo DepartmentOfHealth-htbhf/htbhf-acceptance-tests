@@ -47,4 +47,9 @@ public class LocalConfiguration {
     public WireMockManager wireMockManagerImpl(WireMockServer wireMockServer) {
         return new WireMockManagerImpl(wireMockServer);
     }
+
+    @Bean
+    public TestResultHandler testResultHandler() {
+        return new NoopTestResultHandler();
+    }
 }
