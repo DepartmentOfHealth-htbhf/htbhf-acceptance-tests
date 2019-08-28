@@ -14,8 +14,8 @@ public class DoYouLiveInScotlandPage extends SubmittablePage {
 
     public DoYouLiveInScotlandPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.yesRadioButton = new RadioButton(webDriver, RadioButton.YES);
-        this.noRadioButton = new RadioButton(webDriver, RadioButton.NO);
+        this.yesRadioButton = new RadioButton(webDriver, wait, RadioButton.YES);
+        this.noRadioButton = new RadioButton(webDriver, wait, RadioButton.NO);
     }
 
     @Override

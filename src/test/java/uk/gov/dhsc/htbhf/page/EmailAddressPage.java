@@ -13,7 +13,7 @@ public class EmailAddressPage extends SubmittablePage {
 
     public EmailAddressPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.emailAddressInput = new InputField(webDriver, "email-address");
+        this.emailAddressInput = new InputField(webDriver, wait, "email-address");
     }
 
     @Override

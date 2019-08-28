@@ -22,11 +22,11 @@ public class ManualAddressPage extends SubmittablePage {
 
     public ManualAddressPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        line1InputField = new InputField(webDriver, ADDRESS_LINE_1_INPUT_ID);
-        line2InputField = new InputField(webDriver, ADDRESS_LINE_2_INPUT_ID);
-        townOrCityInputField = new InputField(webDriver, TOWN_OR_CITY_INPUT_ID);
-        countyInputField = new InputField(webDriver, COUNTY_INPUT_ID);
-        postcodeInputField = new InputField(webDriver, POSTCODE_INPUT_ID);
+        line1InputField = new InputField(webDriver, wait, ADDRESS_LINE_1_INPUT_ID);
+        line2InputField = new InputField(webDriver, wait, ADDRESS_LINE_2_INPUT_ID);
+        townOrCityInputField = new InputField(webDriver, wait, TOWN_OR_CITY_INPUT_ID);
+        countyInputField = new InputField(webDriver, wait, COUNTY_INPUT_ID);
+        postcodeInputField = new InputField(webDriver, wait, POSTCODE_INPUT_ID);
     }
 
     @Override

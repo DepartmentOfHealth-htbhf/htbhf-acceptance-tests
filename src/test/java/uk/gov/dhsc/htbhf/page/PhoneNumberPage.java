@@ -13,7 +13,7 @@ public class PhoneNumberPage extends SubmittablePage {
 
     public PhoneNumberPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.phoneNumberInput = new InputField(webDriver, "phone-number");
+        this.phoneNumberInput = new InputField(webDriver, wait, "phone-number");
     }
 
     @Override

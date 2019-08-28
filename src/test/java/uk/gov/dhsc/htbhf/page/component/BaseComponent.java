@@ -3,6 +3,8 @@ package uk.gov.dhsc.htbhf.page.component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -12,9 +14,11 @@ import java.util.List;
 public abstract class BaseComponent {
 
     private final WebDriver webDriver;
+    private final WebDriverWait webDriverWait;
 
-    public BaseComponent(WebDriver webDriver) {
+    public BaseComponent(WebDriver webDriver, WebDriverWait webDriverWait) {
         this.webDriver = webDriver;
+        this.webDriverWait = webDriverWait;
     }
 
     public WebElement findByClassName(String className) {
@@ -31,5 +35,11 @@ public abstract class BaseComponent {
 
     public List<WebElement> findAllByCss(String cssSelector) {
         return webDriver.findElements(By.cssSelector(cssSelector));
+    }
+
+    public void click(By by) {
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(by));
+        WebElement element = webDriver.findElement(by);
+        element.click();
     }
 }

@@ -2,6 +2,7 @@ package uk.gov.dhsc.htbhf.page.component;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Component representing an input field on a page.
@@ -10,8 +11,8 @@ public class InputField extends BaseComponent {
 
     private String inputFieldId;
 
-    public InputField(WebDriver webDriver, String inputFieldId) {
-        super(webDriver);
+    public InputField(WebDriver webDriver, WebDriverWait webDriverWait, String inputFieldId) {
+        super(webDriver, webDriverWait);
         this.inputFieldId = inputFieldId;
     }
 

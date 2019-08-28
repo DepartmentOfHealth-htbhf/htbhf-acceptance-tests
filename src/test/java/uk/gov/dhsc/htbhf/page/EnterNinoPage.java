@@ -14,7 +14,7 @@ public class EnterNinoPage extends SubmittablePage {
 
     public EnterNinoPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.ninoInputField = new InputField(webDriver, NINO_INPUT_ID);
+        this.ninoInputField = new InputField(webDriver, wait, NINO_INPUT_ID);
     }
 
     @Override
