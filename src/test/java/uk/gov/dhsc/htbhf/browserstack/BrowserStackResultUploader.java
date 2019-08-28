@@ -29,6 +29,7 @@ public class BrowserStackResultUploader implements TestResultHandler {
 
     @Override
     public void handleResults(TestResult testResult, String sessionId) {
+        log.info("Uploading results for test with sessionId: {}", sessionId);
         try {
             String url = buildUrlForSession(sessionId);
             URI uri = new URI(url);
