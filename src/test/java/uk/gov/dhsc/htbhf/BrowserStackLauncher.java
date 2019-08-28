@@ -108,11 +108,18 @@ public class BrowserStackLauncher {
         launcher.execute(request);
 
         TestExecutionSummary summary = listener.getSummary();
+        checkForFailures(testName, context, summary);
+        return summary;
+    }
+
+    private static void checkForFailures(String testName, RetryContext context, TestExecutionSummary summary) {
         if (!CollectionUtils.isEmpty(summary.getFailures())) {
-            log.error("Test [{}] had failures so triggering a retry.", testName);
+            int attemptNumber = context.getRetryCount() + 1;
+            if (attemptNumber < MAX_RETRY_ATTEMPTS) {
+                log.error("Test [{}] had failures on attempt number [{}] so triggering a retry.", testName, attemptNumber);
+            }
             throw new RetryTriggerException();
         }
-        return summary;
     }
 
     //TODO MRS 2019-08-24: Seems to be ignoring the root logger level in application.properties so setting here for now.
