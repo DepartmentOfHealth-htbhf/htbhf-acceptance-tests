@@ -53,22 +53,22 @@ public class EnterChildrensDobPage extends SubmittablePage {
     }
 
     private void enterDay(int day) {
-        InputField inputField = new InputField(webDriver, getDayInputIdForIndex(childIndex));
+        InputField inputField = new InputField(webDriver, wait, getDayInputIdForIndex(childIndex));
         inputField.enterValue(String.valueOf(day));
     }
 
     private void enterMonth(int month) {
-        InputField inputField = new InputField(webDriver, getMonthInputIdForIndex(childIndex));
+        InputField inputField = new InputField(webDriver, wait, getMonthInputIdForIndex(childIndex));
         inputField.enterValue(String.valueOf(month));
     }
 
     private void enterYear(int year) {
-        InputField inputField = new InputField(webDriver, getYearInputIdForIndex(childIndex));
+        InputField inputField = new InputField(webDriver, wait, getYearInputIdForIndex(childIndex));
         inputField.enterValue(String.valueOf(year));
     }
 
     private void enterChildName(String name) {
-        InputField inputField = new InputField(webDriver, getNameInputIdForIndex(childIndex));
+        InputField inputField = new InputField(webDriver, wait, getNameInputIdForIndex(childIndex));
         inputField.enterValue(name);
     }
 

@@ -13,7 +13,7 @@ public abstract class SubmittablePage extends BasePage {
 
     protected SubmittablePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.submitButton = new SubmitButton(webDriver);
+        this.submitButton = new SubmitButton(webDriver, wait);
     }
 
     public void clickContinue() {

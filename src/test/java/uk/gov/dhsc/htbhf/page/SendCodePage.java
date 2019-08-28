@@ -16,8 +16,8 @@ public class SendCodePage extends SubmittablePage {
 
     public SendCodePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.selectTextRadioButton = new RadioButton(webDriver, TEXT);
-        this.selectEmailRadioButton = new RadioButton(webDriver, EMAIL);
+        this.selectTextRadioButton = new RadioButton(webDriver, wait, TEXT);
+        this.selectEmailRadioButton = new RadioButton(webDriver, wait, EMAIL);
     }
 
     @Override

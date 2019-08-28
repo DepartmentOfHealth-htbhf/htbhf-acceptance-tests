@@ -24,11 +24,11 @@ public class AreYouPregnantPage extends SubmittablePage {
 
     public AreYouPregnantPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.dayInputField = new InputField(webDriver, DAY_INPUT_FIELD_ID);
-        this.monthInputField = new InputField(webDriver, MONTH_INPUT_FIELD_ID);
-        this.yearInputField = new InputField(webDriver, YEAR_INPUT_FIELD_ID);
-        this.yesRadioButton = new RadioButton(webDriver, RadioButton.YES);
-        this.noRadioButton = new RadioButton(webDriver, RadioButton.NO);
+        this.dayInputField = new InputField(webDriver, wait, DAY_INPUT_FIELD_ID);
+        this.monthInputField = new InputField(webDriver, wait, MONTH_INPUT_FIELD_ID);
+        this.yearInputField = new InputField(webDriver, wait, YEAR_INPUT_FIELD_ID);
+        this.yesRadioButton = new RadioButton(webDriver, wait, RadioButton.YES);
+        this.noRadioButton = new RadioButton(webDriver, wait, RadioButton.NO);
     }
 
     @Override

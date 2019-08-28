@@ -19,9 +19,9 @@ public class EnterDobPage extends SubmittablePage {
 
     public EnterDobPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.dayInputField = new InputField(webDriver, DOB_DAY_INPUT_FIELD_ID);
-        this.monthInputField = new InputField(webDriver, DOB_MONTH_INPUT_FIELD_ID);
-        this.yearInputField = new InputField(webDriver, DOB_YEAR_INPUT_FIELD_ID);
+        this.dayInputField = new InputField(webDriver, wait, DOB_DAY_INPUT_FIELD_ID);
+        this.monthInputField = new InputField(webDriver, wait, DOB_MONTH_INPUT_FIELD_ID);
+        this.yearInputField = new InputField(webDriver, wait, DOB_YEAR_INPUT_FIELD_ID);
     }
 
     @Override

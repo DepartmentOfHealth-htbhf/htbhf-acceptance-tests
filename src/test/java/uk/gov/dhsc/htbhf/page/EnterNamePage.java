@@ -17,8 +17,8 @@ public class EnterNamePage extends SubmittablePage {
 
     public EnterNamePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.firstNameInputField = new InputField(webDriver, FIRST_NAME_INPUT_ID);
-        this.lastNameInputField = new InputField(webDriver, LAST_NAME_INPUT_ID);
+        this.firstNameInputField = new InputField(webDriver, wait, FIRST_NAME_INPUT_ID);
+        this.lastNameInputField = new InputField(webDriver, wait, LAST_NAME_INPUT_ID);
     }
 
     @Override

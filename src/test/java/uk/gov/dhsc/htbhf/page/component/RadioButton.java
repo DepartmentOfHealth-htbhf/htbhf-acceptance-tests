@@ -3,6 +3,7 @@ package uk.gov.dhsc.htbhf.page.component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Component for a radio button on a page
@@ -13,8 +14,8 @@ public class RadioButton extends BaseComponent {
     public static final String NO = "no";
     private String option;
 
-    public RadioButton(WebDriver webDriver, String option) {
-        super(webDriver);
+    public RadioButton(WebDriver webDriver, WebDriverWait webDriverWait, String option) {
+        super(webDriver, webDriverWait);
         this.option = option;
     }
 

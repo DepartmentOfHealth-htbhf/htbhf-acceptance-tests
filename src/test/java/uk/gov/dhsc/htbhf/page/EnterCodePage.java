@@ -15,7 +15,7 @@ public class EnterCodePage extends SubmittablePage {
 
     public EnterCodePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
-        this.enterCodeInputField = new InputField(webDriver, CONFIRMATION_CODE_INPUT_ID);
+        this.enterCodeInputField = new InputField(webDriver, wait, CONFIRMATION_CODE_INPUT_ID);
     }
 
     @Override
