@@ -41,6 +41,7 @@ dependencies {
     implementation "com.google.guava:guava:27.0.1-jre"
     implementation "org.springframework:spring-context:${springVersion}"
     implementation "org.springframework:spring-beans:${springVersion}"
+    implementation "org.springframework.retry:spring-retry:1.2.4.RELEASE"
 
     testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"

@@ -10,8 +10,12 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import org.slf4j.LoggerFactory;
+import org.springframework.retry.RetryContext;
+import org.springframework.retry.policy.SimpleRetryPolicy;
+import org.springframework.retry.support.RetryTemplate;
+import org.springframework.util.CollectionUtils;
+import uk.gov.dhsc.htbhf.browserstack.RetryTriggerException;
 
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -28,6 +32,7 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass
 public class BrowserStackLauncher {
 
     private static final int MAX_THREADS = 5;
+    private static final int MAX_RETRY_ATTEMPTS = 3;
     private static ThreadLocal<String> testNameLocal = new ThreadLocal<>();
     private static ExecutorService executorService;
 
@@ -40,13 +45,21 @@ public class BrowserStackLauncher {
             "mac-mojave-firefox"
     );
 
+    public static String getTestName() {
+        return testNameLocal.get();
+    }
+
+    public static void setTestName(String testName) {
+        testNameLocal.set(testName);
+    }
+
     public static void main(String[] args) {
         setRootLoggerLevel();
         try {
             executorService = Executors.newFixedThreadPool(MAX_THREADS);
 
             CompletableFuture[] completableFuturesArray = TEST_NAMES.stream()
-                    .map(BrowserStackLauncher::runAndOutput)
+                    .map(testName -> CompletableFuture.supplyAsync(() -> runTest(testName), executorService))
                     .toArray(CompletableFuture[]::new);
             CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(completableFuturesArray);
 
@@ -60,28 +73,30 @@ public class BrowserStackLauncher {
         }
     }
 
-    //TODO MRS 2019-08-24: Seems to be ignoring the root logger level in application.properties so setting here for now.
-    private static void setRootLoggerLevel() {
-        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        root.setLevel(Level.INFO);
-    }
-
-    public static String getTestName() {
-        return testNameLocal.get();
-    }
-
-    public static void setTestName(String testName) {
-        testNameLocal.set(testName);
-    }
-
-    private static CompletableFuture<Void> runAndOutput(String testName) {
-        CompletableFuture<TestExecutionSummary> completableFuture = CompletableFuture.supplyAsync(() -> runTest(testName), executorService);
-        return completableFuture.thenAccept(testExecutionSummary -> outputSummary(testExecutionSummary, testName));
-    }
-
     private static TestExecutionSummary runTest(String testName) {
-        log.info(">>>>>>>>>>>>Running test for compatibility name: {}", testName);
+        log.info("Running compatibility test: [{}]", testName);
         setTestName(testName);
+
+        try {
+            RetryTemplate retryTemplate = buildRetryTemplate();
+            return retryTemplate.execute(context -> runTest(testName, context));
+        } catch (RetryTriggerException r) {
+            log.error("Max retries of [{}] exceeded for test [{}], compatibility test failed.", MAX_RETRY_ATTEMPTS, testName);
+        } catch (Throwable t) {
+            log.error("Unexpected exception caught trying to run the test: {}" + testName, t);
+        }
+        return null;
+    }
+
+    private static RetryTemplate buildRetryTemplate() {
+        RetryTemplate retryTemplate = new RetryTemplate();
+        SimpleRetryPolicy simpleRetryPolicy = new SimpleRetryPolicy();
+        simpleRetryPolicy.setMaxAttempts(MAX_RETRY_ATTEMPTS);
+        retryTemplate.setRetryPolicy(simpleRetryPolicy);
+        return retryTemplate;
+    }
+
+    private static TestExecutionSummary runTest(String testName, RetryContext context) {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectClass(RunCompatibilityTests.class))
                 .build();
@@ -92,15 +107,18 @@ public class BrowserStackLauncher {
         launcher.registerTestExecutionListeners(listener);
         launcher.execute(request);
 
-        return listener.getSummary();
+        TestExecutionSummary summary = listener.getSummary();
+        if (!CollectionUtils.isEmpty(summary.getFailures())) {
+            log.error("Test [{}] had failures so triggering a retry.", testName);
+            throw new RetryTriggerException();
+        }
+        return summary;
     }
 
-    private static void outputSummary(TestExecutionSummary summary, String testName) {
-        //TODO MRS 2019-08-23: Do something with the TestExecutionSummary, re-run if there any failures
-        log.info(">>>>>>>>>>>>>>>Test summary for test with name: {}", testName);
-        PrintWriter outFile = new PrintWriter(System.out, true);
-        summary.printTo(outFile);
-        summary.getFailures().forEach(failure -> failure.getException().printStackTrace());
+    //TODO MRS 2019-08-24: Seems to be ignoring the root logger level in application.properties so setting here for now.
+    private static void setRootLoggerLevel() {
+        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        root.setLevel(Level.INFO);
     }
 
 }
