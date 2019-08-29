@@ -3,11 +3,9 @@ package uk.gov.dhsc.htbhf.steps;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import uk.gov.dhsc.htbhf.TestResult;
 
-@Slf4j
 public class Hooks extends BaseSteps {
 
     /**
@@ -28,7 +26,6 @@ public class Hooks extends BaseSteps {
         if (isBrowserStackProfile()) {
             try {
                 String sessionId = getSessionId();
-                log.info("Uploading results for test with sessionId: {}", sessionId);
                 TestResult sessionDetails = new TestResult(scenario);
                 testResultHandler.handleResults(sessionDetails, sessionId);
             } finally {

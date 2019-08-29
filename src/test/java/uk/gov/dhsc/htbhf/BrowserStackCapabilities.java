@@ -62,8 +62,6 @@ public class BrowserStackCapabilities {
         capabilities.setCapability("browserstack.user", browserStackUsername);
         capabilities.setCapability("browserstack.key", browserStackKey);
         capabilities.setCapability("browserstack.use_w3c", true);
-        //TODO MRS 2019-08-23: Remove this when the REST API is called after the test to set the status.
-        capabilities.setCapability("name", "Compatibility test - Valid application details can be checked");
         return capabilities;
     }
 
