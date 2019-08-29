@@ -37,10 +37,21 @@ public class BrowserStackLauncher {
     private static ExecutorService executorService;
 
     private static final List<String> TEST_NAMES = List.of(
-            "mobile-android-galaxys9",
+            "mobile-android-galaxys8",
+            "mobile-android-pixel",
+            "mobile-android-pixel3",
+            //TODO MRS 2019-08-29: Auto focus doesn't work on IOS devices so need to comment out for now, will (hopefully) fix in next PR.
+//            "mobile-ios-iphone8",
+//            "mobile-ios-iphonexs",
+//            "tablet-ios-ipad6",
+//            "tablet-ios-ipad-mini4",
+//            "tablet-ios-ipad-pro-11",
             "windows-win10-chrome",
             "windows-win10-firefox",
             "windows-win10-edge",
+            "windows-win10-ie",
+            //TODO MRS 2019-08-28: HTBHF-96 Currently disabled in compatibility tests due to being unable to login using basic authentication.
+            //"mac-mojave-safari",
             "mac-mojave-chrome",
             "mac-mojave-firefox"
     );

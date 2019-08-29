@@ -21,7 +21,7 @@ class BrowserStackCapabilitiesTest {
         assertThat(result).hasSize(4);
         assertThat(result).containsOnly(
                 entry("browserName", "iPhone"),
-                entry("device", "iPhone 8 Plus"),
+                entry("device", "iPhone 8"),
                 entry("realMobile", "true"),
                 entry("os_version", "11")
         );
