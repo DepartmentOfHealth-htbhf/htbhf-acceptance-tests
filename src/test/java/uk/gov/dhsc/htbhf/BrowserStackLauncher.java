@@ -15,12 +15,11 @@ import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.util.CollectionUtils;
 import uk.gov.dhsc.htbhf.browserstack.RetryTriggerException;
+import uk.gov.dhsc.htbhf.browserstack.TestResultSummary;
+import uk.gov.dhsc.htbhf.steps.Hooks;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
@@ -35,6 +34,7 @@ public class BrowserStackLauncher {
     private static final int MAX_RETRY_ATTEMPTS = 3;
     private static ThreadLocal<String> testNameLocal = new ThreadLocal<>();
     private static ExecutorService executorService;
+    private static final List<TestResultSummary> results = new CopyOnWriteArrayList<>();
 
     private static final List<String> TEST_NAMES = List.of(
             "mobile-android-galaxys8",
@@ -49,8 +49,7 @@ public class BrowserStackLauncher {
             "windows-win10-firefox",
             "windows-win10-edge",
             "windows-win10-ie",
-            //TODO MRS 2019-08-28: HTBHF-96 Currently disabled in compatibility tests due to being unable to login using basic authentication.
-            //"mac-mojave-safari",
+            "mac-mojave-safari",
             "mac-mojave-chrome",
             "mac-mojave-firefox"
     );
@@ -81,6 +80,11 @@ public class BrowserStackLauncher {
         } finally {
             executorService.shutdown();
         }
+        outputResults();
+    }
+
+    private static void outputResults() {
+        results.forEach(resultSummary -> log.info(">>>>>>>>>>>>ResultSummary: {}", resultSummary));
     }
 
     private static TestExecutionSummary runTest(String testName) {
@@ -122,9 +126,11 @@ public class BrowserStackLauncher {
         return summary;
     }
 
+    //TODO MRS 2019-08-29: Add a link to the build via sessionId if fails.
     private static void checkForFailures(String testName, RetryContext context, TestExecutionSummary summary) {
+        int attemptNumber = context.getRetryCount() + 1;
+        storeTestRunSummary(testName, summary, attemptNumber);
         if (!CollectionUtils.isEmpty(summary.getFailures())) {
-            int attemptNumber = context.getRetryCount() + 1;
             if (attemptNumber < MAX_RETRY_ATTEMPTS) {
                 log.error("Test [{}] had failures on attempt number [{}] so triggering a retry.", testName, attemptNumber);
             }
@@ -138,4 +144,9 @@ public class BrowserStackLauncher {
         root.setLevel(Level.INFO);
     }
 
+    private static void storeTestRunSummary(String testName, TestExecutionSummary summary, int attempts) {
+        String sessionId = Hooks.getSessionIdThreadLocal().get();
+        TestResultSummary result = new TestResultSummary(summary, testName, attempts, sessionId);
+        results.add(result);
+    }
 }

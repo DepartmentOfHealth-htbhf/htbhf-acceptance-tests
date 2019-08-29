@@ -8,6 +8,12 @@ import uk.gov.dhsc.htbhf.TestResult;
 
 public class Hooks extends BaseSteps {
 
+    private static ThreadLocal<String> sessionIdThreadLocal = new ThreadLocal<>();
+
+    public static ThreadLocal<String> getSessionIdThreadLocal() {
+        return sessionIdThreadLocal;
+    }
+
     /**
      * As we have to always quit the driver for BrowserStack tests, we need to initialise a new one for each new test.
      */
@@ -26,6 +32,7 @@ public class Hooks extends BaseSteps {
         if (isBrowserStackProfile()) {
             try {
                 String sessionId = getSessionId();
+                sessionIdThreadLocal.set(sessionId);
                 TestResult sessionDetails = new TestResult(scenario);
                 testResultHandler.handleResults(sessionDetails, sessionId);
             } finally {
