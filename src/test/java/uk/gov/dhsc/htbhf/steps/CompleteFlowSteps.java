@@ -33,7 +33,7 @@ public class CompleteFlowSteps extends BaseSteps {
         enterDoYouLiveInScotlandNoAndSubmit();
         enterDateOfBirthAndSubmit();
         enterDoYouHaveChildrenYesAndSubmit();
-        enterTwoChildrensDatesOfBirth();
+        enterOneChildsDateOfBirth();
         selectYesOnPregnancyPage();
         enterName();
         enterNino();
@@ -77,6 +77,7 @@ public class CompleteFlowSteps extends BaseSteps {
 
     private void enterManualAddress() {
         manualAddressPage = new ManualAddressPage(getWebDriver(), baseUrl, getWebDriverWait());
+        manualAddressPage.waitForPageToLoad();
         manualAddressPage.enterAddressLine1(ADDRESS_LINE_1);
         manualAddressPage.enterAddressLine2(ADDRESS_LINE_2);
         manualAddressPage.enterTownOrCity(TOWN);
@@ -107,12 +108,10 @@ public class CompleteFlowSteps extends BaseSteps {
         areYouPregnantPage.clickContinue();
     }
 
-    private void enterTwoChildrensDatesOfBirth() {
+    private void enterOneChildsDateOfBirth() {
         enterChildrensDobPage = new EnterChildrensDobPage(getWebDriver(), baseUrl, getWebDriverWait());
         enterChildrensDobPage.waitForPageToLoad();
         enterChildrensDobPage.enterChild3OrUnderDetails(1);
-        enterChildrensDobPage.clickAddAnotherChild();
-        enterChildrensDobPage.enterChild3OrUnderDetails(2);
         enterChildrensDobPage.clickContinue();
     }
 
