@@ -5,7 +5,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.RadioButton;
 
 /**
- * Page object for the send code page
+ * Page object for the page where the claimant chooses how to receive their code.
  */
 public class SendCodePage extends SubmittablePage {
 

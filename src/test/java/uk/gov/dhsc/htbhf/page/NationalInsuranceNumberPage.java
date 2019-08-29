@@ -7,24 +7,24 @@ import uk.gov.dhsc.htbhf.page.component.InputField;
 /**
  * Page object for the enter your national insurance number page.
  */
-public class EnterNinoPage extends SubmittablePage {
+public class NationalInsuranceNumberPage extends SubmittablePage {
 
     private static final String NINO_INPUT_ID = "nino";
     private InputField ninoInputField;
 
-    public EnterNinoPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+    public NationalInsuranceNumberPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
         this.ninoInputField = new InputField(webDriver, wait, NINO_INPUT_ID);
     }
 
     @Override
     String getPath() {
-        return "/enter-nino";
+        return "/national-insurance-number";
     }
 
     @Override
     String getPageName() {
-        return "enter national insurance";
+        return "enter national insurance number";
     }
 
     @Override

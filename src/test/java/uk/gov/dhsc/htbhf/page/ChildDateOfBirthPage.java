@@ -10,17 +10,17 @@ import java.time.LocalDate;
 /**
  * Page object for the Enter Children's Dates of Birth page.
  */
-public class EnterChildrensDobPage extends SubmittablePage {
+public class ChildDateOfBirthPage extends SubmittablePage {
 
     private int childIndex = 1;
 
-    public EnterChildrensDobPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+    public ChildDateOfBirthPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
     }
 
     @Override
     String getPath() {
-        return "/children-dob";
+        return "/child-date-of-birth";
     }
 
     @Override

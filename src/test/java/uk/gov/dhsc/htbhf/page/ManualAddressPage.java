@@ -9,11 +9,11 @@ import uk.gov.dhsc.htbhf.page.component.InputField;
  */
 public class ManualAddressPage extends SubmittablePage {
 
-    public static final String ADDRESS_LINE_1_INPUT_ID = "address-line-1";
-    public static final String ADDRESS_LINE_2_INPUT_ID = "address-line-2";
-    public static final String TOWN_OR_CITY_INPUT_ID = "town-or-city";
-    public static final String COUNTY_INPUT_ID = "county";
-    public static final String POSTCODE_INPUT_ID = "postcode";
+    private static final String ADDRESS_LINE_1_INPUT_ID = "address-line-1";
+    private static final String ADDRESS_LINE_2_INPUT_ID = "address-line-2";
+    private static final String TOWN_OR_CITY_INPUT_ID = "town-or-city";
+    private static final String COUNTY_INPUT_ID = "county";
+    private static final String POSTCODE_INPUT_ID = "postcode";
     private final InputField line1InputField;
     private final InputField line2InputField;
     private final InputField townOrCityInputField;
