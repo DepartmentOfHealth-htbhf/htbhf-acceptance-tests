@@ -1,7 +1,7 @@
 package uk.gov.dhsc.htbhf.steps;
 
 import io.cucumber.java.en.When;
-import uk.gov.dhsc.htbhf.page.CheckDetailsPage;
+import uk.gov.dhsc.htbhf.page.CheckAnswersPage;
 import uk.gov.dhsc.htbhf.page.TermsAndConditionsPage;
 
 /**
@@ -9,14 +9,14 @@ import uk.gov.dhsc.htbhf.page.TermsAndConditionsPage;
  */
 public class TermsAndConditionsSteps extends BaseSteps {
 
-    private CheckDetailsPage checkDetailsPage;
+    private CheckAnswersPage checkAnswersPage;
     private TermsAndConditionsPage termsAndConditionsPage;
 
     @When("/^I accept the terms and conditions and submit my application$/")
     public void acceptTermsAndConditionsAndSubmitApplication() {
         wireMockManager.setupWireMockMappingsWithStatus("ELIGIBLE");
-        checkDetailsPage = new CheckDetailsPage(getWebDriver(), baseUrl, getWebDriverWait());
-        checkDetailsPage.clickContinue();
+        checkAnswersPage = new CheckAnswersPage(getWebDriver(), baseUrl, getWebDriverWait());
+        checkAnswersPage.clickContinue();
         acceptTsAndCsAndSubmitApplication();
     }
 

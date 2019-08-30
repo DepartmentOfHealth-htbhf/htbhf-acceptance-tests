@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Page object for the check your details page.
+ * Page object for the page where the customer can check their answers before submitting.
  */
-public class CheckDetailsPage extends SubmittablePage {
+public class CheckAnswersPage extends SubmittablePage {
 
     private static final String GOV_LIST_HEADER_CLASSNAME = "govuk-summary-list__key";
     private static final String GOV_LIST_VALUE_CLASSNAME = "govuk-summary-list__value";
@@ -23,18 +23,18 @@ public class CheckDetailsPage extends SubmittablePage {
     private static final String CLAIM_SUMMARY_PARENT_ID = "#claim-summary";
     private static final String CHILDREN_SUMMARY_PARENT_ID = "#children-summary";
 
-    public CheckDetailsPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+    public CheckAnswersPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
     }
 
     @Override
     String getPath() {
-        return "/check";
+        return "/check-answers";
     }
 
     @Override
     String getPageName() {
-        return "check details";
+        return "check answers";
     }
 
     @Override

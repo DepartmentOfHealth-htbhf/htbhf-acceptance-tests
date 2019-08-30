@@ -5,14 +5,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.RadioButton;
 
 /**
- * Page object for the Do You Live In Scotland page.
+ * Page object for Scotland page where the claimant enters whether they live in Scotland or not.
  */
-public class DoYouLiveInScotlandPage extends SubmittablePage {
+public class ScotlandPage extends SubmittablePage {
 
     private RadioButton yesRadioButton;
     private RadioButton noRadioButton;
 
-    public DoYouLiveInScotlandPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+    public ScotlandPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
         this.yesRadioButton = new RadioButton(webDriver, wait, RadioButton.YES);
         this.noRadioButton = new RadioButton(webDriver, wait, RadioButton.NO);
@@ -20,7 +20,7 @@ public class DoYouLiveInScotlandPage extends SubmittablePage {
 
     @Override
     String getPath() {
-        return "/do-you-live-in-scotland";
+        return "/scotland";
     }
 
     @Override

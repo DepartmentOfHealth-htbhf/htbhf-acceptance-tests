@@ -1,7 +1,7 @@
 package uk.gov.dhsc.htbhf.steps;
 
 import io.cucumber.java.en.Then;
-import uk.gov.dhsc.htbhf.page.CheckDetailsPage;
+import uk.gov.dhsc.htbhf.page.CheckAnswersPage;
 import uk.gov.dhsc.htbhf.page.CheckDetailsRowData;
 
 import java.util.List;
@@ -14,24 +14,24 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class CheckDetailsSteps extends BaseSteps {
 
-    private CheckDetailsPage checkDetailsPage;
+    private CheckAnswersPage checkAnswersPage;
 
-    @Then("^I am shown the check details page with correct page content$")
+    @Then("^I am shown the check answers page with correct page content$")
     public void verifyCheckDetailsPageCorrect() {
-        checkDetailsPage = new CheckDetailsPage(getWebDriver(), baseUrl, getWebDriverWait());
-        checkDetailsPage.waitForPageToLoad();
-        assertThat(checkDetailsPage.getH1Text())
+        checkAnswersPage = new CheckAnswersPage(getWebDriver(), baseUrl, getWebDriverWait());
+        checkAnswersPage.waitForPageToLoad();
+        assertThat(checkAnswersPage.getH1Text())
                 .as("expected check page H1 text to not be empty")
                 .isNotBlank();
-        assertThat(checkDetailsPage.getH2Text())
+        assertThat(checkAnswersPage.getH2Text())
                 .as("expected check page H2 text to not be empty")
                 .isNotBlank();
-        assertThat(checkDetailsPage.getSubmitButtonText())
+        assertThat(checkAnswersPage.getSubmitButtonText())
                 .as("expected submit button text to not be empty")
                 .isNotBlank();
-        List<CheckDetailsRowData> claimContents = checkDetailsPage.getClaimSummaryListContents();
+        List<CheckDetailsRowData> claimContents = checkAnswersPage.getClaimSummaryListContents();
         assertHeaderAndChangeLinkShownForEachRow(claimContents);
-        List<CheckDetailsRowData> childrenContents = checkDetailsPage.getChildrenSummaryListContents();
+        List<CheckDetailsRowData> childrenContents = checkAnswersPage.getChildrenSummaryListContents();
         assertHeaderTextShownForEachRow(childrenContents);
     }
 

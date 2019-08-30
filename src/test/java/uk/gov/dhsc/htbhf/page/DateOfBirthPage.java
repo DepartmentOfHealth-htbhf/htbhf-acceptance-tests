@@ -7,7 +7,7 @@ import uk.gov.dhsc.htbhf.page.component.InputField;
 /**
  * Page object for the Enter Date of Birth page.
  */
-public class EnterDobPage extends SubmittablePage {
+public class DateOfBirthPage extends SubmittablePage {
 
     private static final String DOB_DAY_INPUT_FIELD_ID = "dateOfBirth-day";
     private static final String DOB_MONTH_INPUT_FIELD_ID = "dateOfBirth-month";
@@ -17,7 +17,7 @@ public class EnterDobPage extends SubmittablePage {
     private InputField monthInputField;
     private InputField yearInputField;
 
-    public EnterDobPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+    public DateOfBirthPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
         this.dayInputField = new InputField(webDriver, wait, DOB_DAY_INPUT_FIELD_ID);
         this.monthInputField = new InputField(webDriver, wait, DOB_MONTH_INPUT_FIELD_ID);
@@ -26,7 +26,7 @@ public class EnterDobPage extends SubmittablePage {
 
     @Override
     String getPath() {
-        return "/enter-dob";
+        return "/date-of-birth";
     }
 
     @Override

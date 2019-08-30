@@ -7,7 +7,7 @@ import uk.gov.dhsc.htbhf.page.component.InputField;
 /**
  * Page object for the enter your name page.
  */
-public class EnterNamePage extends SubmittablePage {
+public class NamePage extends SubmittablePage {
 
     private static final String FIRST_NAME_INPUT_ID = "first-name";
     private static final String LAST_NAME_INPUT_ID = "last-name";
@@ -15,7 +15,7 @@ public class EnterNamePage extends SubmittablePage {
     private InputField firstNameInputField;
     private InputField lastNameInputField;
 
-    public EnterNamePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+    public NamePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
         this.firstNameInputField = new InputField(webDriver, wait, FIRST_NAME_INPUT_ID);
         this.lastNameInputField = new InputField(webDriver, wait, LAST_NAME_INPUT_ID);
@@ -23,7 +23,7 @@ public class EnterNamePage extends SubmittablePage {
 
     @Override
     String getPath() {
-        return "/enter-name";
+        return "/name";
     }
 
     @Override

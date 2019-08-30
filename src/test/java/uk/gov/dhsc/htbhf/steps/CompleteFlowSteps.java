@@ -12,13 +12,13 @@ import static uk.gov.dhsc.htbhf.utils.NinoGenerator.generateEligibleNino;
 public class CompleteFlowSteps extends BaseSteps {
 
     private GuidancePage guidancePage;
-    private DoYouLiveInScotlandPage doYouLiveInScotlandPage;
-    private EnterDobPage enterDobPage;
+    private ScotlandPage scotlandPage;
+    private DateOfBirthPage dateOfBirthPage;
     private DoYouHaveChildren doYouHaveChildren;
-    private EnterChildrensDobPage enterChildrensDobPage;
+    private ChildDateOfBirthPage childDateOfBirthPage;
     private AreYouPregnantPage areYouPregnantPage;
-    private EnterNamePage enterNamePage;
-    private EnterNinoPage enterNinoPage;
+    private NamePage namePage;
+    private NationalInsuranceNumberPage nationalInsuranceNumberPage;
     private ManualAddressPage manualAddressPage;
     private PhoneNumberPage phoneNumberPage;
     private EmailAddressPage emailAddressPage;
@@ -87,17 +87,17 @@ public class CompleteFlowSteps extends BaseSteps {
     }
 
     private void enterNino() {
-        enterNinoPage = new EnterNinoPage(getWebDriver(), baseUrl, getWebDriverWait());
-        enterNinoPage.waitForPageToLoad();
-        enterNinoPage.enterNino(generateEligibleNino());
-        enterNinoPage.clickContinue();
+        nationalInsuranceNumberPage = new NationalInsuranceNumberPage(getWebDriver(), baseUrl, getWebDriverWait());
+        nationalInsuranceNumberPage.waitForPageToLoad();
+        nationalInsuranceNumberPage.enterNino(generateEligibleNino());
+        nationalInsuranceNumberPage.clickContinue();
     }
 
     private void enterName() {
-        enterNamePage = new EnterNamePage(getWebDriver(), baseUrl, getWebDriverWait());
-        enterNamePage.waitForPageToLoad();
-        enterNamePage.enterName(FIRST_NAME, LAST_NAME);
-        enterNamePage.clickContinue();
+        namePage = new NamePage(getWebDriver(), baseUrl, getWebDriverWait());
+        namePage.waitForPageToLoad();
+        namePage.enterName(FIRST_NAME, LAST_NAME);
+        namePage.clickContinue();
     }
 
     private void selectYesOnPregnancyPage() {
@@ -109,10 +109,10 @@ public class CompleteFlowSteps extends BaseSteps {
     }
 
     private void enterOneChildsDateOfBirth() {
-        enterChildrensDobPage = new EnterChildrensDobPage(getWebDriver(), baseUrl, getWebDriverWait());
-        enterChildrensDobPage.waitForPageToLoad();
-        enterChildrensDobPage.enterChild3OrUnderDetails(1);
-        enterChildrensDobPage.clickContinue();
+        childDateOfBirthPage = new ChildDateOfBirthPage(getWebDriver(), baseUrl, getWebDriverWait());
+        childDateOfBirthPage.waitForPageToLoad();
+        childDateOfBirthPage.enterChild3OrUnderDetails(1);
+        childDateOfBirthPage.clickContinue();
     }
 
     private void enterDoYouHaveChildrenYesAndSubmit() {
@@ -123,19 +123,19 @@ public class CompleteFlowSteps extends BaseSteps {
     }
 
     private void enterDateOfBirthAndSubmit() {
-        enterDobPage = new EnterDobPage(getWebDriver(), baseUrl, getWebDriverWait());
-        enterDobPage.waitForPageToLoad();
-        enterDobPage.getDayInputField().enterValue(DOB_DAY);
-        enterDobPage.getMonthInputField().enterValue(DOB_MONTH);
-        enterDobPage.getYearInputField().enterValue(DOB_YEAR);
-        enterDobPage.clickContinue();
+        dateOfBirthPage = new DateOfBirthPage(getWebDriver(), baseUrl, getWebDriverWait());
+        dateOfBirthPage.waitForPageToLoad();
+        dateOfBirthPage.getDayInputField().enterValue(DOB_DAY);
+        dateOfBirthPage.getMonthInputField().enterValue(DOB_MONTH);
+        dateOfBirthPage.getYearInputField().enterValue(DOB_YEAR);
+        dateOfBirthPage.clickContinue();
     }
 
     private void enterDoYouLiveInScotlandNoAndSubmit() {
-        doYouLiveInScotlandPage = new DoYouLiveInScotlandPage(getWebDriver(), baseUrl, getWebDriverWait());
-        doYouLiveInScotlandPage.waitForPageToLoad();
-        doYouLiveInScotlandPage.selectNoRadioButton();
-        doYouLiveInScotlandPage.clickContinue();
+        scotlandPage = new ScotlandPage(getWebDriver(), baseUrl, getWebDriverWait());
+        scotlandPage.waitForPageToLoad();
+        scotlandPage.selectNoRadioButton();
+        scotlandPage.clickContinue();
     }
 
 }
