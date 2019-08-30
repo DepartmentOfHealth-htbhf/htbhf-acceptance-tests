@@ -15,9 +15,12 @@ import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.util.CollectionUtils;
 import uk.gov.dhsc.htbhf.browserstack.RetryTriggerException;
+import uk.gov.dhsc.htbhf.browserstack.TestOutputHtmlGenerator;
 import uk.gov.dhsc.htbhf.browserstack.TestResultSummary;
 import uk.gov.dhsc.htbhf.steps.Hooks;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -32,6 +35,9 @@ public class BrowserStackLauncher {
 
     private static final int MAX_THREADS = 5;
     private static final int MAX_RETRY_ATTEMPTS = 3;
+    private static final int TOTAL_TIMEOUT_MINS = 10;
+    private static final String COMPATIBILITY_REPORT_DIR = "build/reports/compatibility-report";
+    private static final String COMPATIBILITY_REPORT_FILE = COMPATIBILITY_REPORT_DIR + "/compatibility-report.html";
     private static ThreadLocal<String> testNameLocal = new ThreadLocal<>();
     private static ExecutorService executorService;
     private static final List<TestResultSummary> results = new CopyOnWriteArrayList<>();
@@ -72,19 +78,27 @@ public class BrowserStackLauncher {
                     .toArray(CompletableFuture[]::new);
             CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(completableFuturesArray);
 
-            combinedFuture.get();
-        } catch (InterruptedException e) {
-            log.error("InterruptedException caught trying to run task", e);
-        } catch (ExecutionException e) {
-            log.error("ExecutionException caught trying to run task", e);
+            combinedFuture.get(TOTAL_TIMEOUT_MINS, TimeUnit.MINUTES);
+
+            outputReport();
+        } catch (InterruptedException ie) {
+            log.error("InterruptedException caught trying to run task", ie);
+        } catch (ExecutionException ee) {
+            log.error("ExecutionException caught trying to run task", ee);
+        } catch (TimeoutException te) {
+            log.error("TimeoutException caught trying to run task", te);
+        } catch (IOException ioe) {
+            log.error("IOException caught trying to write out the compatibility test report", ioe);
         } finally {
             executorService.shutdown();
         }
-        outputResults();
     }
 
-    private static void outputResults() {
-        results.forEach(resultSummary -> log.info(">>>>>>>>>>>>ResultSummary: {}", resultSummary));
+    private static void outputReport() throws IOException {
+        File reportDir = new File(COMPATIBILITY_REPORT_DIR);
+        reportDir.mkdirs();
+        TestOutputHtmlGenerator.generateHtmlReport(results, COMPATIBILITY_REPORT_FILE);
+        log.info("Compatibility test report output to: {}", COMPATIBILITY_REPORT_FILE);
     }
 
     private static TestExecutionSummary runTest(String testName) {
@@ -126,7 +140,6 @@ public class BrowserStackLauncher {
         return summary;
     }
 
-    //TODO MRS 2019-08-29: Add a link to the build via sessionId if fails.
     private static void checkForFailures(String testName, RetryContext context, TestExecutionSummary summary) {
         int attemptNumber = context.getRetryCount() + 1;
         storeTestRunSummary(testName, summary, attemptNumber);
@@ -144,9 +157,9 @@ public class BrowserStackLauncher {
         root.setLevel(Level.INFO);
     }
 
-    private static void storeTestRunSummary(String testName, TestExecutionSummary summary, int attempts) {
+    private static void storeTestRunSummary(String testName, TestExecutionSummary summary, int attempt) {
         String sessionId = Hooks.getSessionIdThreadLocal().get();
-        TestResultSummary result = new TestResultSummary(summary, testName, attempts, sessionId);
+        TestResultSummary result = new TestResultSummary(summary, testName, attempt, sessionId);
         results.add(result);
     }
 }
