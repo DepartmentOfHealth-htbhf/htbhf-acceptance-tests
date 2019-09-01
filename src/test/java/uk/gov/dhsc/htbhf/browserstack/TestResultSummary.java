@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 @Data
 public class TestResultSummary {
 
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private String testName;
     private boolean passed;
