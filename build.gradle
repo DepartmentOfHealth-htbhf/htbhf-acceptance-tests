@@ -48,6 +48,10 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
     testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
     testImplementation "org.junit.platform:junit-platform-console:1.5.1"
+    testImplementation "org.apache.velocity:velocity:1.7"
+    testImplementation "org.apache.velocity:velocity-tools:2.0"
+    testImplementation "org.apache.velocity:velocity-tools:2.0"
+    testImplementation "org.mockito:mockito-junit-jupiter:2.23.4"
 
     testImplementation "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
     testImplementation "org.springframework:spring-test:${springVersion}"

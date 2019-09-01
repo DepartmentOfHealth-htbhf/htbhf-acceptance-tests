@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Test results</title>
+</head>
+<body>
+<h1>Compatibility Test Summary</h1>
+
+<table border="1">
+    <tr>
+        <th>Test</th>
+        <th>Passed</th>
+        <th>Start Time</th>
+        <th>Finished Time</th>
+        <th>Duration</th>
+        <th>Attempt</th>
+        <th>Session Id</th>
+        <th>Failure</th>
+    </tr>
+    #foreach( $resultSummary in $resultSummaries )
+        <tr>
+            <td>$resultSummary.getTestName()</td>
+            <td>$resultSummary.isPassed()</td>
+            <td>$resultSummary.getFormattedStartTime()</td>
+            <td>$resultSummary.getFormattedEndTime()</td>
+            <td>$resultSummary.getDuration()</td>
+            <td>$resultSummary.getAttempts()</td>
+            <td>$resultSummary.getSessionId()</td>
+            <td>#if( $resultSummary.getFailure() ) $resultSummary.getFailure() #end</td>
+        </tr>
+    #end
+</table>
+
+</body>

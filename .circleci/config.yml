@@ -25,7 +25,7 @@ jobs:
             - "81:ca:95:90:1b:25:e9:cb:e7:0c:89:41:b8:cf:7f:a0"
       - run:
           name: prepare for tests and build
-          command: ./ci_scripts/prepare_for_tests.sh && ./gradlew clean build -s
+          command: ./ci_scripts/prepare_for_tests.sh && ./gradlew clean build --info -s
       - run:
           name: cat the RunAcceptanceTests logs for debugging on failure
           command: cat /home/circleci/project/build/reports/tests/test/classes/uk.gov.dhsc.htbhf.RunAcceptanceTests.html
