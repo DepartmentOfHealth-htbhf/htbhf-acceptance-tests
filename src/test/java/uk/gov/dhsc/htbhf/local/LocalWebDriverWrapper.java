@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf;
+package uk.gov.dhsc.htbhf.local;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import uk.gov.dhsc.htbhf.WebDriverWrapper;
 
 /**
  * Controls creation of WebDriver and WebDriverWait for local testing.

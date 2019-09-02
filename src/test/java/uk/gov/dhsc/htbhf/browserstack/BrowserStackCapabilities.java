@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf;
+package uk.gov.dhsc.htbhf.browserstack;
 
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.util.Map;
 import java.util.Properties;
 
-import static uk.gov.dhsc.htbhf.BrowserStackLauncher.getTestName;
+import static uk.gov.dhsc.htbhf.browserstack.BrowserStackLauncher.getTestName;
 
 /**
  * Retrieves and builds the BrowserStack capabilities from the values stored in the capabilities files

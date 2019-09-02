@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf;
+package uk.gov.dhsc.htbhf.browserstack;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
-import uk.gov.dhsc.htbhf.browserstack.BrowserStackResultUploader;
+import uk.gov.dhsc.htbhf.WebDriverWrapper;
 import uk.gov.dhsc.htbhf.utils.NoopWireMockManager;
 import uk.gov.dhsc.htbhf.utils.WireMockManager;
 

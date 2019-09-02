@@ -1,4 +1,6 @@
-package uk.gov.dhsc.htbhf;
+package uk.gov.dhsc.htbhf.local;
+
+import uk.gov.dhsc.htbhf.TestResultHandler;
 
 /**
  * No-op implementation for local testing.

@@ -78,6 +78,6 @@ test {
 
 task compatibility(type:JavaExec) {
     systemProperty "spring.profiles.active", "browserstack"
-    main = "uk.gov.dhsc.htbhf.BrowserStackLauncher"
+    main = "uk.gov.dhsc.htbhf.browserstack.BrowserStackLauncher"
     classpath sourceSets.test.runtimeClasspath
 }

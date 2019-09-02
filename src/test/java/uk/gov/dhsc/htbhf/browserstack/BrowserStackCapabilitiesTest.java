@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf;
+package uk.gov.dhsc.htbhf.browserstack;
 
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -7,7 +7,7 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
-import static uk.gov.dhsc.htbhf.BrowserStackLauncher.setTestName;
+import static uk.gov.dhsc.htbhf.browserstack.BrowserStackLauncher.setTestName;
 
 class BrowserStackCapabilitiesTest {
 

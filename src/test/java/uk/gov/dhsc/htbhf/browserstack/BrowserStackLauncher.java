@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf;
+package uk.gov.dhsc.htbhf.browserstack;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -14,9 +14,7 @@ import org.springframework.retry.RetryContext;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.util.CollectionUtils;
-import uk.gov.dhsc.htbhf.browserstack.RetryTriggerException;
-import uk.gov.dhsc.htbhf.browserstack.TestOutputHtmlGenerator;
-import uk.gov.dhsc.htbhf.browserstack.TestResultSummary;
+import uk.gov.dhsc.htbhf.RunCompatibilityTests;
 import uk.gov.dhsc.htbhf.steps.Hooks;
 
 import java.io.File;

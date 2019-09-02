@@ -1,4 +1,4 @@
-package uk.gov.dhsc.htbhf;
+package uk.gov.dhsc.htbhf.browserstack;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Validate;
@@ -6,13 +6,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import uk.gov.dhsc.htbhf.WebDriverWrapper;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-import static uk.gov.dhsc.htbhf.BrowserStackCapabilities.buildDesiredCapabilities;
-import static uk.gov.dhsc.htbhf.BrowserStackCapabilities.getBrowserStackCapabilities;
+import static uk.gov.dhsc.htbhf.browserstack.BrowserStackCapabilities.buildDesiredCapabilities;
+import static uk.gov.dhsc.htbhf.browserstack.BrowserStackCapabilities.getBrowserStackCapabilities;
 
 /**
  * Controls building of the WebDriver and WebDriverWait needed for BrowserStack testing so that we can rebuild them when required.
