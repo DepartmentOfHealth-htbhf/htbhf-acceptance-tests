@@ -35,8 +35,8 @@ public class ManualAddressPage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "address";
+    PageName getPageName() {
+        return PageName.MANUAL_ADDRESS;
     }
 
     @Override

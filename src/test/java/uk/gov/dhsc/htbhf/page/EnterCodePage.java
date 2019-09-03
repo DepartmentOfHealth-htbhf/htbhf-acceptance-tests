@@ -24,8 +24,8 @@ public class EnterCodePage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "enter code";
+    PageName getPageName() {
+        return PageName.ENTER_CODE;
     }
 
     @Override

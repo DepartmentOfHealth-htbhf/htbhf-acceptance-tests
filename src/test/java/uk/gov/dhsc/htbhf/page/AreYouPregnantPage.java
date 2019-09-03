@@ -37,8 +37,8 @@ public class AreYouPregnantPage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "are you pregnant";
+    PageName getPageName() {
+        return PageName.ARE_YOU_PREGNANT;
     }
 
     @Override

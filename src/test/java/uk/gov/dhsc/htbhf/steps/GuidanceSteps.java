@@ -5,6 +5,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.GuidancePage;
+import uk.gov.dhsc.htbhf.page.PageName;
 
 import java.util.List;
 
@@ -19,13 +20,13 @@ public class GuidanceSteps extends BaseSteps {
 
     @Given("^I am on the first page of the application")
     public void givenIAmOnTheFirstPageOfTheApplication() {
-        guidancePage = GuidancePage.buildApplyGuidancePage(getWebDriver(), baseUrl, getWebDriverWait());
+        guidancePage = getPages().getGuidancePageNoWait(PageName.APPLY);
         guidancePage.open();
     }
 
     @When("^I open the (.*) guidance page$")
     public void openGuidancePage(String pageName) {
-        guidancePage = new GuidancePage(getWebDriver(), baseUrl, getWebDriverWait(), pageName);
+        guidancePage = getPages().getGuidancePageNoWait(PageName.getPageName(pageName));
         guidancePage.open();
     }
 

@@ -7,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.WebDriverWrapper;
+import uk.gov.dhsc.htbhf.page.Pages;
 
 /**
  * Controls creation of WebDriver and WebDriverWait for local testing.
@@ -18,13 +19,15 @@ public class LocalWebDriverWrapper implements WebDriverWrapper {
     private final int waitTimeoutInSeconds;
     private final WebDriver webDriver;
     private final WebDriverWait webDriverWait;
+    private final Pages pages;
 
-    public LocalWebDriverWrapper(String browser, boolean headless, int waitTimeoutInSeconds) {
+    public LocalWebDriverWrapper(String browser, boolean headless, int waitTimeoutInSeconds, String baseUrl) {
         this.browser = browser;
         this.headless = headless;
         this.waitTimeoutInSeconds = waitTimeoutInSeconds;
         this.webDriver = buildWebDriver();
         this.webDriverWait = buildWebDriverWait();
+        this.pages = new Pages(webDriver, webDriverWait, baseUrl);
     }
 
     @Override
@@ -35,6 +38,11 @@ public class LocalWebDriverWrapper implements WebDriverWrapper {
     @Override
     public WebDriverWait getWebDriverWait() {
         return webDriverWait;
+    }
+
+    @Override
+    public Pages getPages() {
+        return pages;
     }
 
     @Override

@@ -9,23 +9,17 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 class GuidancePageMetadataTest {
 
-    @CsvSource({"How it works, HOW_IT_WORKS",
-            "Eligibility, ELIGIBILITY",
-            "What you’ll get, WHAT_YOU_GET",
-            "What you can buy, WHAT_YOU_CAN_BUY",
-            "Using your card, USING_YOUR_CARD",
-            "Apply for Healthy Start, APPLY",
-            "Report a change, REPORT_A_CHANGE"
+    @CsvSource({"HOW_IT_WORKS, HOW_IT_WORKS",
+            "ELIGIBILITY, ELIGIBILITY",
+            "WHAT_YOU_GET, WHAT_YOU_GET",
+            "WHAT_YOU_CAN_BUY, WHAT_YOU_CAN_BUY",
+            "USING_YOUR_CARD, USING_YOUR_CARD",
+            "APPLY, APPLY",
+            "REPORT_A_CHANGE, REPORT_A_CHANGE"
     })
     @ParameterizedTest
-    void shouldFindByName(String pageName, GuidancePageMetadata expectedGuidancePageMetadata) {
+    void shouldFindByName(PageName pageName, GuidancePageMetadata expectedGuidancePageMetadata) {
         assertThat(GuidancePageMetadata.findByName(pageName)).isEqualTo(expectedGuidancePageMetadata);
-    }
-
-    @Test
-    void shouldThrowErrorWhenPageNotFoundByName() {
-        IllegalArgumentException exception = catchThrowableOfType(() -> GuidancePageMetadata.findByName("foo"), IllegalArgumentException.class);
-        assertThat(exception).hasMessage("No page metadata found for page with name: foo");
     }
 
     @Test

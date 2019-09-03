@@ -22,8 +22,8 @@ public class EmailAddressPage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "email address";
+    PageName getPageName() {
+        return PageName.EMAIL_ADDRESS;
     }
 
     @Override

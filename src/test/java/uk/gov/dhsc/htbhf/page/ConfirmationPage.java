@@ -22,8 +22,8 @@ public class ConfirmationPage extends BasePage {
     }
 
     @Override
-    String getPageName() {
-        return "confirmation";
+    PageName getPageName() {
+        return PageName.CONFIRMATION;
     }
 
     @Override

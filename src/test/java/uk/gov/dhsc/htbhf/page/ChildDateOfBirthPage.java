@@ -24,8 +24,8 @@ public class ChildDateOfBirthPage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "enter your childrens dates of birth";
+    PageName getPageName() {
+        return PageName.CHILD_DATE_OF_BIRTH;
     }
 
     @Override

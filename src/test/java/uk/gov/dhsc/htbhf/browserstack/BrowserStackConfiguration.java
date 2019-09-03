@@ -25,9 +25,12 @@ public class BrowserStackConfiguration {
     @Value("${wait.timeout.seconds}")
     private int waitTimeoutInSeconds;
 
+    @Value("${base.url}")
+    private String baseUrl;
+
     @Bean
     public WebDriverWrapper browserStackDriverBuilder() {
-        return new BrowserStackDriverWrapper(browserStackUser, browserStackKey, waitTimeoutInSeconds);
+        return new BrowserStackDriverWrapper(browserStackUser, browserStackKey, waitTimeoutInSeconds, baseUrl);
     }
 
     @Bean

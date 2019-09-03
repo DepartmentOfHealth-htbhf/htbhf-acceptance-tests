@@ -18,8 +18,7 @@ public class CheckDetailsSteps extends BaseSteps {
 
     @Then("^I am shown the check answers page with correct page content$")
     public void verifyCheckDetailsPageCorrect() {
-        checkAnswersPage = new CheckAnswersPage(getWebDriver(), baseUrl, getWebDriverWait());
-        checkAnswersPage.waitForPageToLoad();
+        checkAnswersPage = getPages().getCheckAnswersPage();
         assertThat(checkAnswersPage.getH1Text())
                 .as("expected check page H1 text to not be empty")
                 .isNotBlank();
