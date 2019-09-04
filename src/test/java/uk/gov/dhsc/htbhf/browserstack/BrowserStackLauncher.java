@@ -35,7 +35,7 @@ public class BrowserStackLauncher {
     private static final int MAX_RETRY_ATTEMPTS = 3;
     private static final int TOTAL_TIMEOUT_MINS = 15;
     private static final String COMPATIBILITY_REPORT_DIR = "build/reports/compatibility-report";
-    private static final String COMPATIBILITY_REPORT_FILE = COMPATIBILITY_REPORT_DIR + "/compatibility-report.html";
+    private static final String COMPATIBILITY_REPORT_FILE = COMPATIBILITY_REPORT_DIR + "/index.html";
     private static ThreadLocal<String> testNameLocal = new ThreadLocal<>();
     private static ExecutorService executorService;
     private static final List<TestResultSummary> results = new CopyOnWriteArrayList<>();
@@ -66,7 +66,7 @@ public class BrowserStackLauncher {
         testNameLocal.set(testName);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException, IOException {
         setRootLoggerLevel();
         try {
             executorService = Executors.newFixedThreadPool(MAX_THREADS);
@@ -79,14 +79,11 @@ public class BrowserStackLauncher {
             combinedFuture.get(TOTAL_TIMEOUT_MINS, TimeUnit.MINUTES);
 
             outputReport();
-        } catch (InterruptedException ie) {
-            log.error("InterruptedException caught trying to run task", ie);
-        } catch (ExecutionException ee) {
-            log.error("ExecutionException caught trying to run task", ee);
-        } catch (TimeoutException te) {
-            log.error("TimeoutException caught trying to run task", te);
-        } catch (IOException ioe) {
-            log.error("IOException caught trying to write out the compatibility test report", ioe);
+
+            if (anyTestsFailed()) {
+                log.error("Some tests failed - please see the test report for details");
+                System.exit(1);
+            }
         } finally {
             executorService.shutdown();
         }
@@ -153,6 +150,10 @@ public class BrowserStackLauncher {
         reportDir.mkdirs();
         TestOutputHtmlGenerator.generateHtmlReport(results, COMPATIBILITY_REPORT_FILE);
         log.info("Compatibility test report output to: {}", COMPATIBILITY_REPORT_FILE);
+    }
+
+    private static boolean anyTestsFailed() {
+        return results.stream().anyMatch(summary -> summary.isPassed() == false);
     }
 
     //TODO MRS 2019-08-24: Seems to be ignoring the root logger level in application.properties so setting here for now.
