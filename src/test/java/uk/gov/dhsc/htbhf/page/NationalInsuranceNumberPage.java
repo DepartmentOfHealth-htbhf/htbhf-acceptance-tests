@@ -23,8 +23,8 @@ public class NationalInsuranceNumberPage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "enter national insurance number";
+    PageName getPageName() {
+        return PageName.NATIONAL_INSURANCE_NUMBER;
     }
 
     @Override

@@ -31,7 +31,7 @@ public abstract class BasePage extends BaseComponent {
 
     abstract String getPath();
 
-    abstract String getPageName();
+    abstract PageName getPageName();
 
     abstract String getPageTitle();
 

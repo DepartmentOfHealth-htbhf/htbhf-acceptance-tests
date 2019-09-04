@@ -31,9 +31,12 @@ public class LocalConfiguration {
     @Value("${wiremock.port}")
     private int wiremockPort;
 
+    @Value("${base.url}")
+    private String baseUrl;
+
     @Bean(destroyMethod = "closeDriver")
     public WebDriverWrapper localWebDriverWrapper() {
-        return new LocalWebDriverWrapper(browser, headless, waitTimeoutInSeconds);
+        return new LocalWebDriverWrapper(browser, headless, waitTimeoutInSeconds, baseUrl);
     }
 
     @Bean(destroyMethod = "stop")

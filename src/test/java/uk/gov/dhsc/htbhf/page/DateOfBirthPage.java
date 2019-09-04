@@ -30,8 +30,8 @@ public class DateOfBirthPage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "enter date of birth";
+    PageName getPageName() {
+        return PageName.DATE_OF_BIRTH;
     }
 
     @Override

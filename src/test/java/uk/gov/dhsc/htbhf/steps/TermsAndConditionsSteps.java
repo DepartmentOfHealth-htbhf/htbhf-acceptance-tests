@@ -15,14 +15,13 @@ public class TermsAndConditionsSteps extends BaseSteps {
     @When("/^I accept the terms and conditions and submit my application$/")
     public void acceptTermsAndConditionsAndSubmitApplication() {
         wireMockManager.setupWireMockMappingsWithStatus("ELIGIBLE");
-        checkAnswersPage = new CheckAnswersPage(getWebDriver(), baseUrl, getWebDriverWait());
+        checkAnswersPage = getPages().getCheckAnswersPage();
         checkAnswersPage.clickContinue();
         acceptTsAndCsAndSubmitApplication();
     }
 
     private void acceptTsAndCsAndSubmitApplication() {
-        termsAndConditionsPage = new TermsAndConditionsPage(getWebDriver(), baseUrl, getWebDriverWait());
-        termsAndConditionsPage.waitForPageToLoad();
+        termsAndConditionsPage = getPages().getTermsAndConditionsPage();
         termsAndConditionsPage.clickAcceptTermsAndConditionsCheckBox();
         termsAndConditionsPage.clickContinue();
     }

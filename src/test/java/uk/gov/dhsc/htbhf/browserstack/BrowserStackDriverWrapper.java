@@ -7,6 +7,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.WebDriverWrapper;
+import uk.gov.dhsc.htbhf.page.Pages;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -31,17 +32,22 @@ public class BrowserStackDriverWrapper implements WebDriverWrapper {
 
     private final URL browserStackUrl;
 
+    private final String baseUrl;
+
     private ThreadLocal<WebDriver> webDriver = new ThreadLocal<>();
 
     private ThreadLocal<WebDriverWait> webDriverWait = new ThreadLocal<>();
 
-    public BrowserStackDriverWrapper(String browserStackUser, String browserStackKey, int waitTimeoutInSeconds) {
+    private Pages pages;
+
+    public BrowserStackDriverWrapper(String browserStackUser, String browserStackKey, int waitTimeoutInSeconds, String baseUrl) {
         Validate.notBlank(browserStackUser, "BrowserStack user must be provided, set the BROWSER_STACK_USER environment variable");
         Validate.notBlank(browserStackKey, "BrowserStack key must be provided, set the BROWSER_STACK_KEY environment variable");
         this.browserStackUser = browserStackUser;
         this.browserStackKey = browserStackKey;
         this.waitTimeoutInSeconds = waitTimeoutInSeconds;
         this.browserStackUrl = buildBrowserStackUrl();
+        this.baseUrl = baseUrl;
     }
 
     @Override
@@ -55,12 +61,18 @@ public class BrowserStackDriverWrapper implements WebDriverWrapper {
     }
 
     @Override
+    public Pages getPages() {
+        return pages;
+    }
+
+    @Override
     public void initDriver() {
         Map<String, String> browserStackCapabilities = getBrowserStackCapabilities();
         log.info("Using capabilities: {}", browserStackCapabilities);
         DesiredCapabilities desiredCapabilities = buildDesiredCapabilities(browserStackCapabilities, browserStackUser, browserStackKey);
         this.webDriver.set(buildWebDriver(desiredCapabilities));
         this.webDriverWait.set(buildWebDriverWait());
+        this.pages = new Pages(webDriver.get(), webDriverWait.get(), baseUrl);
     }
 
     @Override

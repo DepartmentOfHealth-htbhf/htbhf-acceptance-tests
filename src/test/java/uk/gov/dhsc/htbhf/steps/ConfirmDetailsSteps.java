@@ -15,8 +15,7 @@ public class ConfirmDetailsSteps extends BaseSteps {
 
     @Then("/^I am shown a successful confirmation page$/")
     public void iAmShownASuccessfulConfirmationPage() {
-        confirmationPage = new ConfirmationPage(getWebDriver(), baseUrl, getWebDriverWait());
-        confirmationPage.waitForPageToLoad();
+        confirmationPage = getPages().getConfirmationPage();
         checkAllPageContentIsPresentAndCorrect();
         wireMockManager.resetWireMockStubs();
     }

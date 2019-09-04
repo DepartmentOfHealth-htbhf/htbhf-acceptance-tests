@@ -2,31 +2,29 @@ package uk.gov.dhsc.htbhf.page;
 
 import java.util.Arrays;
 
-import static uk.gov.dhsc.htbhf.page.GuidancePage.APPLY_PAGE;
-
 /**
  * Enum representing metadata about each guidance page. The order of the enums
  * is important and should mirror the order of the pages in the application.
  */
 public enum GuidancePageMetadata {
 
-    HOW_IT_WORKS("How it works", "/"),
-    ELIGIBILITY("Eligibility", "/eligibility"),
-    WHAT_YOU_GET("What you’ll get", "/what-you-get"),
-    WHAT_YOU_CAN_BUY("What you can buy", "/buy"),
-    USING_YOUR_CARD("Using your card", "/using-your-card"),
-    APPLY(APPLY_PAGE, "/apply"),
-    REPORT_A_CHANGE("Report a change", "/report-a-change");
+    HOW_IT_WORKS(PageName.HOW_IT_WORKS, "/"),
+    ELIGIBILITY(PageName.ELIGIBILITY, "/eligibility"),
+    WHAT_YOU_GET(PageName.WHAT_YOU_GET, "/what-you-get"),
+    WHAT_YOU_CAN_BUY(PageName.WHAT_YOU_CAN_BUY, "/buy"),
+    USING_YOUR_CARD(PageName.USING_YOUR_CARD, "/using-your-card"),
+    APPLY(PageName.APPLY, "/apply"),
+    REPORT_A_CHANGE(PageName.REPORT_A_CHANGE, "/report-a-change");
 
-    private String pageName;
+    private PageName pageName;
     private String pagePath;
 
-    GuidancePageMetadata(String pageName, String pagePath) {
+    GuidancePageMetadata(PageName pageName, String pagePath) {
         this.pageName = pageName;
         this.pagePath = pagePath;
     }
 
-    public String getPageName() {
+    public PageName getPageName() {
         return pageName;
     }
 
@@ -34,7 +32,7 @@ public enum GuidancePageMetadata {
         return pagePath;
     }
 
-    public static GuidancePageMetadata findByName(String pageName) {
+    public static GuidancePageMetadata findByName(PageName pageName) {
         return Arrays.stream(GuidancePageMetadata.values())
                 .filter(page -> pageName.equals(page.pageName))
                 .findFirst()

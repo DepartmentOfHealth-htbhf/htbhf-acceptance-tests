@@ -26,8 +26,8 @@ public class SendCodePage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "send code";
+    PageName getPageName() {
+        return PageName.SEND_CODE;
     }
 
     @Override

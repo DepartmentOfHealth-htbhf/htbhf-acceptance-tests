@@ -15,17 +15,11 @@ import static java.util.stream.Collectors.toList;
  */
 public class GuidancePage extends BasePage {
 
-    public static final String APPLY_PAGE = "Apply for Healthy Start";
-
     private GuidancePageMetadata currentPage;
 
-    public GuidancePage(WebDriver webDriver, String baseUrl, WebDriverWait wait, String pageName) {
+    public GuidancePage(WebDriver webDriver, String baseUrl, WebDriverWait wait, PageName pageName) {
         super(webDriver, baseUrl, wait);
         this.currentPage = GuidancePageMetadata.findByName(pageName);
-    }
-
-    public static GuidancePage buildApplyGuidancePage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
-        return new GuidancePage(webDriver, baseUrl, wait, APPLY_PAGE);
     }
 
     @Override
@@ -34,13 +28,13 @@ public class GuidancePage extends BasePage {
     }
 
     @Override
-    String getPageName() {
+    PageName getPageName() {
         return currentPage.getPageName();
     }
 
     @Override
     String getPageTitle() {
-        return "GOV.UK - " + currentPage.getPageName();
+        return "GOV.UK - " + currentPage.getPageName().getPageName();
     }
 
     public void clickStartButton() {
