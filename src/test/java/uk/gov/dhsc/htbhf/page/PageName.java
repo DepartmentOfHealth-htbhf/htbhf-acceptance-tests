@@ -40,7 +40,7 @@ public enum PageName {
         return this.pageName;
     }
 
-    public static PageName getPageName(String pageName) {
+    public static PageName toPageName(String pageName) {
         return Arrays.stream(PageName.values())
                 .filter(page -> pageName.equals(page.pageName))
                 .findFirst()

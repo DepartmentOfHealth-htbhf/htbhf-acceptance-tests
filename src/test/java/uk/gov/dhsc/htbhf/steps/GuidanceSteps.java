@@ -26,7 +26,7 @@ public class GuidanceSteps extends BaseSteps {
 
     @When("^I open the (.*) guidance page$")
     public void openGuidancePage(String pageName) {
-        guidancePage = getPages().getGuidancePageNoWait(PageName.getPageName(pageName));
+        guidancePage = getPages().getGuidancePageNoWait(PageName.toPageName(pageName));
         guidancePage.open();
     }
 
