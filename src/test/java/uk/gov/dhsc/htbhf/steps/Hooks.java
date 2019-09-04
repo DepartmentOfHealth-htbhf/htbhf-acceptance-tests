@@ -19,9 +19,7 @@ public class Hooks extends BaseSteps {
      */
     @Before
     public void initDriver() {
-        if (isBrowserStackProfile()) {
-            webDriverWrapper.initDriver();
-        }
+        webDriverWrapper.initDriver();
     }
 
     /**
@@ -29,15 +27,15 @@ public class Hooks extends BaseSteps {
      */
     @After
     public void finaliseTest(Scenario scenario) {
-        if (isBrowserStackProfile()) {
-            try {
+        try {
+            if (isBrowserStackProfile()) {
                 String sessionId = getSessionId();
                 sessionIdThreadLocal.set(sessionId);
                 TestResult sessionDetails = new TestResult(scenario);
                 testResultHandler.handleResults(sessionDetails, sessionId);
-            } finally {
-                webDriverWrapper.quitDriver();
             }
+        } finally {
+            webDriverWrapper.quitDriver();
         }
     }
 

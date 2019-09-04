@@ -17,17 +17,16 @@ public class LocalWebDriverWrapper implements WebDriverWrapper {
     private final String browser;
     private final boolean headless;
     private final int waitTimeoutInSeconds;
-    private final WebDriver webDriver;
-    private final WebDriverWait webDriverWait;
-    private final Pages pages;
+    private final String baseUrl;
+    private WebDriver webDriver;
+    private WebDriverWait webDriverWait;
+    private Pages pages;
 
     public LocalWebDriverWrapper(String browser, boolean headless, int waitTimeoutInSeconds, String baseUrl) {
         this.browser = browser;
         this.headless = headless;
         this.waitTimeoutInSeconds = waitTimeoutInSeconds;
-        this.webDriver = buildWebDriver();
-        this.webDriverWait = buildWebDriverWait();
-        this.pages = new Pages(webDriver, webDriverWait, baseUrl);
+        this.baseUrl = baseUrl;
     }
 
     @Override
@@ -47,17 +46,14 @@ public class LocalWebDriverWrapper implements WebDriverWrapper {
 
     @Override
     public void initDriver() {
-        throw new RuntimeException("This is for BrowserStack WebDrivers only");
+        this.webDriver = buildWebDriver();
+        this.webDriverWait = buildWebDriverWait();
+        this.pages = new Pages(webDriver, webDriverWait, baseUrl);
     }
 
     @Override
     public void quitDriver() {
-        throw new RuntimeException("Should not be calling quit() on a local WebDriver, this is for BrowserStack WebDrivers only");
-    }
-
-    @Override
-    public void closeDriver() {
-        webDriver.close();
+        webDriver.quit();
     }
 
     private WebDriver buildWebDriver() {
