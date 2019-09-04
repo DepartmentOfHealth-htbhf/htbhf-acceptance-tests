@@ -24,8 +24,8 @@ public class ScotlandPage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "do you live in Scotland";
+    PageName getPageName() {
+        return PageName.SCOTLAND;
     }
 
     @Override

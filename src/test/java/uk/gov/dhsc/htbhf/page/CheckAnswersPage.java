@@ -33,8 +33,8 @@ public class CheckAnswersPage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "check answers";
+    PageName getPageName() {
+        return PageName.CHECK_ANSWERS;
     }
 
     @Override

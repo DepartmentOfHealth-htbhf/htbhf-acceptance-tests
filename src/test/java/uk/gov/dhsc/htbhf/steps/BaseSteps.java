@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import uk.gov.dhsc.htbhf.TestResultHandler;
 import uk.gov.dhsc.htbhf.WebDriverWrapper;
+import uk.gov.dhsc.htbhf.page.Pages;
 import uk.gov.dhsc.htbhf.utils.WireMockManager;
 
 /**
@@ -39,6 +40,10 @@ public abstract class BaseSteps {
 
     protected WebDriverWait getWebDriverWait() {
         return webDriverWrapper.getWebDriverWait();
+    }
+
+    protected Pages getPages() {
+        return webDriverWrapper.getPages();
     }
 
 }

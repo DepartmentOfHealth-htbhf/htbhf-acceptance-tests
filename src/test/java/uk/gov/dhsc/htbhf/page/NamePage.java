@@ -27,8 +27,8 @@ public class NamePage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "enter name";
+    PageName getPageName() {
+        return PageName.NAME;
     }
 
     @Override

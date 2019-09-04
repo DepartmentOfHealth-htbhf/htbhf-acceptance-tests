@@ -7,12 +7,12 @@ import uk.gov.dhsc.htbhf.page.component.RadioButton;
 /**
  * Page object for the Do You Have Children page.
  */
-public class DoYouHaveChildren extends SubmittablePage {
+public class DoYouHaveChildrenPage extends SubmittablePage {
 
     private RadioButton yesRadioButton;
     private RadioButton noRadioButton;
 
-    public DoYouHaveChildren(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+    public DoYouHaveChildrenPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
         this.yesRadioButton = new RadioButton(webDriver, wait, RadioButton.YES);
         this.noRadioButton = new RadioButton(webDriver, wait, RadioButton.NO);
@@ -24,8 +24,8 @@ public class DoYouHaveChildren extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "do you have children under four years old";
+    PageName getPageName() {
+        return PageName.DO_YOU_HAVE_CHILDREN;
     }
 
     @Override

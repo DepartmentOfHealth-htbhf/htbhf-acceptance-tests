@@ -22,8 +22,8 @@ public class PhoneNumberPage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "phone number";
+    PageName getPageName() {
+        return PageName.PHONE_NUMBER;
     }
 
     @Override

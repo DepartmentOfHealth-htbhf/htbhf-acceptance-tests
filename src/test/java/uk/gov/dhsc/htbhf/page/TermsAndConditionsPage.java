@@ -20,8 +20,8 @@ public class TermsAndConditionsPage extends SubmittablePage {
     }
 
     @Override
-    String getPageName() {
-        return "terms and conditions";
+    PageName getPageName() {
+        return PageName.TERMS_AND_CONDITIONS;
     }
 
     @Override
