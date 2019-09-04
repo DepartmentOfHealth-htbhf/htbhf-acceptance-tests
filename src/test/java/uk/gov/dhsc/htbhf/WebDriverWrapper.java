@@ -19,6 +19,4 @@ public interface WebDriverWrapper {
 
     void quitDriver();
 
-    void closeDriver();
-
 }

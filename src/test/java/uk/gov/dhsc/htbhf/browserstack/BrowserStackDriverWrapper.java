@@ -80,11 +80,6 @@ public class BrowserStackDriverWrapper implements WebDriverWrapper {
         getWebDriver().quit();
     }
 
-    @Override
-    public void closeDriver() {
-        getWebDriver().close();
-    }
-
     //Simply to deal with the checked Exception
     private URL buildBrowserStackUrl() {
         try {

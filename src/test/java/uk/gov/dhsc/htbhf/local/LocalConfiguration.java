@@ -34,7 +34,7 @@ public class LocalConfiguration {
     @Value("${base.url}")
     private String baseUrl;
 
-    @Bean(destroyMethod = "closeDriver")
+    @Bean()
     public WebDriverWrapper localWebDriverWrapper() {
         return new LocalWebDriverWrapper(browser, headless, waitTimeoutInSeconds, baseUrl);
     }
