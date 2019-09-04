@@ -11,21 +11,7 @@ export WORKING_DIR=$(pwd)
 export BIN_DIR=${WORKING_DIR}/bin
 export WEB_UI_DIR=${WORKING_DIR}/tmp-web-ui
 
-check_variable_is_set CHROMEDRIVER_VERSION
-check_variable_is_set CHROMEDRIVER_URL
 check_variable_is_set NOTIFY_API_KEY
-
-
-download_chromedriver(){
-    if [[ ! -e ${BIN_DIR}/chromedriver_${CHROMEDRIVER_VERSION}.ver || ! -e ${BIN_DIR}/chromedriver ]]; then
-        echo "Downloading chromedriver ${CHROMEDRIVER_VERSION} from ${CHROMEDRIVER_URL}"
-        mkdir -p ${BIN_DIR}
-        cd ${BIN_DIR}
-        wget -q -O chromedriver.zip "${CHROMEDRIVER_URL}" && unzip -o chromedriver.zip && rm chromedriver.zip
-        touch chromedriver_${CHROMEDRIVER_VERSION}.ver
-        cd ${WORKING_DIR}
-    fi
-}
 
 download_web_ui(){
     rm -rf ${WEB_UI_DIR}
@@ -61,7 +47,5 @@ start_web_ui(){
     cd ${WORKING_DIR}
 }
 
-
-download_chromedriver
 download_web_ui
 start_web_ui
