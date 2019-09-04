@@ -7,7 +7,7 @@ To run the BrowserStack compatibility tests from your local machine, you simply 
 ```
 BROWSER_STACK_USER
 BROWSER_STACK_KEY
-APP_BASE
+APP_BASE_URL
 SESSION_DETAILS_URL
 ```
 
