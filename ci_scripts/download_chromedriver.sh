@@ -16,6 +16,7 @@ if [[ ! -e ${BIN_DIR}/chromedriver_${CHROMEDRIVER_VERSION}.ver || ! -e ${BIN_DIR
   mkdir -p ${BIN_DIR}
   cd ${BIN_DIR}
   wget -q -O chromedriver.zip "${CHROMEDRIVER_URL}" && unzip -o chromedriver.zip && rm chromedriver.zip
+  rm -rf chromedriver_*.ver
   touch chromedriver_${CHROMEDRIVER_VERSION}.ver
   cd ${WORKING_DIR}
 fi
