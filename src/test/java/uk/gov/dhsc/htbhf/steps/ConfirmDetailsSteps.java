@@ -30,7 +30,7 @@ public class ConfirmDetailsSteps extends BaseSteps {
     private void checkAllPageContentIsPresentAndCorrect() {
         String h2Text = confirmationPage.getH2Text();
         assertThat(h2Text).as("expected confirm page H2 text to be correct").isEqualTo("What happens next");
-        String panelTitle = confirmationPage.getPanelTitleText();
+        String panelTitle = confirmationPage.getPanelTitleText().trim();
         assertThat(panelTitle).as("expected confirmation header to be correct").isEqualTo("Application complete");
     }
 }
