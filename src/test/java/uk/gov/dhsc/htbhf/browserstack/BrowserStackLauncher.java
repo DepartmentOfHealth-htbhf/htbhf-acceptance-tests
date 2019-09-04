@@ -153,7 +153,7 @@ public class BrowserStackLauncher {
     }
 
     private static boolean anyTestsFailed() {
-        return results.stream().anyMatch(summary -> summary.isPassed() == false);
+        return results.stream().anyMatch(summary -> summary.isPassed() == false && summary.getAttempts() == MAX_RETRY_ATTEMPTS);
     }
 
     //TODO MRS 2019-08-24: Seems to be ignoring the root logger level in application.properties so setting here for now.
