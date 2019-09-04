@@ -36,9 +36,13 @@ public abstract class BasePage extends BaseComponent {
     abstract String getPageTitle();
 
     public void open() {
+        openDirect();
+        waitForPageToLoad();
+    }
+
+    public void openDirect() {
         String fullUrl = baseUrl + getPath();
         webDriver.get(fullUrl);
-        waitForPageToLoad();
     }
 
     public void waitForPageToLoad() {
