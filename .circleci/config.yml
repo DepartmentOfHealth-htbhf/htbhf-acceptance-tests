@@ -11,8 +11,6 @@ jobs:
       WIREMOCK_PORT: 8090
       WIREMOCK_URL: http://localhost:8090
       USE_UNSECURE_COOKIE: true
-      CHROMEDRIVER_VERSION: 76.0.3809.68
-      CHROMEDRIVER_URL: https://chromedriver.storage.googleapis.com/76.0.3809.68/chromedriver_linux64.zip
     steps:
       - checkout
       - run:
@@ -25,7 +23,7 @@ jobs:
             - "81:ca:95:90:1b:25:e9:cb:e7:0c:89:41:b8:cf:7f:a0"
       - run:
           name: prepare for tests and build
-          command: ./ci_scripts/prepare_for_tests.sh && ./gradlew clean build --info -s
+          command: ./ci_scripts/prepare_for_tests.sh && ./ci_scripts/download_chromedriver.sh && ./gradlew clean build --info -s
       - run:
           name: cat the RunAcceptanceTests logs for debugging on failure
           command: cat /home/circleci/project/build/reports/tests/test/classes/uk.gov.dhsc.htbhf.RunAcceptanceTests.html
@@ -40,6 +38,22 @@ jobs:
           paths:
             - ./*
 
+  deploy:
+    docker:
+      - image: circleci/openjdk:11.0.4-jdk-stretch
+    environment:
+      BIN_DIR: ./bin
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "81:ca:95:90:1b:25:e9:cb:e7:0c:89:41:b8:cf:7f:a0"
+      - attach_workspace:
+          at: .
+      - run:
+          name: release
+          command: ./ci_scripts/tag_version.sh
+
 workflows:
   version: 2
   build:
@@ -48,3 +62,9 @@ workflows:
           filters:
             branches:
               ignore: gh-pages
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
