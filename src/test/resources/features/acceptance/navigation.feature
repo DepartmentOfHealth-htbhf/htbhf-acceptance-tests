@@ -30,27 +30,27 @@ Feature: Application process navigation is controlled
 #      | enter name                            |
 #      | do you live in Scotland               |
 #      | I live in Scotland                    |
-#
-#  Scenario Outline: Navigation is not allowed past the current page in the flow
-#    Given I have entered my details up to the <application page> page
-#    When I navigate to the <navigation page> page
-#    Then I am shown the <application page> page
-#    Examples:
-#      | application page    | navigation page |
-#      | enter name          | address         |
-#      | enter date of birth | check answers   |
-#      | are you pregnant    | confirmation    |
-#
-#  Scenario Outline: Navigation to previous navigable steps in an unsubmitted application flow is allowed
-#    Given I have entered my details up to the check answers page
-#    When I navigate to the <page> page
-#    Then I am shown the <page> page
-#    Examples:
-#      | page                                  |
-#      | enter name                            |
-#      | enter national insurance number       |
-#      | enter date of birth                   |
-#
+
+  Scenario Outline: Navigation is not allowed past the current page in the flow
+    Given I have entered my details up to the <application page> page
+    When I navigate to the <navigation page> page
+    Then I am shown the <application page> page
+    Examples:
+      | application page    | navigation page |
+      | enter name          | address         |
+      | enter date of birth | check answers   |
+      | are you pregnant    | confirmation    |
+
+  Scenario Outline: Navigation to previous navigable steps in an unsubmitted application flow is allowed
+    Given I have entered my details up to the check answers page
+    When I navigate to the <page> page
+    Then I am shown the <page> page
+    Examples:
+      | page                            |
+      | enter name                      |
+      | enter national insurance number |
+      | enter date of birth             |
+
 #  Scenario: Navigation to I live in Scotland from the check answers page is not allowed
 #    Given I have entered my details up to the check answers page
 #    When I navigate to the I live in Scotland page

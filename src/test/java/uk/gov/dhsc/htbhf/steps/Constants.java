@@ -16,4 +16,15 @@ public class Constants {
     public static final String PHONE_NUMBER_2 = "07111111111";
     public static final String EMAIL_ADDRESS = "test@email.com";
     public static final String EMAIL_ADDRESS_2 = "different-email-address@email.com";
+
+    public static final ActionOptions DEFAULT_ACTION_OPTIONS = ActionOptions.builder()
+            .firstName(FIRST_NAME)
+            .lastName(LAST_NAME)
+            .isClaimantPregnant(true)
+            .addressLine1(ADDRESS_LINE_1)
+            .addressLine2(ADDRESS_LINE_2)
+            .townOrCity(TOWN)
+            .county(COUNTY)
+            .postcode(POSTCODE)
+            .build();
 }

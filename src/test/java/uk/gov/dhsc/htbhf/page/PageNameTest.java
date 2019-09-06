@@ -35,12 +35,12 @@ class PageNameTest {
     })
     @ParameterizedTest
     void shouldGetPageName(PageName pageName, String name) {
-        assertThat(PageName.getPageName(name)).isEqualTo(pageName);
+        assertThat(PageName.toPageName(name)).isEqualTo(pageName);
     }
 
     @Test
     void shouldFailToGetPageName() {
-        Throwable thrown = catchThrowableOfType(() -> PageName.getPageName("foo"), IllegalArgumentException.class);
+        Throwable thrown = catchThrowableOfType(() -> PageName.toPageName("foo"), IllegalArgumentException.class);
         assertThat(thrown).hasMessage("No page name found for name: foo");
     }
 }
