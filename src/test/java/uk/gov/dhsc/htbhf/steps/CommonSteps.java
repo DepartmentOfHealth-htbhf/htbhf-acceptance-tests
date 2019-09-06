@@ -106,4 +106,12 @@ public class CommonSteps extends BaseSteps {
         scotlandPage.clickContinue();
     }
 
+    protected void acceptTermsAndConditionsAndSubmitApplication() {
+        wireMockManager.setupWireMockMappingsWithStatus("ELIGIBLE");
+        CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();
+        checkAnswersPage.clickContinue();
+        TermsAndConditionsPage termsAndConditionsPage = getPages().getTermsAndConditionsPage();
+        termsAndConditionsPage.clickAcceptTermsAndConditionsCheckBox();
+        termsAndConditionsPage.clickContinue();
+    }
 }

@@ -13,23 +13,22 @@ Feature: Application process navigation is controlled
       | enter national insurance number |
       | enter date of birth             |
 
-# TODO Enable more scenarios as the navigate functionality is added
-#  @RequiresWiremock
-#  Scenario: Navigation to confirm page after completing application stays on the confirm page
-#    Given I have completed my application
-#    When I navigate to the confirmation page
-#    Then I am shown the confirm details page
-#
-#  @RequiresWiremock
-#  Scenario Outline: Navigation after completing application returns to start of process and clears the session
-#    Given I have completed my application
-#    When I navigate to the <page> page
-#    Then I am shown the guidance page
-#    Examples:
-#      | page                                  |
-#      | enter name                            |
-#      | do you live in Scotland               |
-#      | I live in Scotland                    |
+  @RequiresWiremock
+  Scenario: Navigation to confirm page after completing application stays on the confirm page
+    Given I have completed my application
+    When I navigate to the confirmation page
+    Then I am shown the confirmation page
+
+  @RequiresWiremock
+  Scenario Outline: Navigation after completing application returns to start of process and clears the session
+    Given I have completed my application
+    When I navigate to the <page> page
+    Then I am shown the How it works page
+    Examples:
+      | page                    |
+      | enter name              |
+      | do you live in Scotland |
+      | I live in Scotland      |
 
   Scenario Outline: Navigation is not allowed past the current page in the flow
     Given I have entered my details up to the <application page> page
@@ -37,7 +36,7 @@ Feature: Application process navigation is controlled
     Then I am shown the <application page> page
     Examples:
       | application page    | navigation page |
-      | enter name          | address         |
+      | enter name          | manual address  |
       | enter date of birth | check answers   |
       | are you pregnant    | confirmation    |
 
@@ -51,17 +50,17 @@ Feature: Application process navigation is controlled
       | enter national insurance number |
       | enter date of birth             |
 
-#  Scenario: Navigation to I live in Scotland from the check answers page is not allowed
-#    Given I have entered my details up to the check answers page
-#    When I navigate to the I live in Scotland page
-#    Then I am shown the terms and conditions page
-#
-#  Scenario: Navigation to send code is not allowed after the confirmation code has been sent
-#    Given I have entered my details up to the check answers page
-#    When I go directly to the send code page
-#    Then I am shown the terms and conditions page
-#
-#  Scenario: Navigation to enter code is not allowed after the confirmation code has been sent
-#    Given I have entered my details up to the check answers page
-#    When I go directly to the enter code page
-#    Then I am shown the terms and conditions page
+  Scenario: Navigation to I live in Scotland from the check answers page is not allowed
+    Given I have entered my details up to the check answers page
+    When I navigate to the I live in Scotland page
+    Then I am shown the terms and conditions page
+
+  Scenario: Navigation to send code is not allowed after the confirmation code has been sent
+    Given I have entered my details up to the check answers page
+    When I navigate to the send code page
+    Then I am shown the terms and conditions page
+
+  Scenario: Navigation to enter code is not allowed after the confirmation code has been sent
+    Given I have entered my details up to the check answers page
+    When I navigate to the enter code page
+    Then I am shown the terms and conditions page

@@ -15,7 +15,7 @@ import static uk.gov.dhsc.htbhf.page.PageName.*;
 import static uk.gov.dhsc.htbhf.steps.Constants.DEFAULT_ACTION_OPTIONS;
 
 /**
- * Steps that help; with navigation through the application flow.
+ * Steps that help with navigation through the application flow.
  */
 public class NavigationSteps extends CommonSteps {
 
@@ -27,9 +27,12 @@ public class NavigationSteps extends CommonSteps {
 
     @Given("^I have entered my details up to the (.*) page")
     public void enterDetailsUpToPage(String page) {
+        enterDetailsUpToPage(PageName.toPageName(page));
+    }
+
+    private void enterDetailsUpToPage(PageName pageName) {
         GuidancePage applyPage = openApplyPage();
         applyPage.clickStartButton();
-        PageName pageName = PageName.toPageName(page);
         for (Map.Entry<PageName, Consumer<ActionOptions>> entry : pageActions.entrySet()) {
             if (pageName == entry.getKey()) {
                 break;
@@ -42,6 +45,13 @@ public class NavigationSteps extends CommonSteps {
     @Given("^I am starting a new application")
     public void givenIAmStartingANewApplication() {
         openApplyPage();
+    }
+
+    @Given("^I have completed my application")
+    public void givenIHaveCompletedMyApplication() {
+        enterDetailsUpToPage(CHECK_ANSWERS);
+        acceptTermsAndConditionsAndSubmitApplication();
+        getPages().getConfirmationPage();
     }
 
     private GuidancePage openApplyPage() {
