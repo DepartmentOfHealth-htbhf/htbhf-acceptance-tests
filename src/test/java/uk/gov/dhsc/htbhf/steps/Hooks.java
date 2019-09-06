@@ -34,6 +34,7 @@ public class Hooks extends BaseSteps {
                 TestResult sessionDetails = new TestResult(scenario);
                 testResultHandler.handleResults(sessionDetails, sessionId);
             }
+            wireMockManager.resetWireMockStubs();
         } finally {
             webDriverWrapper.quitDriver();
         }
