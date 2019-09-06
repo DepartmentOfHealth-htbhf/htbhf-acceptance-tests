@@ -38,6 +38,7 @@ public class Pages {
         pages.add(new NationalInsuranceNumberPage(webDriver, baseUrl, webDriverWait));
         pages.add(new PhoneNumberPage(webDriver, baseUrl, webDriverWait));
         pages.add(new ScotlandPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new InScotlandPage(webDriver, baseUrl, webDriverWait));
         pages.add(new SendCodePage(webDriver, baseUrl, webDriverWait));
         pages.add(new TermsAndConditionsPage(webDriver, baseUrl, webDriverWait));
         //Guidance pages
@@ -109,6 +110,10 @@ public class Pages {
 
     public ScotlandPage getScotlandPage() {
         return (ScotlandPage) getAndWaitForPageByName(PageName.SCOTLAND);
+    }
+
+    public InScotlandPage getInScotlandPage() {
+        return (InScotlandPage) getAndWaitForPageByName(PageName.IN_SCOTLAND);
     }
 
     public TermsAndConditionsPage getTermsAndConditionsPage() {
