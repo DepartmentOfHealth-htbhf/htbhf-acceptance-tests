@@ -65,7 +65,9 @@ dependencies {
 }
 
 test {
-    systemProperty "webdriver.chrome.driver", "./bin/chromedriver"
+    def binDir = System.getenv("BIN_DIR") ?: "./bin"
+    systemProperty "webdriver.chrome.driver", "${binDir}/chromedriver"
+    systemProperty "cucumber.options", System.getProperty("cucumber.options")
     filter {
         excludeTestsMatching "uk.gov.dhsc.htbhf.RunCompatibilityTests"
     }
@@ -78,6 +80,7 @@ test {
 
 task compatibility(type:JavaExec) {
     systemProperty "spring.profiles.active", "browserstack"
+    systemProperty "cucumber.options", System.getProperty("cucumber.options")
     main = "uk.gov.dhsc.htbhf.browserstack.BrowserStackLauncher"
     classpath sourceSets.test.runtimeClasspath
 }
