@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
-export CHROMEDRIVER_VERSION=76.0.3809.68
-export CHROMEDRIVER_URL=https://chromedriver.storage.googleapis.com/76.0.3809.68/chromedriver_linux64.zip
-
-if [[ -z "$WORKING_DIR" ]]; then
-  export WORKING_DIR=$(pwd)
+if [[ -z "$CHROMEDRIVER_VERSION" ]]; then
+  export CHROMEDRIVER_VERSION=76.0.3809.68
+fi
+if [[ -z "$CHROMEDRIVER_URL" ]]; then
+  export CHROMEDRIVER_URL=https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
 fi
 
+CURR_DIR=$(pwd)
 if [[ -z "$BIN_DIR" ]]; then
-  BIN_DIR=${WORKING_DIR}/bin
+  BIN_DIR=${CURR_DIR}/bin
 fi
 
 if [[ ! -e ${BIN_DIR}/chromedriver_${CHROMEDRIVER_VERSION}.ver || ! -e ${BIN_DIR}/chromedriver ]]; then
@@ -18,5 +19,5 @@ if [[ ! -e ${BIN_DIR}/chromedriver_${CHROMEDRIVER_VERSION}.ver || ! -e ${BIN_DIR
   wget -q -O chromedriver.zip "${CHROMEDRIVER_URL}" && unzip -o chromedriver.zip && rm chromedriver.zip
   rm -rf chromedriver_*.ver
   touch chromedriver_${CHROMEDRIVER_VERSION}.ver
-  cd ${WORKING_DIR}
+  cd ${CURR_DIR}
 fi
