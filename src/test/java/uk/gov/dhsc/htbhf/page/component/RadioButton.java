@@ -11,7 +11,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class RadioButton extends BaseComponent {
 
     public static final String YES = "yes";
+    public static final String YES_LABEL = "Yes";
     public static final String NO = "no";
+    public static final String NO_LABEL = "No";
     private String option;
 
     public RadioButton(WebDriver webDriver, WebDriverWait webDriverWait, String option) {
