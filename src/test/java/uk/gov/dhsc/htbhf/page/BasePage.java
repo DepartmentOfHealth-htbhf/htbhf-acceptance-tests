@@ -8,14 +8,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.BaseComponent;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Base page all page objects which contains all common utility and navigation methods.
  */
 public abstract class BasePage extends BaseComponent {
 
-    private static final String RADIO_ITEM_CLASSNAME = "govuk-radios__item";
-    private static final String RADIO_LABEL_CLASSNAME = "govuk-label govuk-radios__label";
+    private static final String RADIO_INPUT_CLASSNAME = "govuk-radios__input";
+    private static final String RADIO_LABEL_CLASSNAME = "govuk-radios__label";
+    private static final String ERROR_HEADER_SELECTOR = "h2#error-summary-title";
 
     protected final WebDriver webDriver;
     protected final WebDriverWait wait;
@@ -50,11 +52,12 @@ public abstract class BasePage extends BaseComponent {
     }
 
     public List<WebElement> getRadioButtons() {
-        return webDriver.findElements(By.className(RADIO_ITEM_CLASSNAME));
+        return webDriver.findElements(By.className(RADIO_INPUT_CLASSNAME));
     }
 
-    public List<WebElement> getAllRadioLabels() {
-        return webDriver.findElements(By.className(RADIO_LABEL_CLASSNAME));
+    public List<String> getAllRadioLabels() {
+        List<WebElement> radioLabels = webDriver.findElements(By.className(RADIO_LABEL_CLASSNAME));
+        return radioLabels.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     public WebElement findH1() {
@@ -76,6 +79,11 @@ public abstract class BasePage extends BaseComponent {
     public WebElement findLinkForHref(String href) {
         String linkCss = String.format("a[href=\"%s\"]", href);
         return findByCss(linkCss);
+    }
+
+    public String getPageErrorHeaderText() {
+        WebElement pageError = findByCss(ERROR_HEADER_SELECTOR);
+        return pageError.getText();
     }
 
 }

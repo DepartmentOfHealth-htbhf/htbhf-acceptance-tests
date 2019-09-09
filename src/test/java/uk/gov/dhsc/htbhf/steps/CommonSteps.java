@@ -68,10 +68,14 @@ public class CommonSteps extends BaseSteps {
     }
 
     protected void selectYesOnPregnancyPage() {
+        enterExpectedDeliveryDateOnPregnancyPage(2);
+        getPages().getAreYouPregnantPage().clickContinue();
+    }
+
+    protected void enterExpectedDeliveryDateOnPregnancyPage(int monthIncrement) {
         AreYouPregnantPage areYouPregnantPage = getPages().getAreYouPregnantPage();
         areYouPregnantPage.selectYes();
-        areYouPregnantPage.enterExpectedDeliveryDate(2);
-        areYouPregnantPage.clickContinue();
+        areYouPregnantPage.enterExpectedDeliveryDate(monthIncrement);
     }
 
     protected void selectNoOnPregnancyPage() {

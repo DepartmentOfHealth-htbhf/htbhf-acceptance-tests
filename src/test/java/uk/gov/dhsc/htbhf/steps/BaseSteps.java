@@ -1,13 +1,18 @@
 package uk.gov.dhsc.htbhf.steps;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import uk.gov.dhsc.htbhf.TestResultHandler;
 import uk.gov.dhsc.htbhf.WebDriverWrapper;
+import uk.gov.dhsc.htbhf.page.BasePage;
 import uk.gov.dhsc.htbhf.page.Pages;
 import uk.gov.dhsc.htbhf.utils.WireMockManager;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Base setup for all the step classes which autowires in the web driver and anything
@@ -44,6 +49,31 @@ public abstract class BaseSteps {
 
     protected Pages getPages() {
         return webDriverWrapper.getPages();
+    }
+
+
+    protected void assertErrorHeaderTextPresent(BasePage basePage) {
+        basePage.waitForPageToLoad();
+        String errorHeader = basePage.getPageErrorHeaderText();
+        assertThat(errorHeader).isEqualTo("There’s a problem");
+    }
+
+    protected void assertFieldErrorAndLinkTextPresentAndCorrect(BasePage basePage, String fieldErrorId, String errorLinkCss, String expectedErrorMessage) {
+        WebElement fieldError = basePage.findById(fieldErrorId);
+        String fieldErrorText = getVisibleTextFromFieldError(fieldError);
+
+        WebElement errorLink = basePage.findByCss(errorLinkCss);
+        String errorLinkText = errorLink.getText();
+
+        assertThat(fieldErrorText).isEqualTo(expectedErrorMessage);
+        assertThat(errorLinkText).isEqualTo(expectedErrorMessage);
+    }
+
+    private String getVisibleTextFromFieldError(WebElement errorElement) {
+        String fullErrorText = errorElement.getText();
+        WebElement hiddenError = errorElement.findElement(By.className("govuk-visually-hidden"));
+        String hiddenErrorText = hiddenError.getText();
+        return fullErrorText.replace(hiddenErrorText, "").trim();
     }
 
 }
