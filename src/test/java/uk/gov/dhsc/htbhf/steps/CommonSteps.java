@@ -2,6 +2,11 @@ package uk.gov.dhsc.htbhf.steps;
 
 import uk.gov.dhsc.htbhf.page.*;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Consumer;
+
+import static uk.gov.dhsc.htbhf.page.PageName.*;
 import static uk.gov.dhsc.htbhf.steps.Constants.*;
 import static uk.gov.dhsc.htbhf.utils.NinoGenerator.generateEligibleNino;
 
@@ -9,6 +14,65 @@ import static uk.gov.dhsc.htbhf.utils.NinoGenerator.generateEligibleNino;
  * Contains common steps used by more than one step
  */
 public class CommonSteps extends BaseSteps {
+
+    private Map<PageName, Consumer<ActionOptions>> pageActions;
+
+    public CommonSteps() {
+        this.pageActions = buildDefaultStepPageActions();
+    }
+
+    protected void enterDetailsUpToPage(PageName pageName) {
+        GuidancePage applyPage = openApplyPage();
+        applyPage.clickStartButton();
+        for (Map.Entry<PageName, Consumer<ActionOptions>> entry : pageActions.entrySet()) {
+            if (pageName == entry.getKey()) {
+                break;
+            }
+            Consumer<ActionOptions> actionsForPage = entry.getValue();
+            actionsForPage.accept(DEFAULT_ACTION_OPTIONS);
+        }
+    }
+
+    protected GuidancePage openApplyPage() {
+        GuidancePage applyPage = getPages().getGuidancePageNoWait(PageName.APPLY);
+        applyPage.open();
+        return applyPage;
+    }
+
+    private Map<PageName, Consumer<ActionOptions>> buildDefaultStepPageActions() {
+        Map<PageName, Consumer<ActionOptions>> pageActions = new LinkedHashMap<>();
+        pageActions.put(SCOTLAND, (actionOptions) -> enterDoYouLiveInScotlandNoAndSubmit());
+        pageActions.put(DATE_OF_BIRTH, (actionOptions) -> enterDateOfBirthAndSubmit());
+        pageActions.put(DO_YOU_HAVE_CHILDREN, (actionOptions) -> enterDoYouHaveChildrenYesAndSubmit());
+        pageActions.put(CHILD_DATE_OF_BIRTH, (actionOptions) -> enterOneChildsDateOfBirth());
+        pageActions.put(ARE_YOU_PREGNANT, (actionOptions) -> {
+            if (actionOptions.isClaimantPregnant()) {
+                selectYesOnPregnancyPage();
+            } else {
+                selectNoOnPregnancyPage();
+            }
+        });
+        pageActions.put(NAME, (actionOptions) -> enterName(actionOptions.getFirstName(), actionOptions.getLastName()));
+        pageActions.put(NATIONAL_INSURANCE_NUMBER, (actionOptions) -> enterNino());
+        //TODO MRS 2019-09-04: Need to add postcode lookup here when required.
+//        pageActions.put(POSTCODE, (actionOptions) -> {
+//            setupPostcodeLookupWithResults(POSTCODE);
+//            enterPostcode();
+//        });
+        pageActions.put(MANUAL_ADDRESS, (actionOptions) ->
+                enterManualAddress(actionOptions.getAddressLine1(),
+                        actionOptions.getAddressLine2(),
+                        actionOptions.getTownOrCity(),
+                        actionOptions.getCounty(),
+                        actionOptions.getPostcode()));
+        pageActions.put(PageName.PHONE_NUMBER, (actionOptions) -> enterPhoneNumber());
+        pageActions.put(PageName.EMAIL_ADDRESS, (actionOptions) -> enterEmailAddress());
+        pageActions.put(SEND_CODE, (actionOptions) -> selectTextOnSendCode());
+        pageActions.put(ENTER_CODE, (actionOptions) -> enterConfirmationCodeAndSubmit());
+        pageActions.put(CHECK_ANSWERS, (actionOptions) -> {
+        });
+        return pageActions;
+    }
 
     protected void enterConfirmationCodeAndSubmit() {
         EnterCodePage enterCodePage = getPages().getEnterCodePage();
@@ -27,13 +91,13 @@ public class CommonSteps extends BaseSteps {
 
     protected void enterEmailAddress() {
         EmailAddressPage emailAddressPage = getPages().getEmailAddressPage();
-        emailAddressPage.enterEmailAddress(EMAIL_ADDRESS);
+        emailAddressPage.enterEmailAddress(Constants.EMAIL_ADDRESS);
         emailAddressPage.clickContinue();
     }
 
     protected void enterPhoneNumber() {
         PhoneNumberPage phoneNumberPage = getPages().getPhoneNumberPage();
-        phoneNumberPage.enterPhoneNumber(PHONE_NUMBER);
+        phoneNumberPage.enterPhoneNumber(Constants.PHONE_NUMBER);
         phoneNumberPage.clickContinue();
     }
 
