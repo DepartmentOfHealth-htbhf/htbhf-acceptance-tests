@@ -28,18 +28,6 @@ public class AreYouPregnantSteps extends CommonSteps {
         areYouPregnantPage.selectYes();
     }
 
-    @When("^I do not select an option$")
-    public void whenIDoNotSelectAnOption() {
-        // Specifically does nothing
-    }
-
-    //TODO MRS 09/09/2019: Create a GenericSteps class where methods like this can be shared.
-    @When("^I click continue$")
-    public void whenIClickContinue() {
-        AreYouPregnantPage areYouPregnantPage = getPages().getAreYouPregnantPage();
-        areYouPregnantPage.clickContinue();
-    }
-
     @When("^I enter text in the expected delivery date fields")
     public void enterTextInExpectedDeliveryDateFields() {
         AreYouPregnantPage areYouPregnantPage = getPages().getAreYouPregnantPage();

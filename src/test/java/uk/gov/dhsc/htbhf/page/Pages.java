@@ -16,12 +16,15 @@ public class Pages {
     private WebDriverWait webDriverWait;
     private String baseUrl;
     private List<BasePage> pages = new ArrayList<>();
+    private GenericPage genericPage;
 
     public Pages(WebDriver webDriver, WebDriverWait webDriverWait, String baseUrl) {
         this.webDriver = webDriver;
         this.webDriverWait = webDriverWait;
         this.baseUrl = baseUrl;
         initPages();
+        //We specifically don't add the GenericPage to the List as it doesn't have a PageName
+        this.genericPage = new GenericPage(webDriver, baseUrl, webDriverWait);
     }
 
     private void initPages() {
@@ -130,6 +133,10 @@ public class Pages {
 
     public GuidancePage getGuidancePageNoWait(PageName pageName) {
         return (GuidancePage) getPageByName(pageName);
+    }
+
+    public GenericPage getGenericPage() {
+        return genericPage;
     }
 
 }
