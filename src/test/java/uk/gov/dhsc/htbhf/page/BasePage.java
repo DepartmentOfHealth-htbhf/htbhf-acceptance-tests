@@ -86,4 +86,21 @@ public abstract class BasePage extends BaseComponent {
         return pageError.getText();
     }
 
+    public String getFieldErrorText(String fieldErrorId) {
+        WebElement fieldError = findById(fieldErrorId);
+        return getVisibleTextFromFieldError(fieldError);
+    }
+
+    public String getErrorLinkText(String errorLinkCss) {
+        WebElement errorLink = findByCss(errorLinkCss);
+        return errorLink.getText();
+    }
+
+    private String getVisibleTextFromFieldError(WebElement errorElement) {
+        String fullErrorText = errorElement.getText();
+        WebElement hiddenError = errorElement.findElement(By.className("govuk-visually-hidden"));
+        String hiddenErrorText = hiddenError.getText();
+        return fullErrorText.replace(hiddenErrorText, "").trim();
+    }
+
 }

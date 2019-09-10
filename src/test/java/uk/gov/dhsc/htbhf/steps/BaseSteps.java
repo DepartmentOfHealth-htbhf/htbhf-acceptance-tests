@@ -1,8 +1,6 @@
 package uk.gov.dhsc.htbhf.steps;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,7 +49,6 @@ public abstract class BaseSteps {
         return webDriverWrapper.getPages();
     }
 
-
     protected void assertErrorHeaderTextPresent(BasePage basePage) {
         basePage.waitForPageToLoad();
         String errorHeader = basePage.getPageErrorHeaderText();
@@ -59,21 +56,11 @@ public abstract class BaseSteps {
     }
 
     protected void assertFieldErrorAndLinkTextPresentAndCorrect(BasePage basePage, String fieldErrorId, String errorLinkCss, String expectedErrorMessage) {
-        WebElement fieldError = basePage.findById(fieldErrorId);
-        String fieldErrorText = getVisibleTextFromFieldError(fieldError);
-
-        WebElement errorLink = basePage.findByCss(errorLinkCss);
-        String errorLinkText = errorLink.getText();
+        String fieldErrorText = basePage.getFieldErrorText(fieldErrorId);
+        String errorLinkText = basePage.getErrorLinkText(errorLinkCss);
 
         assertThat(fieldErrorText).isEqualTo(expectedErrorMessage);
         assertThat(errorLinkText).isEqualTo(expectedErrorMessage);
-    }
-
-    private String getVisibleTextFromFieldError(WebElement errorElement) {
-        String fullErrorText = errorElement.getText();
-        WebElement hiddenError = errorElement.findElement(By.className("govuk-visually-hidden"));
-        String hiddenErrorText = hiddenError.getText();
-        return fullErrorText.replace(hiddenErrorText, "").trim();
     }
 
 }
