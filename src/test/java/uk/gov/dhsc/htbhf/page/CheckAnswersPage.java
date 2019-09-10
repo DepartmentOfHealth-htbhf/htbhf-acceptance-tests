@@ -9,6 +9,8 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.assertj.core.api.Assertions.fail;
+
 /**
  * Page object for the page where the customer can check their answers before submitting.
  */
@@ -42,44 +44,62 @@ public class CheckAnswersPage extends SubmittablePage {
         return "GOV.UK - Check your answers";
     }
 
-    public List<CheckDetailsRowData> getClaimSummaryListContents() {
+    public void clickChangeLinkFor(String headerText) {
+        List<WebElement> changeLinks = getChangeLinksFor(headerText);
+
+        if (changeLinks.size() != 1) {
+            fail(String.format("%s change changeLinks found for %s", changeLinks.size(), headerText));
+        }
+
+        changeLinks.get(0).click();
+    }
+
+    public List<CheckAnswersRowData> getClaimSummaryListContents() {
         return getContentsOfSummaryListsByParentId(CLAIM_SUMMARY_PARENT_ID);
     }
 
-    public List<CheckDetailsRowData> getChildrenSummaryListContents() {
+    public List<CheckAnswersRowData> getChildrenSummaryListContents() {
         return getContentsOfSummaryListsByParentId(CHILDREN_SUMMARY_PARENT_ID);
     }
 
-    private List<CheckDetailsRowData> getContentsOfSummaryListsByParentId(String parentId) {
+    public List<WebElement> getChildrenSummaryElements() {
+        return findAllById("children-summary");
+    }
+
+    private List<WebElement> getChangeLinksFor(String headerText) {
+        return findAllByXpath(String.format("//a[contains(@class, 'govuk-link') and contains(.//span, '%s')]", headerText));
+    }
+
+    private List<CheckAnswersRowData> getContentsOfSummaryListsByParentId(String parentId) {
         List<WebElement> tableRows = findAllByCss(parentId + " " + GOV_LIST_ROW_CLASSNAME);
         return tableRows.stream().map(this::getDataForRow).collect(Collectors.toList());
     }
 
-    private CheckDetailsRowData getDataForRow(WebElement tableRow) {
+    private CheckAnswersRowData getDataForRow(WebElement tableRow) {
         WebElement header = tableRow.findElement(By.className(GOV_LIST_HEADER_CLASSNAME));
         String headerText = header.getText();
         WebElement value = tableRow.findElement(By.className(GOV_LIST_VALUE_CLASSNAME));
         String valueText = value.getText();
-        CheckDetailsAction action = getActionForRow(tableRow);
-        return CheckDetailsRowData.builder()
+        CheckAnswersAction action = getActionForRow(tableRow);
+        return CheckAnswersRowData.builder()
                 .header(headerText)
                 .value(valueText)
                 .action(action)
                 .build();
     }
 
-    private CheckDetailsAction getActionForRow(WebElement row) {
+    private CheckAnswersAction getActionForRow(WebElement row) {
         List<WebElement> actions = row.findElements(By.className(GOV_LIST_ACTION_CLASSNAME));
         return CollectionUtils.isEmpty(actions) ? null : this.getActionFromElement(actions.get(0));
     }
 
-    private CheckDetailsAction getActionFromElement(WebElement actionElement) {
+    private CheckAnswersAction getActionFromElement(WebElement actionElement) {
         WebElement changeLink = actionElement.findElement(By.className(GOV_LINK_CLASSNAME));
         String changeUrl = changeLink.getAttribute("href");
         String changeText = changeLink.getText();
         WebElement hiddenSpan = changeLink.findElement(By.className(GOV_HIDDEN_CLASSNAME));
         String hiddenText = hiddenSpan.getText();
-        return CheckDetailsAction.builder()
+        return CheckAnswersAction.builder()
                 .url(changeUrl)
                 .text(changeText.replace(hiddenText, "").trim())
                 .hiddenText(hiddenText)

@@ -5,10 +5,10 @@ import lombok.Value;
 
 @Value
 @Builder
-public class CheckDetailsRowData {
+public class CheckAnswersRowData {
     private String header;
     private String value;
-    private CheckDetailsAction action;
+    private CheckAnswersAction action;
 
     public boolean hasChangeLinkAndHeaderText() {
         return hasChangeLink() && hasHeaderText();

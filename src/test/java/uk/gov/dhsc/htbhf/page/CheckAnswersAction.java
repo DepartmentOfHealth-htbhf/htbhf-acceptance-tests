@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class CheckDetailsAction {
+public class CheckAnswersAction {
     private String url;
     private String text;
     private String hiddenText;

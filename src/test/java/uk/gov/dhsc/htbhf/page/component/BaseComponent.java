@@ -21,6 +21,7 @@ public abstract class BaseComponent {
         this.webDriverWait = webDriverWait;
     }
 
+    //TODO MRS 10/09/2019: All the find methods should become protected so they can only be used by components and not steps.
     public WebElement findByClassName(String className) {
         return webDriver.findElement(By.className(className));
     }
@@ -35,6 +36,14 @@ public abstract class BaseComponent {
 
     public List<WebElement> findAllByCss(String cssSelector) {
         return webDriver.findElements(By.cssSelector(cssSelector));
+    }
+
+    public List<WebElement> findAllById(String id) {
+        return webDriver.findElements(By.id(id));
+    }
+
+    public List<WebElement> findAllByXpath(String xpathExpression) {
+        return webDriver.findElements(By.xpath(xpathExpression));
     }
 
     public void click(By by) {
