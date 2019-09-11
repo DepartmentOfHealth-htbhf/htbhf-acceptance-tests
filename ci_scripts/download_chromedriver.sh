@@ -12,8 +12,7 @@ chromedriver --version
 
 if [[ $? == 0 ]]; then
 
-  echo "Using version of chromedriver found on path"
-  export CHROMEDRIVER_PATH="chromedriver"
+  echo "Chromedriver found on path"
 
 else
 
@@ -33,7 +32,5 @@ else
     touch chromedriver_${CHROMEDRIVER_VERSION}.ver
     cd ${CURR_DIR}
   fi
-
-  export CHROMEDRIVER_PATH="${BIN_DIR}/chromedriver"
 
 fi

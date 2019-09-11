@@ -4,7 +4,7 @@ buildscript {
         junitVersion = '5.3.2'
         springVersion = '5.1.8.RELEASE'
         seleniumVersion = '3.141.59'
-        chromedriverPath = 'foo'
+        chromedriverPath = 'set by findChromedriver()'
         cucumberVersion = '4.7.1'
     }
 
@@ -73,7 +73,7 @@ task findChromedriver(type: Exec) {
             project.ext.chromedriverPath = standardOutput.toString().trim()
         } else {
             def binDir = System.getenv("BIN_DIR") ?: "./bin"
-            project.ext.chromedriverPath = System.getenv("CHROMEDRIVER_PATH") ?: "${binDir}/chromedriver"
+            project.ext.chromedriverPath = "${binDir}/chromedriver"
         }
     }
 }
