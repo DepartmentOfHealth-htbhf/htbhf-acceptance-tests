@@ -62,6 +62,7 @@ dependencies {
     testImplementation "com.github.tomakehurst:wiremock-jre8:2.24.1"
     testImplementation "org.apache.commons:commons-lang3:3.9"
     testImplementation "ch.qos.logback:logback-classic:1.2.3"
+    testImplementation "com.fasterxml.jackson.core:jackson-databind:2.9.9.3"
 }
 
 test {

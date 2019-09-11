@@ -112,7 +112,7 @@ public class CommonSteps extends BaseSteps {
     }
 
     protected void enterDefaultManualAddress() {
-        enterManualAddress(ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE);
+        enterManualAddress(ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, Constants.POSTCODE);
     }
 
     protected void enterManualAddress(String addressLine1, String addressLine2, String town, String county, String postcode) {
