@@ -6,9 +6,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static uk.gov.dhsc.htbhf.page.PageName.DATE_OF_BIRTH;
 import static uk.gov.dhsc.htbhf.page.PageName.*;
+import static uk.gov.dhsc.htbhf.steps.ActionOptionsTestDataFactory.buildDefaultActionOptions;
 import static uk.gov.dhsc.htbhf.steps.Constants.*;
-import static uk.gov.dhsc.htbhf.utils.NinoGenerator.generateEligibleNino;
 
 /**
  * Contains common steps used by more than one step
@@ -22,6 +24,14 @@ public class CommonSteps extends BaseSteps {
     }
 
     protected void enterDetailsUpToPage(PageName pageName) {
+        performPageActions(pageName, buildDefaultActionOptions());
+    }
+
+    protected void enterDetailsUpToPage(PageName pageName, ActionOptions actionOptions) {
+        performPageActions(pageName, actionOptions);
+    }
+
+    private void performPageActions(PageName pageName, ActionOptions actionOptions) {
         GuidancePage applyPage = openApplyPage();
         applyPage.clickStartButton();
         for (Map.Entry<PageName, Consumer<ActionOptions>> entry : pageActions.entrySet()) {
@@ -29,7 +39,7 @@ public class CommonSteps extends BaseSteps {
                 break;
             }
             Consumer<ActionOptions> actionsForPage = entry.getValue();
-            actionsForPage.accept(DEFAULT_ACTION_OPTIONS);
+            actionsForPage.accept(actionOptions);
         }
     }
 
@@ -117,7 +127,7 @@ public class CommonSteps extends BaseSteps {
 
     protected void enterNino() {
         NationalInsuranceNumberPage nationalInsuranceNumberPage = getPages().getNationalInsuranceNumberPage();
-        nationalInsuranceNumberPage.enterNino(generateEligibleNino());
+        nationalInsuranceNumberPage.enterNino(Constants.VALID_ELIGIBLE_NINO);
         nationalInsuranceNumberPage.clickContinue();
     }
 
@@ -150,7 +160,7 @@ public class CommonSteps extends BaseSteps {
 
     protected void enterOneChildsDateOfBirth() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
-        childDateOfBirthPage.enterChild3OrUnderDetails(1);
+        childDateOfBirthPage.enterChild3OrUnderDetails(0);
         childDateOfBirthPage.clickContinue();
     }
 
@@ -181,5 +191,24 @@ public class CommonSteps extends BaseSteps {
         TermsAndConditionsPage termsAndConditionsPage = getPages().getTermsAndConditionsPage();
         termsAndConditionsPage.clickAcceptTermsAndConditionsCheckBox();
         termsAndConditionsPage.clickContinue();
+    }
+
+    protected void assertBackLinkPointsToPage(PageName expectedPage) {
+        BasePage page = getPages().getPageByName(expectedPage);
+        boolean backLinkPresent = page.isBackLinkPresent();
+        assertThat(backLinkPresent)
+                .as("Back link should be present on the page")
+                .isTrue();
+
+        String href = page.getBackLinkHref();
+        String expectedUrl = page.getFullPath();
+        boolean correctHref = isCorrectHref(href, expectedUrl);
+        assertThat(correctHref)
+                .as("back link url should be [" + expectedUrl + "], is [" + href + "]")
+                .isTrue();
+    }
+
+    private boolean isCorrectHref(String href, String expectedUrl) {
+        return (href.equals(expectedUrl) || href.startsWith(expectedUrl + "?"));
     }
 }
