@@ -66,7 +66,7 @@ public class CheckAnswersPage extends SubmittablePage {
         return findAllById("children-summary");
     }
 
-    private List<WebElement> getChangeLinksFor(String headerText) {
+    public List<WebElement> getChangeLinksFor(String headerText) {
         return findAllByXpath(String.format("//a[contains(@class, 'govuk-link') and contains(.//span, '%s')]", headerText));
     }
 

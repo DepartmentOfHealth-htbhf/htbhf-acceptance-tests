@@ -6,9 +6,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import static uk.gov.dhsc.htbhf.page.PageName.DATE_OF_BIRTH;
 import static uk.gov.dhsc.htbhf.page.PageName.*;
 import static uk.gov.dhsc.htbhf.steps.Constants.*;
-import static uk.gov.dhsc.htbhf.utils.NinoGenerator.generateEligibleNino;
 
 /**
  * Contains common steps used by more than one step
@@ -117,7 +117,7 @@ public class CommonSteps extends BaseSteps {
 
     protected void enterNino() {
         NationalInsuranceNumberPage nationalInsuranceNumberPage = getPages().getNationalInsuranceNumberPage();
-        nationalInsuranceNumberPage.enterNino(generateEligibleNino());
+        nationalInsuranceNumberPage.enterNino(Constants.VALID_ELIGIBLE_NINO);
         nationalInsuranceNumberPage.clickContinue();
     }
 
@@ -150,7 +150,7 @@ public class CommonSteps extends BaseSteps {
 
     protected void enterOneChildsDateOfBirth() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
-        childDateOfBirthPage.enterChild3OrUnderDetails(1);
+        childDateOfBirthPage.enterChild3OrUnderDetails(0);
         childDateOfBirthPage.clickContinue();
     }
 
