@@ -5,29 +5,36 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.CheckAnswersPage;
 import uk.gov.dhsc.htbhf.page.CheckAnswersRowData;
+import uk.gov.dhsc.htbhf.page.PageName;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.gov.dhsc.htbhf.page.component.RadioButton.NO_LABEL;
 import static uk.gov.dhsc.htbhf.page.component.RadioButton.YES_LABEL;
-import static uk.gov.dhsc.htbhf.steps.Constants.EMAIL_ADDRESS;
-import static uk.gov.dhsc.htbhf.steps.Constants.FULL_NAME;
-import static uk.gov.dhsc.htbhf.steps.Constants.PHONE_NUMBER;
-import static uk.gov.dhsc.htbhf.steps.Constants.VALID_ELIGIBLE_NINO;
+import static uk.gov.dhsc.htbhf.steps.Constants.*;
 import static uk.gov.dhsc.htbhf.utils.DateUtils.getFormattedDateInMonths;
 import static uk.gov.dhsc.htbhf.utils.DateUtils.getFormattedDateLastYear;
 
 /**
  * Contains step definitions for the Check Your Details page.
  */
-public class CheckAnswersSteps extends BaseSteps {
+public class CheckAnswersSteps extends CommonSteps {
+
+    private static final Map<String, String> CHILDRENS_DATE_OF_BIRTH = Map.of(
+            "Name", "Child1",
+            "Date of birth", getFormattedDateLastYear());
 
     @When("^I choose to change my answer to Do you have children")
     public void changeDoYouHaveChildrenAnswer() {
-        CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();
-        checkAnswersPage.clickChangeLinkFor("Children under 4 years old?");
+        changeAnswerFor("Children under 4 years old?");
+    }
+
+    @When("^I choose to change my answer to are you pregnant")
+    public void changeAreYouPregnantAnswer() {
+        changeAnswerFor("Are you pregnant?");
     }
 
     @Then("^there are no children displayed")
@@ -66,14 +73,61 @@ public class CheckAnswersSteps extends BaseSteps {
         assertDobShown(claimContents);
         assertAreYouPregnantValueShown(claimContents, YES_LABEL);
         assertDueDateShownInSixMonths(claimContents);
-        assertFullAddressShown(claimContents);
+        assertFullAddressShown(claimContents, FULL_ADDRESS);
         assertPhoneNumberShown(claimContents);
         assertEmailAddressShown(claimContents);
         assertDoYouHaveChildrenIsShown(claimContents, YES_LABEL);
-        Map<String, String> childsDateOfBirth = Map.of(
-                "Name", "Child1",
-                "Date of birth", getFormattedDateLastYear());
-        assertChildrensDatesOfBirthIsShown(childrenContents, childsDateOfBirth);
+        assertChildrensDatesOfBirthIsShown(childrenContents, CHILDRENS_DATE_OF_BIRTH);
+    }
+
+    @Then("^the check answers page contains all data entered for a woman who is not pregnant")
+    public void checkAnswerPageContainsAllDataForWomanWhoIsNotPregnant() {
+        assertCheckAnswersWithAddressForClaimantWithChildrenAndNotPregnant(Constants.FULL_ADDRESS);
+    }
+
+    @Then("^the check answers page contains all data entered for an applicant with no second line of address")
+    public void checkAnswerPageContainsAllDataForApplicantWithNoSecondLineOfAddress() {
+        assertCheckAnswersWithAddressForClaimantWithChildrenAndNotPregnant(FULL_ADDRESS_NO_LINE_2);
+    }
+
+    @Then("^the check answers page contains all data entered for an applicant with no county")
+    public void checkAnswerPageContainsAllDataForApplicantWithNoCounty() {
+        assertCheckAnswersWithAddressForClaimantWithChildrenAndNotPregnant(FULL_ADDRESS_NO_COUNTY);
+    }
+
+    @Then("^The back link on the check answers page links to the email address page")
+    public void backLinkPointsToEmailAddressPage() {
+        assertBackLinkPointsToPage(PageName.EMAIL_ADDRESS);
+    }
+
+    private void changeAnswerFor(String linkText) {
+        CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();
+        checkAnswersPage.clickChangeLinkFor(linkText);
+    }
+
+    private void assertCheckAnswersWithAddressForClaimantWithChildrenAndNotPregnant(String expectedAddress) {
+        CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();
+        List<CheckAnswersRowData> claimContents = checkAnswersPage.getClaimSummaryListContents();
+        List<CheckAnswersRowData> childrenContents = checkAnswersPage.getChildrenSummaryListContents();
+        assertNameShown(claimContents);
+        assertNinoShown(claimContents);
+        assertDobShown(claimContents);
+        assertAreYouPregnantValueShown(claimContents, NO_LABEL);
+        assertNoValueForField(claimContents, "Baby’s due date");
+        assertFullAddressShown(claimContents, expectedAddress);
+        assertPhoneNumberShown(claimContents);
+        assertEmailAddressShown(claimContents);
+        assertDoYouHaveChildrenIsShown(claimContents, YES_LABEL);
+        assertChildrensDatesOfBirthIsShown(childrenContents, CHILDRENS_DATE_OF_BIRTH);
+    }
+
+    private void assertNoValueForField(List<CheckAnswersRowData> claimContents, String fieldName) {
+        List<CheckAnswersRowData> matchingRows = claimContents.stream()
+                .filter(value -> value.getHeader().equals(fieldName))
+                .collect(Collectors.toList());
+        assertThat(matchingRows)
+                .as("must have no rows matching key: " + fieldName + ", found: " + matchingRows)
+                .isEmpty();
     }
 
     private void assertNameShown(List<CheckAnswersRowData> claimContents) {
@@ -101,8 +155,8 @@ public class CheckAnswersSteps extends BaseSteps {
         assertThat(dueDateValue).isEqualTo(getFormattedDateInMonths(2));
     }
 
-    private void assertFullAddressShown(List<CheckAnswersRowData> claimContents) {
-        assertAddressShown(claimContents, Constants.FULL_ADDRESS);
+    private void assertFullAddressShown(List<CheckAnswersRowData> claimContents, String expectedAddress) {
+        assertAddressShown(claimContents, expectedAddress);
     }
 
     private void assertAddressShown(List<CheckAnswersRowData> claimContents, String expectedAddress) {

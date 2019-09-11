@@ -17,20 +17,11 @@ public class Constants {
     public static final String COUNTY = "Devon";
     public static final String POSTCODE = "AA11BB";
     public static final String FULL_ADDRESS = ADDRESS_LINE_1 + "\n" + ADDRESS_LINE_2 + "\n" + TOWN + "\n" + COUNTY + "\n" + POSTCODE;
+    public static final String FULL_ADDRESS_NO_LINE_2 = ADDRESS_LINE_1 + "\n" + TOWN + "\n" + COUNTY + "\n" + POSTCODE;
+    public static final String FULL_ADDRESS_NO_COUNTY = ADDRESS_LINE_1 + "\n" + ADDRESS_LINE_2 + "\n" + TOWN + "\n" + POSTCODE;
     public static final String PHONE_NUMBER = "07123456789";
     public static final String PHONE_NUMBER_2 = "07111111111";
     public static final String EMAIL_ADDRESS = "test@email.com";
     public static final String EMAIL_ADDRESS_2 = "different-email-address@email.com";
     public static final String VALID_ELIGIBLE_NINO = generateEligibleNino();
-
-    public static final ActionOptions DEFAULT_ACTION_OPTIONS = ActionOptions.builder()
-            .firstName(FIRST_NAME)
-            .lastName(LAST_NAME)
-            .isClaimantPregnant(true)
-            .addressLine1(ADDRESS_LINE_1)
-            .addressLine2(ADDRESS_LINE_2)
-            .townOrCity(TOWN)
-            .county(COUNTY)
-            .postcode(POSTCODE)
-            .build();
 }

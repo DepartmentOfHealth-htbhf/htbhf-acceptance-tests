@@ -18,6 +18,7 @@ public abstract class BasePage extends BaseComponent {
     private static final String RADIO_INPUT_CLASSNAME = "govuk-radios__input";
     private static final String RADIO_LABEL_CLASSNAME = "govuk-radios__label";
     private static final String ERROR_HEADER_SELECTOR = "h2#error-summary-title";
+    private static final String BACK_LINK_CLASSNAME = "govuk-back-link";
 
     protected final WebDriver webDriver;
     protected final WebDriverWait wait;
@@ -36,6 +37,10 @@ public abstract class BasePage extends BaseComponent {
     abstract PageName getPageName();
 
     abstract String getPageTitle();
+
+    public String getFullPath() {
+        return baseUrl + getPath();
+    }
 
     public void open() {
         openDirect();
@@ -94,6 +99,19 @@ public abstract class BasePage extends BaseComponent {
     public String getErrorLinkText(String errorLinkCss) {
         WebElement errorLink = findByCss(errorLinkCss);
         return errorLink.getText();
+    }
+
+    public WebElement getBackLink() {
+        return findByClassName(BACK_LINK_CLASSNAME);
+    }
+
+    public String getBackLinkHref() {
+        WebElement backLink = getBackLink();
+        return backLink.getAttribute("href");
+    }
+
+    public boolean isBackLinkPresent() {
+        return getBackLink().isDisplayed();
     }
 
     private String getVisibleTextFromFieldError(WebElement errorElement) {
