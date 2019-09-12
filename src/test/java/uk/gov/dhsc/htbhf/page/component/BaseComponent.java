@@ -33,6 +33,10 @@ public abstract class BaseComponent {
         return webDriver.findElement(By.id(id));
     }
 
+    protected WebElement findByXpath(String xpathExpression) {
+        return webDriver.findElement(By.xpath(xpathExpression));
+    }
+
     protected List<WebElement> findAllByCss(String cssSelector) {
         return webDriver.findElements(By.cssSelector(cssSelector));
     }
