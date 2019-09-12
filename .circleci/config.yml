@@ -12,6 +12,8 @@ jobs:
       WIREMOCK_URL: http://localhost:8090
       USE_UNSECURE_COOKIE: true
       WEB_UI_BRANCH: ''
+      OS_PLACES_API_KEY: os-places-key
+      OS_PLACES_URI: http://localhost:8090
     steps:
       - checkout
       - run:

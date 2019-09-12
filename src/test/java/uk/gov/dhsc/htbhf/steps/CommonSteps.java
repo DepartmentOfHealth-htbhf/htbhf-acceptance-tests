@@ -1,9 +1,11 @@
 package uk.gov.dhsc.htbhf.steps;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.*;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import javax.annotation.PostConstruct;
@@ -67,11 +69,17 @@ public class CommonSteps extends BaseSteps {
         });
         addActionToMapRespectingToggle(pageActions, NAME, (actionOptions) -> enterName(actionOptions.getFirstName(), actionOptions.getLastName()));
         addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (actionOptions) -> enterNino(actionOptions.getNino()));
-        //TODO MRS 2019-09-04: Need to add postcode lookup here when required.
-//        addActionToMapRespectingToggle(pageActions, POSTCODE, (actionOptions) -> {
-//            setupPostcodeLookupWithResults(POSTCODE);
-//            enterPostcode();
-//        });
+        addActionToMapRespectingToggle(pageActions, POSTCODE, (actionOptions) -> {
+            setupPostcodeLookupWithResults(actionOptions.getPostcode());
+            enterPostcodeAndSubmit(actionOptions.getPostcode());
+        });
+        addActionToMapRespectingToggle(pageActions, SELECT_ADDRESS, (actionOptions -> {
+            if (actionOptions.getSelectAddress()) {
+                selectFirstAddressAndSubmit();
+            } else {
+                clickAddressNotListedLink();
+            }
+        }));
         addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (actionOptions) ->
                 enterManualAddress(actionOptions.getAddressLine1(),
                         actionOptions.getAddressLine2(),
@@ -129,6 +137,34 @@ public class CommonSteps extends BaseSteps {
         manualAddressPage.enterCounty(county);
         manualAddressPage.enterPostcode(postcode);
         manualAddressPage.clickContinue();
+    }
+
+    protected void setupPostcodeLookupWithResults(String postcode) {
+        wireMockManager.setupPostcodeLookupWithResultsMapping(postcode);
+    }
+
+    protected void enterPostcodeAndSubmit(String postcode) {
+        PostcodePage postcodePage = getPages().getPostcodePage();
+        postcodePage.enterPostcode(postcode);
+        postcodePage.clickContinue();
+    }
+
+    protected void selectFirstAddress() {
+        SelectAddressPage selectAddressPage = getPages().getSelectAddressPage();
+        List<WebElement> addressOptions = selectAddressPage.getAddressOptions();
+        WebElement option = addressOptions.get(0);
+        option.click();
+    }
+
+    protected void selectFirstAddressAndSubmit() {
+        selectFirstAddress();
+        SelectAddressPage selectAddressPage = getPages().getSelectAddressPage();
+        selectAddressPage.clickContinue();
+    }
+
+    protected void clickAddressNotListedLink() {
+        SelectAddressPage selectAddressPage = getPages().getSelectAddressPage();
+        selectAddressPage.clickAddressNotListedLink();
     }
 
     protected void enterNino(String nino) {

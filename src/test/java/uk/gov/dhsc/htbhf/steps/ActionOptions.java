@@ -18,4 +18,5 @@ public class ActionOptions {
     private String county;
     private String postcode;
     private String nino;
+    private Boolean selectAddress;
 }

@@ -46,6 +46,7 @@ public class ActionOptionsTestDataFactory {
                 .townOrCity(TOWN)
                 .county(COUNTY)
                 .postcode(POSTCODE)
-                .nino(generateEligibleNino());
+                .nino(generateEligibleNino())
+                .selectAddress(false);
     }
 }

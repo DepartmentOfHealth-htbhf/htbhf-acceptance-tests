@@ -1,10 +1,12 @@
 package uk.gov.dhsc.htbhf.utils;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import org.apache.http.HttpStatus;
 
 import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aPostcodeLookupResponseWithResults;
 import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aValidClaimResponseWithVoucherEntitlement;
 import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aValidClaimResponseWithoutVoucherEntitlement;
 
@@ -14,6 +16,7 @@ import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aValidClai
 public class WireMockManagerImpl implements WireMockManager {
 
     private static final String CLAIMS_ENDPOINT = "/v2/claims";
+    private static final String POSTCODE_LOOKUP_ENDPOINT = "/places/v1/addresses/postcode";
     private static final String REQUEST_ID_HEADER = "X-Request-ID";
     private static final String SESSION_ID_HEADER = "X-Session-ID";
     private static final String ID_HEADERS_REGEX = "([A-Za-z0-9_-])+";
@@ -28,6 +31,7 @@ public class WireMockManagerImpl implements WireMockManager {
     );
 
     private WireMockServer wireMockServer;
+
 
     public WireMockManagerImpl(WireMockServer wireMockServer) {
         this.wireMockServer = wireMockServer;
@@ -57,6 +61,18 @@ public class WireMockManagerImpl implements WireMockManager {
                 .withHeader(SESSION_ID_HEADER, matching(ID_HEADERS_REGEX))
                 .willReturn(aResponse()
                         .withStatus(ELIGIBILITY_RESPONSE_MAPPINGS.get(eligibilityStatus))
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(wireMockBody)));
+    }
+
+    @Override
+    public void setupPostcodeLookupWithResultsMapping(String postcode) {
+        String wireMockBody = aPostcodeLookupResponseWithResults(postcode);
+        stubFor(get(urlPathEqualTo(POSTCODE_LOOKUP_ENDPOINT))
+                .withQueryParam("postcode", equalTo(postcode))
+                .withQueryParam("key", matching(".*"))
+                .willReturn(aResponse()
+                        .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody(wireMockBody)));
     }
