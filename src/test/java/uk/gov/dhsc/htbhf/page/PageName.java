@@ -1,6 +1,7 @@
 package uk.gov.dhsc.htbhf.page;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * Enum of all the page names
@@ -15,6 +16,8 @@ public enum PageName {
     DO_YOU_HAVE_CHILDREN("do you have children under four years old"),
     EMAIL_ADDRESS("email address"),
     ENTER_CODE("enter code"),
+    POSTCODE("postcode", "ADDRESS_LOOKUP_ENABLED"),
+    SELECT_ADDRESS("select address", "ADDRESS_LOOKUP_ENABLED"),
     MANUAL_ADDRESS("manual address"),
     NAME("enter name"),
     NATIONAL_INSURANCE_NUMBER("enter national insurance number"),
@@ -32,9 +35,16 @@ public enum PageName {
     REPORT_A_CHANGE("Report a change");
 
     private String pageName;
+    private Optional<String> toggleName;
 
     PageName(String pageName) {
         this.pageName = pageName;
+        this.toggleName = Optional.empty();
+    }
+
+    PageName(String pageName, String toggleName) {
+        this.pageName = pageName;
+        this.toggleName = Optional.of(toggleName);
     }
 
     public String getPageName() {
@@ -46,5 +56,13 @@ public enum PageName {
                 .filter(page -> pageName.equals(page.pageName))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No page name found for name: " + pageName));
+    }
+
+    public boolean hasToggle() {
+        return toggleName.isPresent();
+    }
+
+    public Optional<String> getToggle() {
+        return toggleName;
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import uk.gov.dhsc.htbhf.WebDriverWrapper;
 import uk.gov.dhsc.htbhf.utils.NoopWireMockManager;
+import uk.gov.dhsc.htbhf.utils.ToggleConfiguration;
 import uk.gov.dhsc.htbhf.utils.WireMockManager;
 
 @Configuration
@@ -28,6 +29,9 @@ public class BrowserStackConfiguration {
     @Value("${base.url}")
     private String baseUrl;
 
+    @Value("${FEATURE_TOGGLES}")
+    private String featureToggles;
+
     @Bean
     public WebDriverWrapper browserStackDriverBuilder() {
         return new BrowserStackDriverWrapper(browserStackUser, browserStackKey, waitTimeoutInSeconds, baseUrl);
@@ -41,5 +45,10 @@ public class BrowserStackConfiguration {
     @Bean
     public BrowserStackResultUploader browserStackResultUploader() {
         return new BrowserStackResultUploader(browserStackUser, browserStackKey);
+    }
+
+    @Bean
+    public ToggleConfiguration toggleConfiguration() {
+        return new ToggleConfiguration(featureToggles);
     }
 }

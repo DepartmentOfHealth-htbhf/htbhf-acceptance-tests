@@ -44,4 +44,16 @@ class PageNameTest {
         Throwable thrown = catchThrowableOfType(() -> PageName.toPageName("foo"), IllegalArgumentException.class);
         assertThat(thrown).hasMessage("No page name found for name: foo");
     }
+
+    @Test
+    void shouldHaveNoToggle() {
+        assertThat(PageName.HOW_IT_WORKS.hasToggle()).isFalse();
+        assertThat(PageName.POSTCODE.hasToggle()).isTrue();
+    }
+
+    @Test
+    void shouldReturnNoToggle() {
+        assertThat(PageName.HOW_IT_WORKS.getToggle()).isEmpty();
+        assertThat(PageName.POSTCODE.getToggle()).hasValue("ADDRESS_LOOKUP_ENABLED");
+    }
 }
