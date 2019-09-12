@@ -1,6 +1,7 @@
 package uk.gov.dhsc.htbhf.steps;
 
 import static uk.gov.dhsc.htbhf.steps.Constants.*;
+import static uk.gov.dhsc.htbhf.utils.NinoGenerator.generateEligibleNino;
 
 /**
  * Builds ActionOption instances containing the data to be used for navigating routes through the application.
@@ -44,6 +45,7 @@ public class ActionOptionsTestDataFactory {
                 .addressLine2(ADDRESS_LINE_2)
                 .townOrCity(TOWN)
                 .county(COUNTY)
-                .postcode(POSTCODE);
+                .postcode(POSTCODE)
+                .nino(generateEligibleNino());
     }
 }
