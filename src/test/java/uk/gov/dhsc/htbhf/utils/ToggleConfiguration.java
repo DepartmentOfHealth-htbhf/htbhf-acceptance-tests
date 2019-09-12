@@ -9,22 +9,19 @@ import uk.gov.dhsc.htbhf.page.PageName;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
 
 @Slf4j
 public class ToggleConfiguration {
 
-    public static final String ENVIRONMENT_PROPERTY = "FEATURE_TOGGLES";
     private Map<String, Boolean> toggles;
 
-    public ToggleConfiguration(Properties systemProperties, ObjectMapper objectMapper) {
-        toggles = loadToggles(systemProperties, objectMapper);
+    public ToggleConfiguration(String featureToggleJson, ObjectMapper objectMapper) {
+        toggles = loadToggles(featureToggleJson, objectMapper);
     }
 
-    private Map<String, Boolean> loadToggles(Properties systemProperties, ObjectMapper objectMapper) {
-        String featureToggleJson = systemProperties.getProperty(ENVIRONMENT_PROPERTY);
+    private Map<String, Boolean> loadToggles(String featureToggleJson, ObjectMapper objectMapper) {
         if (StringUtils.isBlank(featureToggleJson)) {
-            log.info("No toggles JSON found in environment variable " + ENVIRONMENT_PROPERTY + " defaulting to no toggles");
+            log.info("No toggles JSON found in environment variable FEATURE_TOGGLES defaulting to no toggles");
             return new HashMap<>();
         }
         return toggles = readToggleJson(objectMapper, featureToggleJson);

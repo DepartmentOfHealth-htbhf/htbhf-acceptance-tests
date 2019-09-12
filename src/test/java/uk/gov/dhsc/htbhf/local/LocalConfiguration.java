@@ -1,5 +1,6 @@
 package uk.gov.dhsc.htbhf.local;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import uk.gov.dhsc.htbhf.TestResultHandler;
 import uk.gov.dhsc.htbhf.WebDriverWrapper;
+import uk.gov.dhsc.htbhf.utils.ToggleConfiguration;
 import uk.gov.dhsc.htbhf.utils.WireMockManager;
 import uk.gov.dhsc.htbhf.utils.WireMockManagerImpl;
 
@@ -34,6 +36,9 @@ public class LocalConfiguration {
     @Value("${base.url}")
     private String baseUrl;
 
+    @Value("${FEATURE_TOGGLES}")
+    private String featureToggles;
+
     @Bean()
     public WebDriverWrapper localWebDriverWrapper() {
         return new LocalWebDriverWrapper(browser, headless, waitTimeoutInSeconds, baseUrl);
@@ -56,5 +61,15 @@ public class LocalConfiguration {
     @Bean
     public TestResultHandler testResultHandler() {
         return new NoopTestResultHandler();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
+
+    @Bean
+    public ToggleConfiguration toggleConfiguration(ObjectMapper objectMapper) {
+        return new ToggleConfiguration(featureToggles, objectMapper);
     }
 }

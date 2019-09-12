@@ -8,6 +8,7 @@ import uk.gov.dhsc.htbhf.TestResultHandler;
 import uk.gov.dhsc.htbhf.WebDriverWrapper;
 import uk.gov.dhsc.htbhf.page.BasePage;
 import uk.gov.dhsc.htbhf.page.Pages;
+import uk.gov.dhsc.htbhf.utils.ToggleConfiguration;
 import uk.gov.dhsc.htbhf.utils.WireMockManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,6 +28,9 @@ public abstract class BaseSteps {
 
     @Autowired
     protected TestResultHandler testResultHandler;
+
+    @Autowired
+    protected ToggleConfiguration toggleConfiguration;
 
     @Value("${base.url}")
     protected String baseUrl;

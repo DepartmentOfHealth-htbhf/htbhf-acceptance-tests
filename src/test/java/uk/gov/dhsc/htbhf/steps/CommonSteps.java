@@ -1,10 +1,12 @@
 package uk.gov.dhsc.htbhf.steps;
 
+import lombok.extern.slf4j.Slf4j;
 import uk.gov.dhsc.htbhf.page.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Consumer;
+import javax.annotation.PostConstruct;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.dhsc.htbhf.page.PageName.DATE_OF_BIRTH;
@@ -15,13 +17,10 @@ import static uk.gov.dhsc.htbhf.steps.Constants.*;
 /**
  * Contains common steps used by more than one step
  */
+@Slf4j
 public class CommonSteps extends BaseSteps {
 
     private Map<PageName, Consumer<ActionOptions>> pageActions;
-
-    public CommonSteps() {
-        this.pageActions = buildDefaultStepPageActions();
-    }
 
     protected void enterDetailsUpToPage(PageName pageName) {
         performPageActions(pageName, buildDefaultActionOptions());
@@ -49,39 +48,47 @@ public class CommonSteps extends BaseSteps {
         return applyPage;
     }
 
-    private Map<PageName, Consumer<ActionOptions>> buildDefaultStepPageActions() {
-        Map<PageName, Consumer<ActionOptions>> pageActions = new LinkedHashMap<>();
-        pageActions.put(SCOTLAND, (actionOptions) -> enterDoYouLiveInScotlandNoAndSubmit());
-        pageActions.put(DATE_OF_BIRTH, (actionOptions) -> enterDateOfBirthAndSubmit());
-        pageActions.put(DO_YOU_HAVE_CHILDREN, (actionOptions) -> enterDoYouHaveChildrenYesAndSubmit());
-        pageActions.put(CHILD_DATE_OF_BIRTH, (actionOptions) -> enterOneChildsDateOfBirth());
-        pageActions.put(ARE_YOU_PREGNANT, (actionOptions) -> {
+    @PostConstruct
+    private void buildDefaultStepPageActions() {
+        pageActions = new LinkedHashMap<>();
+        addActionToMapRespectingToggle(pageActions, SCOTLAND, (actionOptions) -> enterDoYouLiveInScotlandNoAndSubmit());
+        addActionToMapRespectingToggle(pageActions, DATE_OF_BIRTH, (actionOptions) -> enterDateOfBirthAndSubmit());
+        addActionToMapRespectingToggle(pageActions, DO_YOU_HAVE_CHILDREN, (actionOptions) -> enterDoYouHaveChildrenYesAndSubmit());
+        addActionToMapRespectingToggle(pageActions, CHILD_DATE_OF_BIRTH, (actionOptions) -> enterOneChildsDateOfBirth());
+        addActionToMapRespectingToggle(pageActions, ARE_YOU_PREGNANT, (actionOptions) -> {
             if (actionOptions.isClaimantPregnant()) {
                 selectYesOnPregnancyPage();
             } else {
                 selectNoOnPregnancyPage();
             }
         });
-        pageActions.put(NAME, (actionOptions) -> enterName(actionOptions.getFirstName(), actionOptions.getLastName()));
-        pageActions.put(NATIONAL_INSURANCE_NUMBER, (actionOptions) -> enterNino());
+        addActionToMapRespectingToggle(pageActions, NAME, (actionOptions) -> enterName(actionOptions.getFirstName(), actionOptions.getLastName()));
+        addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (actionOptions) -> enterNino());
         //TODO MRS 2019-09-04: Need to add postcode lookup here when required.
-//        pageActions.put(POSTCODE, (actionOptions) -> {
+//        addActionToMapRespectingToggle(pageActions, POSTCODE, (actionOptions) -> {
 //            setupPostcodeLookupWithResults(POSTCODE);
 //            enterPostcode();
 //        });
-        pageActions.put(MANUAL_ADDRESS, (actionOptions) ->
+        addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (actionOptions) ->
                 enterManualAddress(actionOptions.getAddressLine1(),
                         actionOptions.getAddressLine2(),
                         actionOptions.getTownOrCity(),
                         actionOptions.getCounty(),
                         actionOptions.getPostcode()));
-        pageActions.put(PageName.PHONE_NUMBER, (actionOptions) -> enterPhoneNumber());
-        pageActions.put(PageName.EMAIL_ADDRESS, (actionOptions) -> enterEmailAddress());
-        pageActions.put(SEND_CODE, (actionOptions) -> selectTextOnSendCode());
-        pageActions.put(ENTER_CODE, (actionOptions) -> enterConfirmationCodeAndSubmit());
-        pageActions.put(CHECK_ANSWERS, (actionOptions) -> {
+        addActionToMapRespectingToggle(pageActions, PageName.PHONE_NUMBER, (actionOptions) -> enterPhoneNumber());
+        addActionToMapRespectingToggle(pageActions, PageName.EMAIL_ADDRESS, (actionOptions) -> enterEmailAddress());
+        addActionToMapRespectingToggle(pageActions, SEND_CODE, (actionOptions) -> selectTextOnSendCode());
+        addActionToMapRespectingToggle(pageActions, ENTER_CODE, (actionOptions) -> enterConfirmationCodeAndSubmit());
+        addActionToMapRespectingToggle(pageActions, CHECK_ANSWERS, (actionOptions) -> {
         });
-        return pageActions;
+    }
+
+    private void addActionToMapRespectingToggle(Map<PageName, Consumer<ActionOptions>> pageActions, PageName pageName, Consumer<ActionOptions> pageAction) {
+        if (toggleConfiguration.isPageEnabled(pageName)) {
+            pageActions.put(pageName, pageAction);
+        } else {
+            log.info("Not adding page action for [{}] as it is toggled off", pageName);
+        }
     }
 
     protected void enterConfirmationCodeAndSubmit() {

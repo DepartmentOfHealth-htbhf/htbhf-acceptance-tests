@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Test;
 import uk.gov.dhsc.htbhf.page.PageName;
 
 import java.util.Map;
-import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.dhsc.htbhf.utils.ToggleConfiguration.ENVIRONMENT_PROPERTY;
 
 class ToggleConfigurationTest {
 
@@ -23,8 +21,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldLoadTogglesFromEnvironment() {
         //Given
-        Properties properties = setupPropertiesForToggleJson(VALID_TOGGLE_CONFIG);
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(properties, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG, objectMapper);
         //When
         Map<String, Boolean> allToggles = toggleConfiguration.getAllToggles();
         boolean addressToggled = toggleConfiguration.isEnabled("ADDRESS_LOOKUP_ENABLED");
@@ -38,8 +35,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldNotBeEnabledForMissingToggle() {
         //Given
-        Properties properties = setupPropertiesForToggleJson(VALID_TOGGLE_CONFIG);
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(properties, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG, objectMapper);
         //When
         boolean somethingEnabled = toggleConfiguration.isEnabled("SOMETHING_ENABLED");
         //Then
@@ -49,8 +45,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldEnablePageThatHasNoToggle() {
         //Given
-        Properties properties = setupPropertiesForToggleJson(VALID_TOGGLE_CONFIG);
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(properties, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG, objectMapper);
         //When
         boolean pageEnabled = toggleConfiguration.isPageEnabled(PageName.HOW_IT_WORKS);
         //Then
@@ -60,8 +55,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldBeToggledOffForToggledPageWithNoConfig() {
         //Given
-        Properties properties = setupPropertiesForToggleJson(EMPTY_TOGGLE_JSON);
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(properties, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(EMPTY_TOGGLE_JSON, objectMapper);
         //When
         boolean pageEnabled = toggleConfiguration.isPageEnabled(PageName.POSTCODE);
         //Then
@@ -71,8 +65,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldBeToggledOnForPageWithNoToggleWithNoConfig() {
         //Given
-        Properties properties = setupPropertiesForToggleJson(EMPTY_TOGGLE_JSON);
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(properties, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(EMPTY_TOGGLE_JSON, objectMapper);
         //When
         boolean toggle = toggleConfiguration.isPageEnabled(PageName.HOW_IT_WORKS);
         //Then
@@ -82,8 +75,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldReturnNoTogglesWhenEnvironmentVariableDoesntExist() {
         //Given
-        Properties properties = new Properties();
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(properties, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(null, objectMapper);
         //When
         Map<String, Boolean> allToggles = toggleConfiguration.getAllToggles();
         //Then
@@ -93,17 +85,10 @@ class ToggleConfigurationTest {
     @Test
     void shouldReturnNoTogglesWhenEnvironmentVariableIsInvalidJson() {
         //Given
-        Properties properties = setupPropertiesForToggleJson(INVALID_TOGGLE_JSON);
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(properties, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(INVALID_TOGGLE_JSON, objectMapper);
         //When
         Map<String, Boolean> allToggles = toggleConfiguration.getAllToggles();
         //Then
         assertThat(allToggles).isEmpty();
-    }
-
-    private Properties setupPropertiesForToggleJson(String toggleJson) {
-        Properties properties = new Properties();
-        properties.put(ENVIRONMENT_PROPERTY, toggleJson);
-        return properties;
     }
 }
