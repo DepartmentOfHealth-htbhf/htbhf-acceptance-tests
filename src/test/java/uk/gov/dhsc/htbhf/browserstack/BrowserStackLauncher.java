@@ -29,7 +29,7 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass
 public class BrowserStackLauncher {
 
     private static final int MAX_THREADS = 5;
-    private static final int MAX_RETRY_ATTEMPTS = 3;
+    private static final int MAX_RETRY_ATTEMPTS = 4;
     private static final int TOTAL_TIMEOUT_MINS = 15;
     private static final String COMPATIBILITY_REPORT_DIR = "build/reports/compatibility-report";
     private static final String COMPATIBILITY_REPORT_FILE = COMPATIBILITY_REPORT_DIR + "/index.html";
