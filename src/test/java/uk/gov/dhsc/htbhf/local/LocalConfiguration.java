@@ -1,6 +1,5 @@
 package uk.gov.dhsc.htbhf.local;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,12 +63,7 @@ public class LocalConfiguration {
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
-
-    @Bean
-    public ToggleConfiguration toggleConfiguration(ObjectMapper objectMapper) {
-        return new ToggleConfiguration(featureToggles, objectMapper);
+    public ToggleConfiguration toggleConfiguration() {
+        return new ToggleConfiguration(featureToggles);
     }
 }

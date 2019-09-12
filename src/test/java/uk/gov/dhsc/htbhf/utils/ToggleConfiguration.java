@@ -14,20 +14,22 @@ import java.util.Optional;
 public class ToggleConfiguration {
 
     private Map<String, Boolean> toggles;
+    private ObjectMapper objectMapper;
 
-    public ToggleConfiguration(String featureToggleJson, ObjectMapper objectMapper) {
-        toggles = loadToggles(featureToggleJson, objectMapper);
+    public ToggleConfiguration(String featureToggleJson) {
+        objectMapper = new ObjectMapper();
+        toggles = loadToggles(featureToggleJson);
     }
 
-    private Map<String, Boolean> loadToggles(String featureToggleJson, ObjectMapper objectMapper) {
+    private Map<String, Boolean> loadToggles(String featureToggleJson) {
         if (StringUtils.isBlank(featureToggleJson)) {
             log.info("No toggles JSON found in environment variable FEATURE_TOGGLES defaulting to no toggles");
             return new HashMap<>();
         }
-        return toggles = readToggleJson(objectMapper, featureToggleJson);
+        return toggles = readToggleJson(featureToggleJson);
     }
 
-    private Map<String, Boolean> readToggleJson(ObjectMapper objectMapper, String featureToggleJson) {
+    private Map<String, Boolean> readToggleJson(String featureToggleJson) {
         try {
             Map<String, Boolean> toggleMap = objectMapper.readValue(featureToggleJson, new TypeReference<Map<String, Boolean>>() {
             });
@@ -44,10 +46,7 @@ public class ToggleConfiguration {
     }
 
     public boolean isEnabled(String toggle) {
-        if (toggles.containsKey(toggle)) {
-            return toggles.get(toggle);
-        }
-        return false;
+        return toggles.getOrDefault(toggle, false);
     }
 
     public boolean isPageEnabled(PageName pageName) {

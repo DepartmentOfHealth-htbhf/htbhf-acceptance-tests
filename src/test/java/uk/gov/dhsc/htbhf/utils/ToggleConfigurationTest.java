@@ -1,6 +1,5 @@
 package uk.gov.dhsc.htbhf.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.gov.dhsc.htbhf.page.PageName;
 
@@ -16,12 +15,11 @@ class ToggleConfigurationTest {
             "}";
     private static final String INVALID_TOGGLE_JSON = "{}}";
     private static final String EMPTY_TOGGLE_JSON = "{}";
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     void shouldLoadTogglesFromEnvironment() {
         //Given
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG);
         //When
         Map<String, Boolean> allToggles = toggleConfiguration.getAllToggles();
         boolean addressToggled = toggleConfiguration.isEnabled("ADDRESS_LOOKUP_ENABLED");
@@ -35,7 +33,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldNotBeEnabledForMissingToggle() {
         //Given
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG);
         //When
         boolean somethingEnabled = toggleConfiguration.isEnabled("SOMETHING_ENABLED");
         //Then
@@ -45,7 +43,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldEnablePageThatHasNoToggle() {
         //Given
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG);
         //When
         boolean pageEnabled = toggleConfiguration.isPageEnabled(PageName.HOW_IT_WORKS);
         //Then
@@ -55,7 +53,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldBeToggledOffForToggledPageWithNoConfig() {
         //Given
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(EMPTY_TOGGLE_JSON, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(EMPTY_TOGGLE_JSON);
         //When
         boolean pageEnabled = toggleConfiguration.isPageEnabled(PageName.POSTCODE);
         //Then
@@ -65,7 +63,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldBeToggledOnForPageWithNoToggleWithNoConfig() {
         //Given
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(EMPTY_TOGGLE_JSON, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(EMPTY_TOGGLE_JSON);
         //When
         boolean toggle = toggleConfiguration.isPageEnabled(PageName.HOW_IT_WORKS);
         //Then
@@ -75,7 +73,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldReturnNoTogglesWhenEnvironmentVariableDoesntExist() {
         //Given
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(null, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(null);
         //When
         Map<String, Boolean> allToggles = toggleConfiguration.getAllToggles();
         //Then
@@ -85,7 +83,7 @@ class ToggleConfigurationTest {
     @Test
     void shouldReturnNoTogglesWhenEnvironmentVariableIsInvalidJson() {
         //Given
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(INVALID_TOGGLE_JSON, objectMapper);
+        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(INVALID_TOGGLE_JSON);
         //When
         Map<String, Boolean> allToggles = toggleConfiguration.getAllToggles();
         //Then

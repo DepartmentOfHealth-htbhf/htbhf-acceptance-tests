@@ -1,6 +1,5 @@
 package uk.gov.dhsc.htbhf.browserstack;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -49,12 +48,7 @@ public class BrowserStackConfiguration {
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
-
-    @Bean
-    public ToggleConfiguration toggleConfiguration(ObjectMapper objectMapper) {
-        return new ToggleConfiguration(featureToggles, objectMapper);
+    public ToggleConfiguration toggleConfiguration() {
+        return new ToggleConfiguration(featureToggles);
     }
 }
