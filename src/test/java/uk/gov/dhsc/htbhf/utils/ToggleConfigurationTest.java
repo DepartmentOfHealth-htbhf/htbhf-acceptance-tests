@@ -51,7 +51,7 @@ class ToggleConfigurationTest {
     }
 
     @Test
-    void shouldBeToggledOffForToggledPageWithNoConfig() {
+    void shouldNotBeEnabledForToggledPageWithNoConfig() {
         //Given
         ToggleConfiguration toggleConfiguration = new ToggleConfiguration(EMPTY_TOGGLE_JSON);
         //When
@@ -61,7 +61,7 @@ class ToggleConfigurationTest {
     }
 
     @Test
-    void shouldBeToggledOnForPageWithNoToggleWithNoConfig() {
+    void shouldBeEnabledForPageWithNoToggleWithNoConfig() {
         //Given
         ToggleConfiguration toggleConfiguration = new ToggleConfiguration(EMPTY_TOGGLE_JSON);
         //When
