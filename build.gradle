@@ -4,7 +4,7 @@ buildscript {
         junitVersion = '5.3.2'
         springVersion = '5.1.8.RELEASE'
         seleniumVersion = '3.141.59'
-        chromeWebriverPath = './bin/chromedriver'
+        chromedriverPath = '' // this variable is set by findChromedriver()
         cucumberVersion = '4.7.1'
     }
 
@@ -66,10 +66,27 @@ dependencies {
     testImplementation "com.fasterxml.jackson.core:jackson-databind:2.9.9.3"
 }
 
+task findChromedriver(type: Exec) {
+    commandLine './ci_scripts/chromedriver_version.sh'
+    standardOutput = new ByteArrayOutputStream()
+    ignoreExitValue true
+    doLast {
+        if (execResult.getExitValue() == 0) {
+            project.ext.chromedriverPath = standardOutput.toString().trim()
+        } else {
+            def binDir = System.getenv("BIN_DIR") ?: "./bin"
+            project.ext.chromedriverPath = "${binDir}/chromedriver"
+        }
+    }
+}
+
 test {
-    def binDir = System.getenv("BIN_DIR") ?: "./bin"
-    systemProperty "webdriver.chrome.driver", "${binDir}/chromedriver"
-    systemProperty "cucumber.options", System.getProperty("cucumber.options")
+    dependsOn findChromedriver
+    doFirst {
+        println("Chromedriver path: ${project.ext.chromedriverPath}")
+        systemProperty "webdriver.chrome.driver", "${project.ext.chromedriverPath}"
+        systemProperty "cucumber.options", System.getProperty("cucumber.options")
+    }
     filter {
         excludeTestsMatching "uk.gov.dhsc.htbhf.RunCompatibilityTests"
     }
@@ -80,7 +97,7 @@ test {
     }
 }
 
-task compatibility(type:JavaExec) {
+task compatibility(type: JavaExec) {
     systemProperty "spring.profiles.active", "browserstack"
     systemProperty "cucumber.options", System.getProperty("cucumber.options")
     main = "uk.gov.dhsc.htbhf.browserstack.BrowserStackLauncher"

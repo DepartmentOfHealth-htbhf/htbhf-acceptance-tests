@@ -9,10 +9,11 @@ import java.util.function.Consumer;
 import javax.annotation.PostConstruct;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.dhsc.htbhf.page.PageName.DATE_OF_BIRTH;
 import static uk.gov.dhsc.htbhf.page.PageName.*;
 import static uk.gov.dhsc.htbhf.steps.ActionOptionsTestDataFactory.buildDefaultActionOptions;
-import static uk.gov.dhsc.htbhf.steps.Constants.*;
+import static uk.gov.dhsc.htbhf.steps.Constants.DOB_DAY;
+import static uk.gov.dhsc.htbhf.steps.Constants.DOB_MONTH;
+import static uk.gov.dhsc.htbhf.steps.Constants.DOB_YEAR;
 
 /**
  * Contains common steps used by more than one step
@@ -20,6 +21,7 @@ import static uk.gov.dhsc.htbhf.steps.Constants.*;
 @Slf4j
 public class CommonSteps extends BaseSteps {
 
+    protected static ThreadLocal<ActionOptions> actionOptionsThreadLocal = new ThreadLocal<>();
     private Map<PageName, Consumer<ActionOptions>> pageActions;
 
     protected void enterDetailsUpToPage(PageName pageName) {
@@ -31,6 +33,7 @@ public class CommonSteps extends BaseSteps {
     }
 
     private void performPageActions(PageName pageName, ActionOptions actionOptions) {
+        actionOptionsThreadLocal.set(actionOptions);
         GuidancePage applyPage = openApplyPage();
         applyPage.clickStartButton();
         for (Map.Entry<PageName, Consumer<ActionOptions>> entry : pageActions.entrySet()) {
@@ -63,7 +66,7 @@ public class CommonSteps extends BaseSteps {
             }
         });
         addActionToMapRespectingToggle(pageActions, NAME, (actionOptions) -> enterName(actionOptions.getFirstName(), actionOptions.getLastName()));
-        addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (actionOptions) -> enterNino());
+        addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (actionOptions) -> enterNino(actionOptions.getNino()));
         //TODO MRS 2019-09-04: Need to add postcode lookup here when required.
 //        addActionToMapRespectingToggle(pageActions, POSTCODE, (actionOptions) -> {
 //            setupPostcodeLookupWithResults(POSTCODE);
@@ -118,10 +121,6 @@ public class CommonSteps extends BaseSteps {
         phoneNumberPage.clickContinue();
     }
 
-    protected void enterDefaultManualAddress() {
-        enterManualAddress(ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, Constants.POSTCODE);
-    }
-
     protected void enterManualAddress(String addressLine1, String addressLine2, String town, String county, String postcode) {
         ManualAddressPage manualAddressPage = getPages().getManualAddressPage();
         manualAddressPage.enterAddressLine1(addressLine1);
@@ -132,14 +131,10 @@ public class CommonSteps extends BaseSteps {
         manualAddressPage.clickContinue();
     }
 
-    protected void enterNino() {
+    protected void enterNino(String nino) {
         NationalInsuranceNumberPage nationalInsuranceNumberPage = getPages().getNationalInsuranceNumberPage();
-        nationalInsuranceNumberPage.enterNino(Constants.VALID_ELIGIBLE_NINO);
+        nationalInsuranceNumberPage.enterNino(nino);
         nationalInsuranceNumberPage.clickContinue();
-    }
-
-    protected void enterDefaultName() {
-        enterName(FIRST_NAME, LAST_NAME);
     }
 
     protected void enterName(String firstName, String lastName) {
