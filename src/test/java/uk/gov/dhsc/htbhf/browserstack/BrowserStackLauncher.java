@@ -1,7 +1,5 @@
 package uk.gov.dhsc.htbhf.browserstack;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
@@ -9,7 +7,6 @@ import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary;
-import org.slf4j.LoggerFactory;
 import org.springframework.retry.RetryContext;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -32,7 +29,7 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass
 public class BrowserStackLauncher {
 
     private static final int MAX_THREADS = 5;
-    private static final int MAX_RETRY_ATTEMPTS = 3;
+    private static final int MAX_RETRY_ATTEMPTS = 4;
     private static final int TOTAL_TIMEOUT_MINS = 15;
     private static final String COMPATIBILITY_REPORT_DIR = "build/reports/compatibility-report";
     private static final String COMPATIBILITY_REPORT_FILE = COMPATIBILITY_REPORT_DIR + "/index.html";
@@ -67,7 +64,6 @@ public class BrowserStackLauncher {
     }
 
     public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException, IOException {
-        setRootLoggerLevel();
         try {
             executorService = Executors.newFixedThreadPool(MAX_THREADS);
 
@@ -153,13 +149,7 @@ public class BrowserStackLauncher {
     }
 
     private static boolean anyTestsFailed() {
-        return results.stream().anyMatch(summary -> summary.isPassed() == false && summary.getAttempts() == MAX_RETRY_ATTEMPTS);
-    }
-
-    //TODO MRS 2019-08-24: Seems to be ignoring the root logger level in application.properties so setting here for now.
-    private static void setRootLoggerLevel() {
-        Logger root = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
-        root.setLevel(Level.INFO);
+        return results.stream().anyMatch(summary -> !summary.isPassed() && summary.getAttempts() == MAX_RETRY_ATTEMPTS);
     }
 
 }

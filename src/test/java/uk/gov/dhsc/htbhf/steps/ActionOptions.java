@@ -17,4 +17,5 @@ public class ActionOptions {
     private String townOrCity;
     private String county;
     private String postcode;
+    private String nino;
 }

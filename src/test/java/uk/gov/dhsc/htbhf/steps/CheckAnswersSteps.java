@@ -136,8 +136,9 @@ public class CheckAnswersSteps extends CommonSteps {
     }
 
     private void assertNinoShown(List<CheckAnswersRowData> claimContents) {
-        String ninoValue = getValueForField(claimContents, "National Insurance number");
-        assertThat(ninoValue).isEqualTo(VALID_ELIGIBLE_NINO);
+        String ninoValueOnPage = getValueForField(claimContents, "National Insurance number");
+        String originalNinoSet = actionOptionsThreadLocal.get().getNino();
+        assertThat(ninoValueOnPage).isEqualTo(originalNinoSet);
     }
 
     private void assertDobShown(List<CheckAnswersRowData> claimContents) {
