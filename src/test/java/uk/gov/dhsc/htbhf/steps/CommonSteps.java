@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.dhsc.htbhf.page.PageName.*;
-import static uk.gov.dhsc.htbhf.steps.ActionOptionsTestDataFactory.buildDefaultActionOptions;
+import static uk.gov.dhsc.htbhf.steps.ClaimValuesTestDataFactory.buildDefaultClaimValues;
 import static uk.gov.dhsc.htbhf.steps.Constants.DOB_DAY;
 import static uk.gov.dhsc.htbhf.steps.Constants.DOB_MONTH;
 import static uk.gov.dhsc.htbhf.steps.Constants.DOB_YEAR;
@@ -21,27 +21,27 @@ import static uk.gov.dhsc.htbhf.steps.Constants.DOB_YEAR;
 @Slf4j
 public class CommonSteps extends BaseSteps {
 
-    protected static ThreadLocal<ActionOptions> actionOptionsThreadLocal = new ThreadLocal<>();
-    private Map<PageName, Consumer<ActionOptions>> pageActions;
+    protected static ThreadLocal<ClaimValues> actionOptionsThreadLocal = new ThreadLocal<>();
+    private Map<PageName, Consumer<ClaimValues>> pageActions;
 
     protected void enterDetailsUpToPage(PageName pageName) {
-        performPageActions(pageName, buildDefaultActionOptions());
+        performPageActions(pageName, buildDefaultClaimValues());
     }
 
-    protected void enterDetailsUpToPage(PageName pageName, ActionOptions actionOptions) {
-        performPageActions(pageName, actionOptions);
+    protected void enterDetailsUpToPage(PageName pageName, ClaimValues claimValues) {
+        performPageActions(pageName, claimValues);
     }
 
-    private void performPageActions(PageName pageName, ActionOptions actionOptions) {
-        actionOptionsThreadLocal.set(actionOptions);
+    private void performPageActions(PageName pageName, ClaimValues claimValues) {
+        actionOptionsThreadLocal.set(claimValues);
         GuidancePage applyPage = openApplyPage();
         applyPage.clickStartButton();
-        for (Map.Entry<PageName, Consumer<ActionOptions>> entry : pageActions.entrySet()) {
+        for (Map.Entry<PageName, Consumer<ClaimValues>> entry : pageActions.entrySet()) {
             if (pageName == entry.getKey()) {
                 break;
             }
-            Consumer<ActionOptions> actionsForPage = entry.getValue();
-            actionsForPage.accept(actionOptions);
+            Consumer<ClaimValues> actionsForPage = entry.getValue();
+            actionsForPage.accept(claimValues);
         }
     }
 
@@ -54,39 +54,39 @@ public class CommonSteps extends BaseSteps {
     @PostConstruct
     private void buildDefaultStepPageActions() {
         pageActions = new LinkedHashMap<>();
-        addActionToMapRespectingToggle(pageActions, SCOTLAND, (actionOptions) -> enterDoYouLiveInScotlandNoAndSubmit());
-        addActionToMapRespectingToggle(pageActions, DATE_OF_BIRTH, (actionOptions) -> enterDateOfBirthAndSubmit());
-        addActionToMapRespectingToggle(pageActions, DO_YOU_HAVE_CHILDREN, (actionOptions) -> enterDoYouHaveChildrenYesAndSubmit());
-        addActionToMapRespectingToggle(pageActions, CHILD_DATE_OF_BIRTH, (actionOptions) -> enterOneChildsDateOfBirth());
-        addActionToMapRespectingToggle(pageActions, ARE_YOU_PREGNANT, (actionOptions) -> {
-            if (actionOptions.isClaimantPregnant()) {
+        addActionToMapRespectingToggle(pageActions, SCOTLAND, (claimValues) -> enterDoYouLiveInScotlandNoAndSubmit());
+        addActionToMapRespectingToggle(pageActions, DATE_OF_BIRTH, (claimValues) -> enterDateOfBirthAndSubmit());
+        addActionToMapRespectingToggle(pageActions, DO_YOU_HAVE_CHILDREN, (claimValues) -> enterDoYouHaveChildrenYesAndSubmit());
+        addActionToMapRespectingToggle(pageActions, CHILD_DATE_OF_BIRTH, (claimValues) -> enterOneChildsDateOfBirth());
+        addActionToMapRespectingToggle(pageActions, ARE_YOU_PREGNANT, (claimValues) -> {
+            if (claimValues.isClaimantPregnant()) {
                 selectYesOnPregnancyPage();
             } else {
                 selectNoOnPregnancyPage();
             }
         });
-        addActionToMapRespectingToggle(pageActions, NAME, (actionOptions) -> enterName(actionOptions.getFirstName(), actionOptions.getLastName()));
-        addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (actionOptions) -> enterNino(actionOptions.getNino()));
+        addActionToMapRespectingToggle(pageActions, NAME, (claimValues) -> enterName(claimValues.getFirstName(), claimValues.getLastName()));
+        addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (claimValues) -> enterNino(claimValues.getNino()));
         //TODO MRS 2019-09-04: Need to add postcode lookup here when required.
 //        addActionToMapRespectingToggle(pageActions, POSTCODE, (actionOptions) -> {
 //            setupPostcodeLookupWithResults(POSTCODE);
 //            enterPostcode();
 //        });
-        addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (actionOptions) ->
-                enterManualAddress(actionOptions.getAddressLine1(),
-                        actionOptions.getAddressLine2(),
-                        actionOptions.getTownOrCity(),
-                        actionOptions.getCounty(),
-                        actionOptions.getPostcode()));
-        addActionToMapRespectingToggle(pageActions, PageName.PHONE_NUMBER, (actionOptions) -> enterPhoneNumber());
-        addActionToMapRespectingToggle(pageActions, PageName.EMAIL_ADDRESS, (actionOptions) -> enterEmailAddress());
-        addActionToMapRespectingToggle(pageActions, SEND_CODE, (actionOptions) -> selectTextOnSendCode());
-        addActionToMapRespectingToggle(pageActions, ENTER_CODE, (actionOptions) -> enterConfirmationCodeAndSubmit());
-        addActionToMapRespectingToggle(pageActions, CHECK_ANSWERS, (actionOptions) -> {
+        addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (claimValues) ->
+                enterManualAddress(claimValues.getAddressLine1(),
+                        claimValues.getAddressLine2(),
+                        claimValues.getTownOrCity(),
+                        claimValues.getCounty(),
+                        claimValues.getPostcode()));
+        addActionToMapRespectingToggle(pageActions, PageName.PHONE_NUMBER, (claimValues) -> enterPhoneNumber());
+        addActionToMapRespectingToggle(pageActions, PageName.EMAIL_ADDRESS, (claimValues) -> enterEmailAddress());
+        addActionToMapRespectingToggle(pageActions, SEND_CODE, (claimValues) -> selectTextOnSendCode());
+        addActionToMapRespectingToggle(pageActions, ENTER_CODE, (claimValues) -> enterConfirmationCodeAndSubmit());
+        addActionToMapRespectingToggle(pageActions, CHECK_ANSWERS, (claimValues) -> {
         });
     }
 
-    private void addActionToMapRespectingToggle(Map<PageName, Consumer<ActionOptions>> pageActions, PageName pageName, Consumer<ActionOptions> pageAction) {
+    private void addActionToMapRespectingToggle(Map<PageName, Consumer<ClaimValues>> pageActions, PageName pageName, Consumer<ClaimValues> pageAction) {
         if (toggleConfiguration.isPageEnabled(pageName)) {
             pageActions.put(pageName, pageAction);
         } else {
