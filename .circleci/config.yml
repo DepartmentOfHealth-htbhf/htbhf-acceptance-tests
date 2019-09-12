@@ -11,6 +11,7 @@ jobs:
       WIREMOCK_PORT: 8090
       WIREMOCK_URL: http://localhost:8090
       USE_UNSECURE_COOKIE: true
+      WEB_UI_BRANCH: ''
     steps:
       - checkout
       - run:
