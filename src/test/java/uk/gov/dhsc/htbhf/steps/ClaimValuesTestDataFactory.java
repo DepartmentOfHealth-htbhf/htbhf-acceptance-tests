@@ -47,6 +47,6 @@ public class ClaimValuesTestDataFactory {
                 .county(COUNTY)
                 .postcode(POSTCODE)
                 .nino(generateEligibleNino())
-                .selectAddress(false);
+                .selectAddress(true);
     }
 }

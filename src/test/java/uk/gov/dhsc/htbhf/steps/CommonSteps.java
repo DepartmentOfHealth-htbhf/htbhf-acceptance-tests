@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import javax.annotation.PostConstruct;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.dhsc.htbhf.page.PageName.*;
@@ -24,7 +23,6 @@ import static uk.gov.dhsc.htbhf.steps.Constants.DOB_YEAR;
 public class CommonSteps extends BaseSteps {
 
     protected static ThreadLocal<ClaimValues> claimValuesThreadLocal = new ThreadLocal<>();
-    private Map<PageName, Consumer<ClaimValues>> pageActions;
 
     protected void enterDetailsUpToPage(PageName pageName) {
         performPageActions(pageName, buildDefaultClaimValues());
@@ -38,6 +36,7 @@ public class CommonSteps extends BaseSteps {
         claimValuesThreadLocal.set(claimValues);
         GuidancePage applyPage = openApplyPage();
         applyPage.clickStartButton();
+        Map<PageName, Consumer<ClaimValues>> pageActions = buildStepPageActions(claimValues);
         for (Map.Entry<PageName, Consumer<ClaimValues>> entry : pageActions.entrySet()) {
             if (pageName == entry.getKey()) {
                 break;
@@ -53,9 +52,8 @@ public class CommonSteps extends BaseSteps {
         return applyPage;
     }
 
-    @PostConstruct
-    private void buildDefaultStepPageActions() {
-        pageActions = new LinkedHashMap<>();
+    private Map<PageName, Consumer<ClaimValues>> buildStepPageActions(ClaimValues values) {
+        Map<PageName, Consumer<ClaimValues>> pageActions = new LinkedHashMap<>();
         addActionToMapRespectingToggle(pageActions, SCOTLAND, (claimValues) -> enterDoYouLiveInScotlandNoAndSubmit());
         addActionToMapRespectingToggle(pageActions, DATE_OF_BIRTH, (claimValues) -> enterDateOfBirthAndSubmit());
         addActionToMapRespectingToggle(pageActions, DO_YOU_HAVE_CHILDREN, (claimValues) -> enterDoYouHaveChildrenYesAndSubmit());
@@ -65,13 +63,16 @@ public class CommonSteps extends BaseSteps {
         addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (claimValues) -> enterNino(claimValues.getNino()));
         addActionToMapRespectingToggle(pageActions, POSTCODE, (claimValues) -> enterPostcode(claimValues));
         addActionToMapRespectingToggle(pageActions, SELECT_ADDRESS, (claimValues) -> completeSelectAddressPage(claimValues));
-        addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (claimValues) -> enterManualAddress(claimValues));
+        if (!values.isSelectAddress() || !toggleConfiguration.isEnabled(ToggleName.ADDRESS_LOOKUP)) {
+            addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (claimValues) -> enterManualAddress(claimValues));
+        }
         addActionToMapRespectingToggle(pageActions, PHONE_NUMBER, (claimValues) -> enterPhoneNumber());
         addActionToMapRespectingToggle(pageActions, EMAIL_ADDRESS, (claimValues) -> enterEmailAddress());
         addActionToMapRespectingToggle(pageActions, SEND_CODE, (claimValues) -> selectTextOnSendCode());
         addActionToMapRespectingToggle(pageActions, ENTER_CODE, (claimValues) -> enterConfirmationCodeAndSubmit());
         addActionToMapRespectingToggle(pageActions, CHECK_ANSWERS, (claimValues) -> {
         });
+        return pageActions;
     }
 
     private void addActionToMapRespectingToggle(Map<PageName, Consumer<ClaimValues>> pageActions, PageName pageName, Consumer<ClaimValues> pageAction) {

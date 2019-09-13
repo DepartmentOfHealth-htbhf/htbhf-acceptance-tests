@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import uk.gov.dhsc.htbhf.page.PageName;
+import uk.gov.dhsc.htbhf.page.ToggleName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,12 +46,12 @@ public class ToggleConfiguration {
         return toggles;
     }
 
-    public boolean isEnabled(String toggle) {
-        return toggles.getOrDefault(toggle, false);
+    public boolean isEnabled(ToggleName toggle) {
+        return toggles.getOrDefault(toggle.getToggleName(), false);
     }
 
     public boolean isPageEnabled(PageName pageName) {
-        Optional<String> toggle = pageName.getToggle();
+        Optional<ToggleName> toggle = pageName.getToggle();
         return toggle.map(this::isEnabled).orElse(true);
     }
 }
