@@ -1,9 +1,11 @@
 package uk.gov.dhsc.htbhf.steps;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.*;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import javax.annotation.PostConstruct;
@@ -21,7 +23,7 @@ import static uk.gov.dhsc.htbhf.steps.Constants.DOB_YEAR;
 @Slf4j
 public class CommonSteps extends BaseSteps {
 
-    protected static ThreadLocal<ClaimValues> actionOptionsThreadLocal = new ThreadLocal<>();
+    protected static ThreadLocal<ClaimValues> claimValuesThreadLocal = new ThreadLocal<>();
     private Map<PageName, Consumer<ClaimValues>> pageActions;
 
     protected void enterDetailsUpToPage(PageName pageName) {
@@ -33,7 +35,7 @@ public class CommonSteps extends BaseSteps {
     }
 
     private void performPageActions(PageName pageName, ClaimValues claimValues) {
-        actionOptionsThreadLocal.set(claimValues);
+        claimValuesThreadLocal.set(claimValues);
         GuidancePage applyPage = openApplyPage();
         applyPage.clickStartButton();
         for (Map.Entry<PageName, Consumer<ClaimValues>> entry : pageActions.entrySet()) {
@@ -58,28 +60,14 @@ public class CommonSteps extends BaseSteps {
         addActionToMapRespectingToggle(pageActions, DATE_OF_BIRTH, (claimValues) -> enterDateOfBirthAndSubmit());
         addActionToMapRespectingToggle(pageActions, DO_YOU_HAVE_CHILDREN, (claimValues) -> enterDoYouHaveChildrenYesAndSubmit());
         addActionToMapRespectingToggle(pageActions, CHILD_DATE_OF_BIRTH, (claimValues) -> enterOneChildsDateOfBirth());
-        addActionToMapRespectingToggle(pageActions, ARE_YOU_PREGNANT, (claimValues) -> {
-            if (claimValues.isClaimantPregnant()) {
-                selectYesOnPregnancyPage();
-            } else {
-                selectNoOnPregnancyPage();
-            }
-        });
+        addActionToMapRespectingToggle(pageActions, ARE_YOU_PREGNANT, (claimValues) -> completePregnancyPage(claimValues));
         addActionToMapRespectingToggle(pageActions, NAME, (claimValues) -> enterName(claimValues.getFirstName(), claimValues.getLastName()));
         addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (claimValues) -> enterNino(claimValues.getNino()));
-        //TODO MRS 2019-09-04: Need to add postcode lookup here when required.
-//        addActionToMapRespectingToggle(pageActions, POSTCODE, (actionOptions) -> {
-//            setupPostcodeLookupWithResults(POSTCODE);
-//            enterPostcode();
-//        });
-        addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (claimValues) ->
-                enterManualAddress(claimValues.getAddressLine1(),
-                        claimValues.getAddressLine2(),
-                        claimValues.getTownOrCity(),
-                        claimValues.getCounty(),
-                        claimValues.getPostcode()));
-        addActionToMapRespectingToggle(pageActions, PageName.PHONE_NUMBER, (claimValues) -> enterPhoneNumber());
-        addActionToMapRespectingToggle(pageActions, PageName.EMAIL_ADDRESS, (claimValues) -> enterEmailAddress());
+        addActionToMapRespectingToggle(pageActions, POSTCODE, (claimValues) -> enterPostcode(claimValues));
+        addActionToMapRespectingToggle(pageActions, SELECT_ADDRESS, (claimValues) -> completeSelectAddressPage(claimValues));
+        addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (claimValues) -> enterManualAddress(claimValues));
+        addActionToMapRespectingToggle(pageActions, PHONE_NUMBER, (claimValues) -> enterPhoneNumber());
+        addActionToMapRespectingToggle(pageActions, EMAIL_ADDRESS, (claimValues) -> enterEmailAddress());
         addActionToMapRespectingToggle(pageActions, SEND_CODE, (claimValues) -> selectTextOnSendCode());
         addActionToMapRespectingToggle(pageActions, ENTER_CODE, (claimValues) -> enterConfirmationCodeAndSubmit());
         addActionToMapRespectingToggle(pageActions, CHECK_ANSWERS, (claimValues) -> {
@@ -121,6 +109,14 @@ public class CommonSteps extends BaseSteps {
         phoneNumberPage.clickContinue();
     }
 
+    protected void enterManualAddress(ClaimValues claimValues) {
+        enterManualAddress(claimValues.getAddressLine1(),
+                claimValues.getAddressLine2(),
+                claimValues.getTownOrCity(),
+                claimValues.getCounty(),
+                claimValues.getPostcode());
+    }
+
     protected void enterManualAddress(String addressLine1, String addressLine2, String town, String county, String postcode) {
         ManualAddressPage manualAddressPage = getPages().getManualAddressPage();
         manualAddressPage.enterAddressLine1(addressLine1);
@@ -129,6 +125,42 @@ public class CommonSteps extends BaseSteps {
         manualAddressPage.enterCounty(county);
         manualAddressPage.enterPostcode(postcode);
         manualAddressPage.clickContinue();
+    }
+
+    protected void enterPostcode(ClaimValues claimValues) {
+        setupPostcodeLookupWithResults(claimValues.getPostcode());
+        enterPostcodeAndSubmit(claimValues.getPostcode());
+    }
+
+    protected void setupPostcodeLookupWithResults(String postcode) {
+        wireMockManager.setupPostcodeLookupWithResultsMapping(postcode);
+    }
+
+    protected void enterPostcodeAndSubmit(String postcode) {
+        PostcodePage postcodePage = getPages().getPostcodePage();
+        postcodePage.enterPostcode(postcode);
+        postcodePage.clickContinue();
+    }
+
+    protected void completeSelectAddressPage(ClaimValues claimValues) {
+        if (claimValues.isSelectAddress()) {
+            selectFirstAddressAndSubmit();
+        } else {
+            clickAddressNotListedLink();
+        }
+    }
+
+    protected void selectFirstAddressAndSubmit() {
+        SelectAddressPage selectAddressPage = getPages().getSelectAddressPage();
+        List<WebElement> addressOptions = selectAddressPage.getAddressOptions();
+        WebElement option = addressOptions.get(0);
+        option.click();
+        selectAddressPage.clickContinue();
+    }
+
+    protected void clickAddressNotListedLink() {
+        SelectAddressPage selectAddressPage = getPages().getSelectAddressPage();
+        selectAddressPage.clickAddressNotListedLink();
     }
 
     protected void enterNino(String nino) {
@@ -141,6 +173,14 @@ public class CommonSteps extends BaseSteps {
         NamePage namePage = getPages().getNamePage();
         namePage.enterName(firstName, lastName);
         namePage.clickContinue();
+    }
+
+    protected void completePregnancyPage(ClaimValues claimValues) {
+        if (claimValues.isClaimantPregnant()) {
+            selectYesOnPregnancyPage();
+        } else {
+            selectNoOnPregnancyPage();
+        }
     }
 
     protected void selectYesOnPregnancyPage() {

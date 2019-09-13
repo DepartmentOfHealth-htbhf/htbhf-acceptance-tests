@@ -18,4 +18,5 @@ public class ClaimValues {
     private String county;
     private String postcode;
     private String nino;
+    private boolean selectAddress;
 }
