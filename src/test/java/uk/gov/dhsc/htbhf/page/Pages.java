@@ -44,6 +44,8 @@ public class Pages {
         pages.add(new InScotlandPage(webDriver, baseUrl, webDriverWait));
         pages.add(new SendCodePage(webDriver, baseUrl, webDriverWait));
         pages.add(new TermsAndConditionsPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new PostcodePage(webDriver, baseUrl, webDriverWait));
+        pages.add(new SelectAddressPage(webDriver, baseUrl, webDriverWait));
         //Guidance pages
         Arrays.stream(GuidancePageMetadata.values()).forEach(
                 guidancePageMetadata -> pages.add(new GuidancePage(webDriver, baseUrl, webDriverWait, guidancePageMetadata.getPageName()))
@@ -139,4 +141,11 @@ public class Pages {
         return genericPage;
     }
 
+    public PostcodePage getPostcodePage() {
+        return (PostcodePage) getAndWaitForPageByName(PageName.POSTCODE);
+    }
+
+    public SelectAddressPage getSelectAddressPage() {
+        return (SelectAddressPage) getAndWaitForPageByName(PageName.SELECT_ADDRESS);
+    }
 }
