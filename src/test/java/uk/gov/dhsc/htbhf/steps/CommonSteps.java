@@ -23,7 +23,7 @@ import static uk.gov.dhsc.htbhf.steps.Constants.DOB_YEAR;
 @Slf4j
 public class CommonSteps extends BaseSteps {
 
-    protected static ThreadLocal<ClaimValues> actionOptionsThreadLocal = new ThreadLocal<>();
+    protected static ThreadLocal<ClaimValues> claimValuesThreadLocal = new ThreadLocal<>();
     private Map<PageName, Consumer<ClaimValues>> pageActions;
 
     protected void enterDetailsUpToPage(PageName pageName) {
@@ -35,7 +35,7 @@ public class CommonSteps extends BaseSteps {
     }
 
     private void performPageActions(PageName pageName, ClaimValues claimValues) {
-        actionOptionsThreadLocal.set(claimValues);
+        claimValuesThreadLocal.set(claimValues);
         GuidancePage applyPage = openApplyPage();
         applyPage.clickStartButton();
         for (Map.Entry<PageName, Consumer<ClaimValues>> entry : pageActions.entrySet()) {
@@ -60,36 +60,16 @@ public class CommonSteps extends BaseSteps {
         addActionToMapRespectingToggle(pageActions, DATE_OF_BIRTH, (claimValues) -> enterDateOfBirthAndSubmit());
         addActionToMapRespectingToggle(pageActions, DO_YOU_HAVE_CHILDREN, (claimValues) -> enterDoYouHaveChildrenYesAndSubmit());
         addActionToMapRespectingToggle(pageActions, CHILD_DATE_OF_BIRTH, (claimValues) -> enterOneChildsDateOfBirth());
-        addActionToMapRespectingToggle(pageActions, ARE_YOU_PREGNANT, (claimValues) -> {
-            if (claimValues.isClaimantPregnant()) {
-                selectYesOnPregnancyPage();
-            } else {
-                selectNoOnPregnancyPage();
-            }
-        });
-        addActionToMapRespectingToggle(pageActions, NAME, (actionOptions) -> enterName(actionOptions.getFirstName(), actionOptions.getLastName()));
-        addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (actionOptions) -> enterNino(actionOptions.getNino()));
-        addActionToMapRespectingToggle(pageActions, POSTCODE, (actionOptions) -> {
-            setupPostcodeLookupWithResults(actionOptions.getPostcode());
-            enterPostcodeAndSubmit(actionOptions.getPostcode());
-        });
-        addActionToMapRespectingToggle(pageActions, SELECT_ADDRESS, (actionOptions -> {
-            if (actionOptions.getSelectAddress()) {
-                selectFirstAddressAndSubmit();
-            } else {
-                clickAddressNotListedLink();
-            }
-        }));
-        addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (actionOptions) ->
-                enterManualAddress(actionOptions.getAddressLine1(),
-                        actionOptions.getAddressLine2(),
-                        actionOptions.getTownOrCity(),
-                        actionOptions.getCounty(),
-                        actionOptions.getPostcode()));
-        addActionToMapRespectingToggle(pageActions, PageName.PHONE_NUMBER, (actionOptions) -> enterPhoneNumber());
-        addActionToMapRespectingToggle(pageActions, PageName.EMAIL_ADDRESS, (actionOptions) -> enterEmailAddress());
-        addActionToMapRespectingToggle(pageActions, SEND_CODE, (actionOptions) -> selectTextOnSendCode());
-        addActionToMapRespectingToggle(pageActions, ENTER_CODE, (actionOptions) -> enterConfirmationCodeAndSubmit());
+        addActionToMapRespectingToggle(pageActions, ARE_YOU_PREGNANT, (claimValues) -> completePregnancyPage(claimValues));
+        addActionToMapRespectingToggle(pageActions, NAME, (claimValues) -> enterName(claimValues.getFirstName(), claimValues.getLastName()));
+        addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (claimValues) -> enterNino(claimValues.getNino()));
+        addActionToMapRespectingToggle(pageActions, POSTCODE, (claimValues) -> enterPostcode(claimValues));
+        addActionToMapRespectingToggle(pageActions, SELECT_ADDRESS, (claimValues -> completeSelectAddressPage(claimValues)));
+        addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (claimValues) -> enterManualAddress(claimValues));
+        addActionToMapRespectingToggle(pageActions, PHONE_NUMBER, (claimValues) -> enterPhoneNumber());
+        addActionToMapRespectingToggle(pageActions, EMAIL_ADDRESS, (claimValues) -> enterEmailAddress());
+        addActionToMapRespectingToggle(pageActions, SEND_CODE, (claimValues) -> selectTextOnSendCode());
+        addActionToMapRespectingToggle(pageActions, ENTER_CODE, (claimValues) -> enterConfirmationCodeAndSubmit());
         addActionToMapRespectingToggle(pageActions, CHECK_ANSWERS, (claimValues) -> {
         });
     }
@@ -129,6 +109,14 @@ public class CommonSteps extends BaseSteps {
         phoneNumberPage.clickContinue();
     }
 
+    protected void enterManualAddress(ClaimValues claimValues) {
+        enterManualAddress(claimValues.getAddressLine1(),
+                claimValues.getAddressLine2(),
+                claimValues.getTownOrCity(),
+                claimValues.getCounty(),
+                claimValues.getPostcode());
+    }
+
     protected void enterManualAddress(String addressLine1, String addressLine2, String town, String county, String postcode) {
         ManualAddressPage manualAddressPage = getPages().getManualAddressPage();
         manualAddressPage.enterAddressLine1(addressLine1);
@@ -137,6 +125,11 @@ public class CommonSteps extends BaseSteps {
         manualAddressPage.enterCounty(county);
         manualAddressPage.enterPostcode(postcode);
         manualAddressPage.clickContinue();
+    }
+
+    protected void enterPostcode(ClaimValues claimValues) {
+        setupPostcodeLookupWithResults(claimValues.getPostcode());
+        enterPostcodeAndSubmit(claimValues.getPostcode());
     }
 
     protected void setupPostcodeLookupWithResults(String postcode) {
@@ -154,6 +147,14 @@ public class CommonSteps extends BaseSteps {
         List<WebElement> addressOptions = selectAddressPage.getAddressOptions();
         WebElement option = addressOptions.get(0);
         option.click();
+    }
+
+    protected void completeSelectAddressPage(ClaimValues claimValues) {
+        if (claimValues.getSelectAddress()) {
+            selectFirstAddressAndSubmit();
+        } else {
+            clickAddressNotListedLink();
+        }
     }
 
     protected void selectFirstAddressAndSubmit() {
@@ -177,6 +178,14 @@ public class CommonSteps extends BaseSteps {
         NamePage namePage = getPages().getNamePage();
         namePage.enterName(firstName, lastName);
         namePage.clickContinue();
+    }
+
+    protected void completePregnancyPage(ClaimValues claimValues) {
+        if (claimValues.isClaimantPregnant()) {
+            selectYesOnPregnancyPage();
+        } else {
+            selectNoOnPregnancyPage();
+        }
     }
 
     protected void selectYesOnPregnancyPage() {
