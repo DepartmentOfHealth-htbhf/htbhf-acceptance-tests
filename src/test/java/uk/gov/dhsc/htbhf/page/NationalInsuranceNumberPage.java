@@ -35,4 +35,16 @@ public class NationalInsuranceNumberPage extends SubmittablePage {
     public void enterNino(String nino) {
         ninoInputField.enterValue(nino);
     }
+
+    public String getNinoInputErrorId() {
+        return ninoInputField.getInputErrorId();
+    }
+
+    public String getNinoInputErrorLinkCss() {
+        return ninoInputField.getInputErrorLinkCss();
+    }
+
+    public String getNinoInputValue() {
+        return ninoInputField.getValue();
+    }
 }
