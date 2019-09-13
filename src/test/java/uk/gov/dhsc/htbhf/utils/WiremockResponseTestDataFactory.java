@@ -1,9 +1,20 @@
 package uk.gov.dhsc.htbhf.utils;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * Factory for test data coming back from WireMock imitating the ClaimantService.
  */
 public class WiremockResponseTestDataFactory {
+
+    private static final String DEFAULT_POSTCODE = "AA11BB";
+    private static final Map<String, String> RESPONSE_TEMPLATES = new ConcurrentHashMap<>();
 
     public static String aValidClaimResponseWithVoucherEntitlement(String eligibilityStatus) {
         return "{\"claimStatus\": \"NEW\", " +
@@ -18,7 +29,7 @@ public class WiremockResponseTestDataFactory {
                 "}";
     }
 
-    public static String aValidVoucherEntitlement() {
+    private static String aValidVoucherEntitlement() {
         return "{\"vouchersForChildrenUnderOne\": 2, " +
                 "\"vouchersForChildrenBetweenOneAndFour\": 1, " +
                 "\"vouchersForPregnancy\": 1, " +
@@ -29,84 +40,19 @@ public class WiremockResponseTestDataFactory {
     }
 
     public static String aPostcodeLookupResponseWithResults(String postcode) {
-        return "{\n" +
-                "  \"header\" : {\n" +
-                "    \"uri\" : \"https://api.ordnancesurvey.co.uk/places/v1/addresses/postcode?postcode=" + postcode + "\",\n" +
-                "    \"query\" : \"postcode=" + postcode + "\",\n" +
-                "    \"offset\" : 0,\n" +
-                "    \"totalresults\" : 44,\n" +
-                "    \"format\" : \"JSON\",\n" +
-                "    \"dataset\" : \"DPA\",\n" +
-                "    \"lr\" : \"EN,CY\",\n" +
-                "    \"maxresults\" : 100,\n" +
-                "    \"epoch\" : \"67\",\n" +
-                "    \"output_srs\" : \"EPSG:27700\"\n" +
-                "  },\n" +
-                "  \"results\" : [ {\n" +
-                "    \"DPA\" : {\n" +
-                "      \"UPRN\" : \"321323\",\n" +
-                "      \"UDPRN\" : \"51094465\",\n" +
-                "      \"ADDRESS\" : \"113 RATCLIFFE COURT, CHIMNEY STEPS, BRISTOL, " + postcode + "\",\n" +
-                "      \"BUILDING_NAME\" : \"113 RATCLIFFE COURT\",\n" +
-                "      \"THOROUGHFARE_NAME\" : \"CHIMNEY STEPS\",\n" +
-                "      \"POST_TOWN\" : \"BRISTOL\",\n" +
-                "      \"POSTCODE\" : \"" + postcode + "\",\n" +
-                "      \"RPC\" : \"2\",\n" +
-                "      \"X_COORDINATE\" : 359913.0,\n" +
-                "      \"Y_COORDINATE\" : 172758.0,\n" +
-                "      \"STATUS\" : \"APPROVED\",\n" +
-                "      \"LOGICAL_STATUS_CODE\" : \"1\",\n" +
-                "      \"CLASSIFICATION_CODE\" : \"RD06\",\n" +
-                "      \"CLASSIFICATION_CODE_DESCRIPTION\" : \"Self Contained Flat (Includes Maisonette / Apartment)\",\n" +
-                "      \"LOCAL_CUSTODIAN_CODE\" : 116,\n" +
-                "      \"LOCAL_CUSTODIAN_CODE_DESCRIPTION\" : \"BRISTOL CITY\",\n" +
-                "      \"POSTAL_ADDRESS_CODE\" : \"D\",\n" +
-                "      \"POSTAL_ADDRESS_CODE_DESCRIPTION\" : \"A record which is linked to PAF\",\n" +
-                "      \"BLPU_STATE_CODE\" : \"2\",\n" +
-                "      \"BLPU_STATE_CODE_DESCRIPTION\" : \"In use\",\n" +
-                "      \"TOPOGRAPHY_LAYER_TOID\" : \"osgb1000002529045129\",\n" +
-                "      \"PARENT_UPRN\" : \"321210\",\n" +
-                "      \"LAST_UPDATE_DATE\" : \"10/02/2016\",\n" +
-                "      \"ENTRY_DATE\" : \"19/05/2008\",\n" +
-                "      \"BLPU_STATE_DATE\" : \"19/05/2008\",\n" +
-                "      \"LANGUAGE\" : \"EN\",\n" +
-                "      \"MATCH\" : 1.0,\n" +
-                "      \"MATCH_DESCRIPTION\" : \"EXACT\"\n" +
-                "    }\n" +
-                "  }, {\n" +
-                "    \"DPA\" : {\n" +
-                "      \"UPRN\" : \"321324\",\n" +
-                "      \"UDPRN\" : \"51094466\",\n" +
-                "      \"ADDRESS\" : \"114 RATCLIFFE COURT, CHIMNEY STEPS, BRISTOL, " + postcode + "\",\n" +
-                "      \"BUILDING_NAME\" : \"114 RATCLIFFE COURT\",\n" +
-                "      \"THOROUGHFARE_NAME\" : \"CHIMNEY STEPS\",\n" +
-                "      \"POST_TOWN\" : \"BRISTOL\",\n" +
-                "      \"POSTCODE\" : \"" + postcode + "\",\n" +
-                "      \"RPC\" : \"2\",\n" +
-                "      \"X_COORDINATE\" : 359913.0,\n" +
-                "      \"Y_COORDINATE\" : 172758.0,\n" +
-                "      \"STATUS\" : \"APPROVED\",\n" +
-                "      \"LOGICAL_STATUS_CODE\" : \"1\",\n" +
-                "      \"CLASSIFICATION_CODE\" : \"RD06\",\n" +
-                "      \"CLASSIFICATION_CODE_DESCRIPTION\" : \"Self Contained Flat (Includes Maisonette / Apartment)\",\n" +
-                "      \"LOCAL_CUSTODIAN_CODE\" : 116,\n" +
-                "      \"LOCAL_CUSTODIAN_CODE_DESCRIPTION\" : \"BRISTOL CITY\",\n" +
-                "      \"POSTAL_ADDRESS_CODE\" : \"D\",\n" +
-                "      \"POSTAL_ADDRESS_CODE_DESCRIPTION\" : \"A record which is linked to PAF\",\n" +
-                "      \"BLPU_STATE_CODE\" : \"2\",\n" +
-                "      \"BLPU_STATE_CODE_DESCRIPTION\" : \"In use\",\n" +
-                "      \"TOPOGRAPHY_LAYER_TOID\" : \"osgb1000002529045129\",\n" +
-                "      \"PARENT_UPRN\" : \"321210\",\n" +
-                "      \"LAST_UPDATE_DATE\" : \"10/02/2016\",\n" +
-                "      \"ENTRY_DATE\" : \"19/05/2008\",\n" +
-                "      \"BLPU_STATE_DATE\" : \"19/05/2008\",\n" +
-                "      \"LANGUAGE\" : \"EN\",\n" +
-                "      \"MATCH\" : 1.0,\n" +
-                "      \"MATCH_DESCRIPTION\" : \"EXACT\"\n" +
-                "    }\n" +
-                "  }\n" +
-                "  ]\n" +
-                "}\n" +
-                "  ";
+        String template = getResponseTemplate("postcode-lookup-2-results.json");
+        return template.replace(DEFAULT_POSTCODE, postcode);
+    }
+
+    private static String getResponseTemplate(String templateName) {
+        return RESPONSE_TEMPLATES.computeIfAbsent(templateName, key -> {
+            try {
+                URL resource = WiremockResponseTestDataFactory.class.getClassLoader().getResource("wiremock/mappings/" + templateName);
+                return Files.readString( Paths.get(resource.toURI()));
+            } catch (IOException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 }

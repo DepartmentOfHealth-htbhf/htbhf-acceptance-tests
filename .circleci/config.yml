@@ -8,12 +8,11 @@ jobs:
       PORT: 8080
       SESSION_SECRET: notsosecret
       BIN_DIR: ./bin
-      WIREMOCK_PORT: 8090
-      WIREMOCK_URL: http://localhost:8090
+      CLAIMANT_SERVICE_URL: http://localhost:8090
       USE_UNSECURE_COOKIE: true
       WEB_UI_BRANCH: ''
       OS_PLACES_API_KEY: os-places-key
-      OS_PLACES_URI: http://localhost:8090
+      OS_PLACES_URI: http://localhost:8150
     steps:
       - checkout
       - run:

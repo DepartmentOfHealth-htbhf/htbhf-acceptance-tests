@@ -9,8 +9,8 @@ public class Constants {
     public static final String FIRST_NAME = "Lisa";
     public static final String LAST_NAME = "Simpson";
     public static final String FULL_NAME = FIRST_NAME + " " + LAST_NAME;
-    public static final String ADDRESS_LINE_1 = "Flat b";
-    public static final String ADDRESS_LINE_2 = "123 Fake street";
+    public static final String ADDRESS_LINE_1 = "Flat B";
+    public static final String ADDRESS_LINE_2 = "123 Fake Street";
     public static final String TOWN = "Springfield";
     public static final String COUNTY = "Devon";
     public static final String POSTCODE = "AA11BB";

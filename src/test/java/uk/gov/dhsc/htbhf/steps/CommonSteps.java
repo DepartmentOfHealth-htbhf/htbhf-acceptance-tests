@@ -152,9 +152,7 @@ public class CommonSteps extends BaseSteps {
 
     protected void selectFirstAddressAndSubmit() {
         SelectAddressPage selectAddressPage = getPages().getSelectAddressPage();
-        List<WebElement> addressOptions = selectAddressPage.getAddressOptions();
-        WebElement option = addressOptions.get(0);
-        option.click();
+        selectAddressPage.selectFirstAddress();
         selectAddressPage.clickContinue();
     }
 
@@ -227,7 +225,7 @@ public class CommonSteps extends BaseSteps {
     }
 
     protected void acceptTermsAndConditionsAndSubmitApplication() {
-        wireMockManager.setupWireMockMappingsWithStatus("ELIGIBLE");
+        wireMockManager.setupClaimantServiceMappingsWithStatus("ELIGIBLE");
         CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();
         checkAnswersPage.clickContinue();
         TermsAndConditionsPage termsAndConditionsPage = getPages().getTermsAndConditionsPage();

@@ -84,6 +84,8 @@ test {
     dependsOn findChromedriver
     doFirst {
         println("Chromedriver path: ${project.ext.chromedriverPath}")
+        println("Cucumber options: ${System.getProperty("cucumber.options")}")
+        println("Feature Toggles: ${System.getenv("FEATURE_TOGGLES")}")
         systemProperty "webdriver.chrome.driver", "${project.ext.chromedriverPath}"
         systemProperty "cucumber.options", System.getProperty("cucumber.options")
     }

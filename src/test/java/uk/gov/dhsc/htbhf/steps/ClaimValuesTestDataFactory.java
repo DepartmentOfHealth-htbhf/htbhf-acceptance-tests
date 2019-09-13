@@ -15,12 +15,14 @@ public class ClaimValuesTestDataFactory {
     public static ClaimValues buildClaimValuesWithNoAddressLine2() {
         return buildDefaultClaimValuesBuilder()
                 .addressLine2("")
+                .selectAddress(false)
                 .build();
     }
 
     public static ClaimValues buildClaimValuesWithNoCounty() {
         return buildDefaultClaimValuesBuilder()
                 .county("")
+                .selectAddress(false)
                 .build();
     }
 
