@@ -7,12 +7,15 @@ import uk.gov.dhsc.htbhf.utils.NinoGenerator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Steps for the enter National Insurance Number page
+ */
 public class NationalInsuranceNumberSteps extends BaseSteps {
-    String INVALID_NINO_MESSAGE = "Enter a National Insurance number in the correct format";
+    private static final String INVALID_NINO_MESSAGE = "Enter a National Insurance number in the correct format";
 
     @When("^I enter a valid national insurance number")
     public void enterAValidNationalInsuranceNumber() {
-        enterANationalInsuranceNumber(NinoGenerator.generateEligibleNino());
+        enterNationalInsuranceNumber(NinoGenerator.generateEligibleNino());
     }
 
     @When("^I do not enter a national insurance number")
@@ -23,7 +26,7 @@ public class NationalInsuranceNumberSteps extends BaseSteps {
 
     @When("^I enter (.*) as my national insurance number")
     public void enterAnInvalidNationalInsuranceNumber(String invalidNino) {
-        enterANationalInsuranceNumber(invalidNino);
+        enterNationalInsuranceNumber(invalidNino);
     }
 
     @Then("^I am informed that the national insurance number is in the wrong format")
@@ -43,7 +46,7 @@ public class NationalInsuranceNumberSteps extends BaseSteps {
         assertThat(inputValue).isEqualTo(nino);
     }
 
-    public void enterANationalInsuranceNumber(String nino) {
+    private void enterNationalInsuranceNumber(String nino) {
         NationalInsuranceNumberPage nationalInsuranceNumberPage = getPages().getNationalInsuranceNumberPage();
         nationalInsuranceNumberPage.enterNino(nino);
         nationalInsuranceNumberPage.clickContinue();
