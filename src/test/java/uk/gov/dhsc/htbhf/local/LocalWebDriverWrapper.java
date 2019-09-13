@@ -68,8 +68,6 @@ public class LocalWebDriverWrapper implements WebDriverWrapper {
             case "chrome":
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.setHeadless(headless);
-                // try to avoid "(unknown error: DevToolsActivePort file doesn't exist)": https://stackoverflow.com/a/56758428
-                chromeOptions.addArguments("--no-sandbox", "--disable-dev-shm-usage");
                 webdriver = new ChromeDriver(chromeOptions);
                 break;
         }
