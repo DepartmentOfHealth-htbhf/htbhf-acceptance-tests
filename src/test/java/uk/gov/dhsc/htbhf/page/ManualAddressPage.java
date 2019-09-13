@@ -61,7 +61,6 @@ public class ManualAddressPage extends SubmittablePage {
     }
 
     public void enterPostcode(String postcode) {
-        postcodeInputField.clearValue();
         postcodeInputField.enterValue(postcode);
     }
 }
