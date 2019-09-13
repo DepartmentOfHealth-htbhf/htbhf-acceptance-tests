@@ -9,13 +9,13 @@ import java.util.Arrays;
 public enum ToggleName {
     ADDRESS_LOOKUP;
 
-    public String getToggleName() {
+    public String getFeatureKey() {
         return this.name() + "_ENABLED";
     }
 
     public static ToggleName toToggleName(String toggleString) {
         return Arrays.stream(values())
-                .filter(toggleName -> toggleName.getToggleName().equals(toggleString))
+                .filter(toggleName -> toggleName.getFeatureKey().equals(toggleString))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("No toggle found for value: " + toggleString));
     }

@@ -47,7 +47,7 @@ public class ToggleConfiguration {
     }
 
     public boolean isEnabled(ToggleName toggle) {
-        return toggles.getOrDefault(toggle.getToggleName(), false);
+        return toggles.getOrDefault(toggle.getFeatureKey(), false);
     }
 
     public boolean isPageEnabled(PageName pageName) {

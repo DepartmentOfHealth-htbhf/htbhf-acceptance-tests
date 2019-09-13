@@ -10,6 +10,11 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 class ToggleNameTest {
 
     @Test
+    void shouldGetFullFeatureKeyFromEnum() {
+        assertThat(ToggleName.ADDRESS_LOOKUP.getFeatureKey()).isEqualTo("ADDRESS_LOOKUP_ENABLED");
+    }
+
+    @Test
     void shouldGetValidToggleName() {
         assertThat(ToggleName.toToggleName("ADDRESS_LOOKUP_ENABLED")).isEqualTo(ToggleName.ADDRESS_LOOKUP);
     }
