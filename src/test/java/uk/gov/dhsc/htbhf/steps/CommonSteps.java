@@ -64,7 +64,7 @@ public class CommonSteps extends BaseSteps {
         addActionToMapRespectingToggle(pageActions, NAME, (claimValues) -> enterName(claimValues.getFirstName(), claimValues.getLastName()));
         addActionToMapRespectingToggle(pageActions, NATIONAL_INSURANCE_NUMBER, (claimValues) -> enterNino(claimValues.getNino()));
         addActionToMapRespectingToggle(pageActions, POSTCODE, (claimValues) -> enterPostcode(claimValues));
-        addActionToMapRespectingToggle(pageActions, SELECT_ADDRESS, (claimValues -> completeSelectAddressPage(claimValues)));
+        addActionToMapRespectingToggle(pageActions, SELECT_ADDRESS, (claimValues) -> completeSelectAddressPage(claimValues));
         addActionToMapRespectingToggle(pageActions, MANUAL_ADDRESS, (claimValues) -> enterManualAddress(claimValues));
         addActionToMapRespectingToggle(pageActions, PHONE_NUMBER, (claimValues) -> enterPhoneNumber());
         addActionToMapRespectingToggle(pageActions, EMAIL_ADDRESS, (claimValues) -> enterEmailAddress());
@@ -142,15 +142,8 @@ public class CommonSteps extends BaseSteps {
         postcodePage.clickContinue();
     }
 
-    protected void selectFirstAddress() {
-        SelectAddressPage selectAddressPage = getPages().getSelectAddressPage();
-        List<WebElement> addressOptions = selectAddressPage.getAddressOptions();
-        WebElement option = addressOptions.get(0);
-        option.click();
-    }
-
     protected void completeSelectAddressPage(ClaimValues claimValues) {
-        if (claimValues.getSelectAddress()) {
+        if (claimValues.isSelectAddress()) {
             selectFirstAddressAndSubmit();
         } else {
             clickAddressNotListedLink();
@@ -158,8 +151,10 @@ public class CommonSteps extends BaseSteps {
     }
 
     protected void selectFirstAddressAndSubmit() {
-        selectFirstAddress();
         SelectAddressPage selectAddressPage = getPages().getSelectAddressPage();
+        List<WebElement> addressOptions = selectAddressPage.getAddressOptions();
+        WebElement option = addressOptions.get(0);
+        option.click();
         selectAddressPage.clickContinue();
     }
 
