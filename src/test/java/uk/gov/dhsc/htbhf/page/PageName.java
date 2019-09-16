@@ -3,6 +3,8 @@ package uk.gov.dhsc.htbhf.page;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static uk.gov.dhsc.htbhf.page.ToggleName.ADDRESS_LOOKUP;
+
 /**
  * Enum of all the page names
  */
@@ -16,8 +18,8 @@ public enum PageName {
     DO_YOU_HAVE_CHILDREN("do you have children under four years old"),
     EMAIL_ADDRESS("email address"),
     ENTER_CODE("enter code"),
-    POSTCODE("postcode", "ADDRESS_LOOKUP_ENABLED"),
-    SELECT_ADDRESS("select address", "ADDRESS_LOOKUP_ENABLED"),
+    POSTCODE("postcode", ADDRESS_LOOKUP),
+    SELECT_ADDRESS("select address", ADDRESS_LOOKUP),
     MANUAL_ADDRESS("manual address"),
     NAME("enter name"),
     NATIONAL_INSURANCE_NUMBER("enter national insurance number"),
@@ -35,14 +37,14 @@ public enum PageName {
     REPORT_A_CHANGE("Report a change");
 
     private String pageName;
-    private Optional<String> toggleName;
+    private Optional<ToggleName> toggleName;
 
     PageName(String pageName) {
         this.pageName = pageName;
         this.toggleName = Optional.empty();
     }
 
-    PageName(String pageName, String toggleName) {
+    PageName(String pageName, ToggleName toggleName) {
         this.pageName = pageName;
         this.toggleName = Optional.of(toggleName);
     }
@@ -62,7 +64,7 @@ public enum PageName {
         return toggleName.isPresent();
     }
 
-    public Optional<String> getToggle() {
+    public Optional<ToggleName> getToggle() {
         return toggleName;
     }
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
+import static uk.gov.dhsc.htbhf.page.ToggleName.ADDRESS_LOOKUP;
 
 class PageNameTest {
 
@@ -54,6 +55,6 @@ class PageNameTest {
     @Test
     void shouldReturnNoToggle() {
         assertThat(PageName.HOW_IT_WORKS.getToggle()).isEmpty();
-        assertThat(PageName.POSTCODE.getToggle()).hasValue("ADDRESS_LOOKUP_ENABLED");
+        assertThat(PageName.POSTCODE.getToggle()).hasValue(ADDRESS_LOOKUP);
     }
 }

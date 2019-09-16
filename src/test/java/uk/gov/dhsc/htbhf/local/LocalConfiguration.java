@@ -38,7 +38,7 @@ public class LocalConfiguration {
     @Value("${base.url}")
     private String baseUrl;
 
-    @Value("${FEATURE_TOGGLES}")
+    @Value("${FEATURE_TOGGLES:}")
     private String featureToggles;
 
     @Bean()
