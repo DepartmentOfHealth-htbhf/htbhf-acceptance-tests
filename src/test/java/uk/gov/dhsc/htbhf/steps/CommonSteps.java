@@ -1,11 +1,9 @@
 package uk.gov.dhsc.htbhf.steps;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.*;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -79,7 +77,7 @@ public class CommonSteps extends BaseSteps {
         if (toggleConfiguration.isPageEnabled(pageName)) {
             pageActions.put(pageName, pageAction);
         } else {
-            log.info("Not adding page action for [{}] as it is toggled off", pageName);
+            log.debug("Not adding page action for [{}] as it is toggled off", pageName);
         }
     }
 

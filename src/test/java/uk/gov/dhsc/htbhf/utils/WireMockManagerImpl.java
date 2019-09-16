@@ -1,15 +1,13 @@
 package uk.gov.dhsc.htbhf.utils;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.http.Fault;
 import uk.gov.dhsc.htbhf.steps.Constants;
 
 import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
-import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aPostcodeLookupResponseWithNoResults;
-import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aPostcodeLookupResponseWithResults;
-import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aValidClaimResponseWithVoucherEntitlement;
-import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aValidClaimResponseWithoutVoucherEntitlement;
+import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.*;
 
 /**
  * Manages all interactions with WireMock
@@ -83,5 +81,22 @@ public class WireMockManagerImpl implements WireMockManager {
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
                         .withBody(wireMockBody)));
+    }
+
+    @Override
+    public void setupPostcodeLookupErrorResponse() {
+        osPlacesMock.stubFor(get(urlPathEqualTo(POSTCODE_LOOKUP_ENDPOINT))
+                .withQueryParam("key", matching(".*"))
+                .willReturn(aResponse()
+                        .withStatus(500)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(aPostcodeLookup500ErrorResponse())));
+    }
+
+    @Override
+    public void setupPostcodeLookupConnectionResetResponse() {
+        osPlacesMock.stubFor(get(urlPathEqualTo(POSTCODE_LOOKUP_ENDPOINT))
+                .withQueryParam("key", matching(".*"))
+                .willReturn(aResponse().withFault(Fault.CONNECTION_RESET_BY_PEER)));
     }
 }

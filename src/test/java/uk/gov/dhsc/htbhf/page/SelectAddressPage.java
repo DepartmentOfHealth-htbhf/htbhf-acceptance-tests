@@ -43,12 +43,21 @@ public class SelectAddressPage extends SubmittablePage {
         return findAllByCss(ADDRESS_RESULTS_OPTION_CSS);
     }
 
-    public WebElement getAddressNotListedLink () {
+    private WebElement getAddressNotListedLink() {
         return findByXpath("//a[contains(text(), \"My address is not listed\")]");
     }
 
-    public WebElement getChangePostcodeLink () {
+    public String getAddressNotListedLinkHref() {
+        WebElement addressNotListedLink = getAddressNotListedLink();
+        return addressNotListedLink.getAttribute("href");
+    }
+
+    private WebElement getChangePostcodeLink() {
         return findByXpath("//a[contains(text(), \"Change\")]");
+    }
+
+    public String getChangePostcodeLinkHref() {
+        return getChangePostcodeLink().getAttribute("href");
     }
 
     public void clickAddressNotListedLink () {
@@ -61,8 +70,9 @@ public class SelectAddressPage extends SubmittablePage {
         changePostcodeLink.click();
     }
 
-    public WebElement getManualAddressLink () {
-        return findByXpath("//a[contains(text(), \"Enter address manually\")]");
+    public String getManualAddressLinkHref() {
+        WebElement manualAddressLink = findByXpath("//a[contains(text(), \"Enter address manually\")]");
+        return manualAddressLink.getAttribute("href");
     }
 
     public void selectFirstAddress() {
