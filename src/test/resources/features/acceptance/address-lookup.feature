@@ -1,3 +1,4 @@
+@ADDRESS_LOOKUP
 Feature: Select address
   In order to apply for the Apply for Healthy Start programme
   As a potential claimant

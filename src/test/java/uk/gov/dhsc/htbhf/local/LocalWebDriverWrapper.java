@@ -68,7 +68,7 @@ public class LocalWebDriverWrapper implements WebDriverWrapper {
             case "chrome":
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.setHeadless(headless);
-                chromeOptions.addArguments("--headless", "--whitelisted-ips", "--no-sandbox", "--disable-extensions");
+                chromeOptions.addArguments("--whitelisted-ips", "--no-sandbox", "--disable-extensions");
                 webdriver = new ChromeDriver(chromeOptions);
                 break;
         }
