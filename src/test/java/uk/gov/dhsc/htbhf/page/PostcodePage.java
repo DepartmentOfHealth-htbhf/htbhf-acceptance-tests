@@ -32,4 +32,12 @@ public class PostcodePage extends SubmittablePage {
     public void enterPostcode(String postcode) {
         postcodeInputField.enterValue(postcode);
     }
+
+    public String getPostcodeInputErrorId() {
+        return postcodeInputField.getInputErrorId();
+    }
+
+    public String getPostcodeInputErrorLinkCss() {
+        return postcodeInputField.getInputErrorLinkCss();
+    }
 }

@@ -14,6 +14,7 @@ public class Constants {
     public static final String TOWN = "Springfield";
     public static final String COUNTY = "Devon";
     public static final String POSTCODE = "AA11BB";
+    public static final String POSTCODE_WITH_NO_RESULTS = "BS11AA";
     public static final String FULL_ADDRESS = ADDRESS_LINE_1 + "\n" + ADDRESS_LINE_2 + "\n" + TOWN + "\n" + COUNTY + "\n" + POSTCODE;
     public static final String FULL_ADDRESS_NO_LINE_2 = ADDRESS_LINE_1 + "\n" + TOWN + "\n" + COUNTY + "\n" + POSTCODE;
     public static final String FULL_ADDRESS_NO_COUNTY = ADDRESS_LINE_1 + "\n" + ADDRESS_LINE_2 + "\n" + TOWN + "\n" + POSTCODE;

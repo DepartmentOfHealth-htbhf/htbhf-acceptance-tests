@@ -3,7 +3,7 @@
     "uri" : "https://api.ordnancesurvey.co.uk/places/v1/addresses/postcode?postcode=AA11BB",
     "query" : "postcode=AA11BB",
     "offset" : 0,
-    "totalresults" : 44,
+    "totalresults" : 2,
     "format" : "JSON",
     "dataset" : "DPA",
     "lr" : "EN,CY",
