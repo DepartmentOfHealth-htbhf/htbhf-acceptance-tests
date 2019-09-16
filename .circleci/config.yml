@@ -10,7 +10,7 @@ jobs:
       BIN_DIR: ./bin
       CLAIMANT_SERVICE_URL: http://localhost:8090
       USE_UNSECURE_COOKIE: true
-      WEB_UI_BRANCH: ''
+      WEB_UI_BRANCH: '' # if empty, download & run the latest release of web-ui. If populated, download & run that branch
       OS_PLACES_API_KEY: os-places-key
       OS_PLACES_URI: http://localhost:8150
     steps:
@@ -25,7 +25,11 @@ jobs:
             - "81:ca:95:90:1b:25:e9:cb:e7:0c:89:41:b8:cf:7f:a0"
       - run:
           name: prepare for tests and build
-          command: ./ci_scripts/prepare_for_tests.sh && ./ci_scripts/download_chromedriver.sh && ./gradlew clean build --info -s
+          command: |
+            export WEB_UI_DIR=$(pwd)/tmp-web-ui
+            ./ci_scripts/prepare_for_tests.sh
+            ./ci_scripts/download_chromedriver.sh
+            ./run_tests_with_local_feature_toggles.sh
       - run:
           name: cat the RunAcceptanceTests logs for debugging on failure
           command: cat /home/circleci/project/build/reports/tests/test/classes/uk.gov.dhsc.htbhf.RunAcceptanceTests.html

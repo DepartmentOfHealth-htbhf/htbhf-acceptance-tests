@@ -9,7 +9,9 @@ check_variable_is_set(){
 
 export WORKING_DIR=$(pwd)
 export BIN_DIR=${WORKING_DIR}/bin
-export WEB_UI_DIR=${WORKING_DIR}/tmp-web-ui
+if [[ -z "${WEB_UI_DIR}" ]]; then
+  export WEB_UI_DIR=${WORKING_DIR}/tmp-web-ui
+fi
 
 check_variable_is_set NOTIFY_API_KEY
 
