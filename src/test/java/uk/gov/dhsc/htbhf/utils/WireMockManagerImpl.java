@@ -1,7 +1,6 @@
 package uk.gov.dhsc.htbhf.utils;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import org.apache.http.HttpStatus;
 
 import java.util.Map;
 
@@ -30,33 +29,38 @@ public class WireMockManagerImpl implements WireMockManager {
             "DUPLICATE", 200
     );
 
-    private WireMockServer wireMockServer;
+    private WireMockServer claimantServiceMock;
+    private WireMockServer osPlacesMock;
 
 
-    public WireMockManagerImpl(WireMockServer wireMockServer) {
-        this.wireMockServer = wireMockServer;
+    public WireMockManagerImpl(WireMockServer claimantServiceMock, WireMockServer osPlacesMock) {
+        this.claimantServiceMock = claimantServiceMock;
+        this.osPlacesMock = osPlacesMock;
     }
 
     @Override
     public void startWireMock() {
-        wireMockServer.start();
+        claimantServiceMock.start();
+        osPlacesMock.start();
     }
 
     @Override
     public void stopWireMock() {
-        wireMockServer.stop();
+        claimantServiceMock.stop();
+        osPlacesMock.stop();
     }
 
     @Override
     public void resetWireMockStubs() {
-        wireMockServer.resetAll();
+        claimantServiceMock.resetAll();
+        osPlacesMock.resetAll();
     }
 
     @Override
-    public void setupWireMockMappingsWithStatus(String eligibilityStatus) {
+    public void setupClaimantServiceMappingsWithStatus(String eligibilityStatus) {
         String wireMockBody = (eligibilityStatus.equals("ELIGIBLE") ?
                 aValidClaimResponseWithVoucherEntitlement(eligibilityStatus) : aValidClaimResponseWithoutVoucherEntitlement(eligibilityStatus));
-        stubFor(post(urlEqualTo(CLAIMS_ENDPOINT))
+        claimantServiceMock.stubFor(post(urlEqualTo(CLAIMS_ENDPOINT))
                 .withHeader(REQUEST_ID_HEADER, matching(ID_HEADERS_REGEX))
                 .withHeader(SESSION_ID_HEADER, matching(ID_HEADERS_REGEX))
                 .willReturn(aResponse()
@@ -68,7 +72,7 @@ public class WireMockManagerImpl implements WireMockManager {
     @Override
     public void setupPostcodeLookupWithResultsMapping(String postcode) {
         String wireMockBody = aPostcodeLookupResponseWithResults(postcode);
-        stubFor(get(urlPathEqualTo(POSTCODE_LOOKUP_ENDPOINT))
+        osPlacesMock.stubFor(get(urlPathEqualTo(POSTCODE_LOOKUP_ENDPOINT))
                 .withQueryParam("postcode", equalTo(postcode))
                 .withQueryParam("key", matching(".*"))
                 .willReturn(aResponse()

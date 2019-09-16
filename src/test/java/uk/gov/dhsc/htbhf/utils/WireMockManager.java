@@ -14,7 +14,7 @@ public interface WireMockManager {
     default void resetWireMockStubs(){
     }
 
-    default void setupWireMockMappingsWithStatus(String eligibilityStatus){
+    default void setupClaimantServiceMappingsWithStatus(String eligibilityStatus){
     }
 
     default void setupPostcodeLookupWithResultsMapping(String postcode){

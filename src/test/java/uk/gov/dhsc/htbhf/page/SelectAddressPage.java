@@ -1,12 +1,16 @@
 package uk.gov.dhsc.htbhf.page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
 public class SelectAddressPage extends SubmittablePage {
+
+    private static final String ADDRESS_RESULTS_OPTION_CSS = "#address-results > option";
 
     public SelectAddressPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
@@ -36,7 +40,7 @@ public class SelectAddressPage extends SubmittablePage {
     }
 
     public List<WebElement> getAddressOptions () {
-        return findAllByCss("#address-results > option");
+        return findAllByCss(ADDRESS_RESULTS_OPTION_CSS);
     }
 
     public WebElement getAddressNotListedLink () {
@@ -59,5 +63,12 @@ public class SelectAddressPage extends SubmittablePage {
 
     public WebElement getManualAddressLink () {
         return findByXpath("//a[contains(text(), \"Enter address manually\")]");
+    }
+
+    public void selectFirstAddress() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(ADDRESS_RESULTS_OPTION_CSS)));
+        List<WebElement> addressOptions = getAddressOptions();
+        WebElement option = addressOptions.get(0);
+        option.click();
     }
 }
