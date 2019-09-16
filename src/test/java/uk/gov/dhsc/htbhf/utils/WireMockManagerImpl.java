@@ -1,10 +1,12 @@
 package uk.gov.dhsc.htbhf.utils;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import uk.gov.dhsc.htbhf.steps.Constants;
 
 import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aPostcodeLookupResponseWithNoResults;
 import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aPostcodeLookupResponseWithResults;
 import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aValidClaimResponseWithVoucherEntitlement;
 import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aValidClaimResponseWithoutVoucherEntitlement;
@@ -71,7 +73,9 @@ public class WireMockManagerImpl implements WireMockManager {
 
     @Override
     public void setupPostcodeLookupWithResultsMapping(String postcode) {
-        String wireMockBody = aPostcodeLookupResponseWithResults(postcode);
+        String wireMockBody =  (postcode.equalsIgnoreCase(Constants.POSTCODE_WITH_NO_RESULTS))
+                ? aPostcodeLookupResponseWithNoResults()
+                : aPostcodeLookupResponseWithResults(postcode);
         osPlacesMock.stubFor(get(urlPathEqualTo(POSTCODE_LOOKUP_ENDPOINT))
                 .withQueryParam("postcode", equalTo(postcode))
                 .withQueryParam("key", matching(".*"))
