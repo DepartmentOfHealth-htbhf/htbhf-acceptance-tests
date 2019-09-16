@@ -37,6 +37,11 @@ public class CheckAnswersSteps extends CommonSteps {
         changeAnswerFor("Are you pregnant?");
     }
 
+    @When("^I choose to change my address")
+    public void changeAddress() {
+        changeAnswerFor("Address");
+    }
+
     @Then("^there are no children displayed")
     public void thereAreNoChildrenDisplayed() {
         CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();

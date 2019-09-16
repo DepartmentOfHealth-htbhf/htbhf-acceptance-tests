@@ -39,6 +39,10 @@ public class WiremockResponseTestDataFactory {
                 "}";
     }
 
+    public static String aPostcodeLookupResponseWithNoResults() {
+        return getResponseTemplate("postcode-lookup-no-results.json");
+    }
+
     public static String aPostcodeLookupResponseWithResults(String postcode) {
         String template = getResponseTemplate("postcode-lookup-2-results.json");
         return template.replace(DEFAULT_POSTCODE, postcode);
