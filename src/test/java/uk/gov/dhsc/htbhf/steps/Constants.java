@@ -1,5 +1,7 @@
 package uk.gov.dhsc.htbhf.steps;
 
+import java.nio.CharBuffer;
+
 public class Constants {
 
     public static final String DOB_DAY = "30";
@@ -22,4 +24,5 @@ public class Constants {
     public static final String PHONE_NUMBER_2 = "07111111111";
     public static final String EMAIL_ADDRESS = "test@email.com";
     public static final String EMAIL_ADDRESS_2 = "different-email-address@email.com";
+    public static final String LONG_NAME = CharBuffer.allocate(501).toString().replace('\0', 'A');
 }
