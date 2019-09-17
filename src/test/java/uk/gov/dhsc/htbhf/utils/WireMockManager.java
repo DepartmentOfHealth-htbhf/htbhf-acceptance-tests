@@ -19,4 +19,10 @@ public interface WireMockManager {
 
     default void setupPostcodeLookupWithResultsMapping(String postcode){
     }
+
+    default void setupPostcodeLookupErrorResponse() {
+    }
+
+    default void setupPostcodeLookupConnectionResetResponse() {
+    }
 }

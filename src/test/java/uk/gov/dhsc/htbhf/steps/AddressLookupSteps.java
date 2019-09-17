@@ -5,7 +5,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.PostcodePage;
-import uk.gov.dhsc.htbhf.page.SelectAddressPage;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +21,12 @@ public class AddressLookupSteps extends CommonSteps {
 
     @Given("OS places returns an error response")
     public void givenOsPlacesReturnsAnError() {
-        setupPostcodeLookupWithResults(POSTCODE_WITH_NO_RESULTS);
-        enterPostcodeAndSubmit(POSTCODE_WITH_NO_RESULTS);
+        wireMockManager.setupPostcodeLookupErrorResponse();
+    }
+
+    @Given("OS places resets the connection")
+    public void givenOsResetsTheConnection() {
+        wireMockManager.setupPostcodeLookupConnectionResetResponse();
     }
 
     @When("^I enter a postcode that returns no search results")
@@ -41,6 +44,11 @@ public class AddressLookupSteps extends CommonSteps {
     @When("^I enter (.*) as my postcode")
     public void enterPostcode(String postcode) {
         enterPostcodeAndSubmit(postcode);
+    }
+
+    @When("^I enter my postcode")
+    public void enterPostcode() {
+        enterPostcodeAndSubmit(POSTCODE);
     }
 
     @When("^I select an address")
@@ -73,10 +81,8 @@ public class AddressLookupSteps extends CommonSteps {
 
     @Then("^I am shown a link to change my postcode")
     public void changePostcodeLinkIsShown() {
-        SelectAddressPage selectAddressPage = getPages().getSelectAddressPage();
-        WebElement changePostcodeLink = selectAddressPage.getChangePostcodeLink();
-        String href = changePostcodeLink.getAttribute("href");
-        assertThat(href).isEqualTo(getPages().getPostcodePage().getFullPath());
+        String changePostcodeLinkHref = getPages().getSelectAddressPage().getChangePostcodeLinkHref();
+        assertThat(changePostcodeLinkHref).isEqualTo(getPages().getPostcodePage().getFullPath());
     }
 
     @Then("^I am shown a button to enter my address manually")
@@ -87,9 +93,8 @@ public class AddressLookupSteps extends CommonSteps {
 
     @Then("^I am shown an address not listed link")
     public void addressNotListedLinkShown() {
-        WebElement addressNotListedLink = getPages().getSelectAddressPage().getAddressNotListedLink();
-        String href = addressNotListedLink.getAttribute("href");
-        assertThat(href).isEqualTo(getPages().getManualAddressPage().getFullPath());
+        String addressNotListedLinkHref = getPages().getSelectAddressPage().getAddressNotListedLinkHref();
+        assertThat(addressNotListedLinkHref).isEqualTo(getPages().getManualAddressPage().getFullPath());
     }
 
     @Then("^I am shown a continue button")
@@ -106,6 +111,18 @@ public class AddressLookupSteps extends CommonSteps {
     @Then("^I am informed that you can only apply if I live in England, Wales or Northern Ireland")
     public void assertPostcodeNotInEnglandWalesOrNorthernIreland() {
         assertPostcodeErrorPresent("You can only apply if you live in England, Wales or Northern Ireland");
+    }
+
+    @Then("^I am informed that there's a problem with the address lookup")
+    public void postcodeLookupNotWorkingErrorShown() {
+        WebElement postcodeLookupNotWorkingElement = getPages().getSelectAddressPage().getPostcodeLookupNotWorkingElement();
+        assertThat(postcodeLookupNotWorkingElement.isDisplayed()).isTrue();
+    }
+
+    @Then("^I am shown a link to enter my address manually")
+    public void manualAddressLinkIsShown() {
+        String manualAddressLink = getPages().getSelectAddressPage().getManualAddressLinkHref();
+        assertThat(manualAddressLink).isEqualTo(getPages().getManualAddressPage().getFullPath());
     }
 
     private void assertPostcodeErrorPresent(String expectedErrorMessage) {

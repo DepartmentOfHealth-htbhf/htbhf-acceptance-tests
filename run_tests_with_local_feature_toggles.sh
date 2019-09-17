@@ -14,4 +14,4 @@ export TAGS=$(cat ${WEB_UI_DIR}/features.json | grep false | sed 's/": false//g'
 
 echo "Using feature toggles: ${FEATURE_TOGGLES}"
 echo "Runing tests with: -Dcucumber.options=\"--tags 'not @Ignore ${TAGS}'\""
-./gradlew -Dcucumber.options="--tags 'not @Ignore ${TAGS}'" clean build --info -s
+./gradlew -Dcucumber.options="--tags 'not @Ignore ${TAGS}'" clean build --info --stacktrace

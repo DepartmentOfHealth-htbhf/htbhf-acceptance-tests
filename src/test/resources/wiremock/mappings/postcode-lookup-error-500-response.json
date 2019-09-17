@@ -1,0 +1,12 @@
+{
+  "header": {
+    "offset": 0,
+    "totalresults": 0,
+    "format": "JSON",
+    "dataset": "DPA",
+    "lr": "EN,CY",
+    "maxresults": 100,
+    "epoch": "69",
+    "output_srs": "EPSG:27700"
+  }
+}
