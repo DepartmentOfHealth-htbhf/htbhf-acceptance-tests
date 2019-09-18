@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.InputField;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Page object for the Enter Children's Dates of Birth page.
@@ -39,49 +40,107 @@ public class ChildDateOfBirthPage extends SubmittablePage {
     }
 
     public void enterChild3OrUnderDetails(int dayIncrement) {
-        String name = "Child" + this.childIndex;
-        enterChildName(name);
+        enterChild3OrUnderDetails("Child" + this.childIndex, dayIncrement);
+    }
+
+    public void enterChild3OrUnderDetails(String childName, int dayIncrement) {
+        enterChildName(childName);
         LocalDate dateOfBirthLastYear = LocalDate.now().plusDays(dayIncrement).minusYears(1);
         enterChild3OrUnderDateOfBirth(dateOfBirthLastYear);
         this.childIndex++;
     }
 
-    private void enterChild3OrUnderDateOfBirth(LocalDate dateOfBirth) {
+    public List<WebElement> findAllRemoveChildButtons() {
+        return findAllByCss(".govuk-button.govuk-button--secondary");
+    }
+
+    public void clickRemoveButtonForChild(int childIndex) {
+        WebElement removeButton = findById(getRemoveButtonIdForIndex(childIndex));
+        removeButton.click();
+    }
+
+    private String getRemoveButtonIdForIndex(int childIndex) {
+        return "remove-child-" + childIndex;
+    }
+
+    public String getChildDateOfBirthFieldErrorId(int childIndex) {
+        return "child-dob-" + childIndex + "-error";
+    }
+
+    public String getChildDateOfBirthErrorLinkCss(int childIndex) {
+        return "a[href=\"#child-dob-" + childIndex + "-error\"]";
+    }
+
+    public String getChildNameFieldErrorId(int childIndex) {
+        return getNameInputField(childIndex).getInputErrorId();
+    }
+
+    public String getChildNameErrorLinkCss(int childIndex) {
+        // TODO Should the inconsistency in camel case vs kebab case in htbhf-date-input.njk be fixed in web-ui, this will fail and
+        //  should be corrected to use getNameInputFieldForIndex(index).getInputErrorLinkCss()
+        return "a[href=\"#child-dob-name-" + childIndex + "-error\"]";
+    }
+
+    public void enterChild3OrUnderDateOfBirth(LocalDate dateOfBirth) {
         enterDay(dateOfBirth.getDayOfMonth());
         enterMonth(dateOfBirth.getMonthValue());
         enterYear(dateOfBirth.getYear());
     }
 
     private void enterDay(int day) {
-        InputField inputField = new InputField(webDriver, wait, getDayInputIdForIndex(childIndex));
-        inputField.enterValue(String.valueOf(day));
+        getDayInputField(childIndex).enterValue(String.valueOf(day));
+    }
+
+    private InputField getDayInputField(int childIndex) {
+        return new InputField(webDriver, wait, getDayInputIdForIndex(childIndex));
     }
 
     private void enterMonth(int month) {
-        InputField inputField = new InputField(webDriver, wait, getMonthInputIdForIndex(childIndex));
-        inputField.enterValue(String.valueOf(month));
+        getMonthInputField(childIndex).enterValue(String.valueOf(month));
+    }
+
+    private InputField getMonthInputField(int childIndex) {
+        return new InputField(webDriver, wait, getMonthInputIdForIndex(childIndex));
     }
 
     private void enterYear(int year) {
-        InputField inputField = new InputField(webDriver, wait, getYearInputIdForIndex(childIndex));
-        inputField.enterValue(String.valueOf(year));
+        getYearInputField(childIndex).enterValue(String.valueOf(year));
+    }
+
+    private InputField getYearInputField(int childIndex) {
+        return new InputField(webDriver, wait, getYearInputIdForIndex(childIndex));
     }
 
     private void enterChildName(String name) {
-        InputField inputField = new InputField(webDriver, wait, getNameInputIdForIndex(childIndex));
-        inputField.enterValue(name);
+        getNameInputField(childIndex).enterValue(name);
+    }
+
+    private InputField getNameInputField(int childIndex) {
+        return new InputField(webDriver, wait, getNameInputIdForIndex(childIndex));
     }
 
     private String getNameInputIdForIndex(int index) {
         return "childDob-name-" + index;
     }
 
+    public String getChildDateOfBirthDay(int childIndex) {
+        return getDayInputField(childIndex).getValue();
+    }
+
     private String getDayInputIdForIndex(int index) {
         return "childDob-" + index + "-day";
     }
 
+    public String getChildDateOfBirthMonth(int childIndex) {
+        return getMonthInputField(childIndex).getValue();
+    }
+
     private String getMonthInputIdForIndex(int index) {
         return "childDob-" + index + "-month";
+    }
+
+    public String getChildDateOfBirthYear(int childIndex) {
+        return getYearInputField(childIndex).getValue();
     }
 
     private String getYearInputIdForIndex(int index) {
