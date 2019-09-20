@@ -17,6 +17,9 @@ public interface WireMockManager {
     default void setupClaimantServiceMappingsWithStatus(String eligibilityStatus){
     }
 
+    default void setupClaimantServiceUpdatedClaimMapping() {
+    }
+
     default void setupPostcodeLookupWithResultsMapping(String postcode){
     }
 
@@ -24,5 +27,8 @@ public interface WireMockManager {
     }
 
     default void setupPostcodeLookupConnectionResetResponse() {
+    }
+
+    default void verifyClaimantServiceRequestMatching(String expectedBody) {
     }
 }

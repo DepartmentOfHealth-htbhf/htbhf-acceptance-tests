@@ -32,6 +32,7 @@ public class Pages {
         pages.add(new CheckAnswersPage(webDriver, baseUrl, webDriverWait));
         pages.add(new ChildDateOfBirthPage(webDriver, baseUrl, webDriverWait));
         pages.add(new ConfirmationPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new ConfirmUpdatedPage(webDriver, baseUrl, webDriverWait));
         pages.add(new DateOfBirthPage(webDriver, baseUrl, webDriverWait));
         pages.add(new DoYouHaveChildrenPage(webDriver, baseUrl, webDriverWait));
         pages.add(new EmailAddressPage(webDriver, baseUrl, webDriverWait));
@@ -127,6 +128,14 @@ public class Pages {
 
     public ConfirmationPage getConfirmationPage() {
         return (ConfirmationPage) getAndWaitForPageByName(PageName.CONFIRMATION);
+    }
+
+    public ConfirmationPage getConfirmationPageNoWait() {
+        return (ConfirmationPage) getPageByName(PageName.CONFIRMATION);
+    }
+
+    public ConfirmUpdatedPage getConfirmUpdatedPage() {
+        return (ConfirmUpdatedPage) getAndWaitForPageByName(PageName.CONFIRM_UPDATED);
     }
 
     public GuidancePage getGuidancePage(PageName pageName) {

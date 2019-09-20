@@ -13,6 +13,7 @@ import static uk.gov.dhsc.htbhf.steps.ClaimValuesTestDataFactory.buildDefaultCla
 import static uk.gov.dhsc.htbhf.steps.Constants.DOB_DAY;
 import static uk.gov.dhsc.htbhf.steps.Constants.DOB_MONTH;
 import static uk.gov.dhsc.htbhf.steps.Constants.DOB_YEAR;
+import static uk.gov.dhsc.htbhf.steps.Constants.VALID_PREGNANCY_MONTH_INCREMENT;
 
 /**
  * Contains common steps used by more than one step
@@ -181,7 +182,7 @@ public class CommonSteps extends BaseSteps {
     }
 
     protected void selectYesOnPregnancyPage() {
-        enterExpectedDeliveryDateOnPregnancyPage(2);
+        enterExpectedDeliveryDateOnPregnancyPage(VALID_PREGNANCY_MONTH_INCREMENT);
         getPages().getAreYouPregnantPage().clickContinue();
     }
 
@@ -225,6 +226,15 @@ public class CommonSteps extends BaseSteps {
 
     protected void acceptTermsAndConditionsAndSubmitApplication() {
         wireMockManager.setupClaimantServiceMappingsWithStatus("ELIGIBLE");
+        checkAnswersAndAcceptTsAndCs();
+    }
+
+    protected void acceptTermsAndConditionsAndUpdateApplication() {
+        wireMockManager.setupClaimantServiceUpdatedClaimMapping();
+        checkAnswersAndAcceptTsAndCs();
+    }
+
+    private void checkAnswersAndAcceptTsAndCs() {
         CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();
         checkAnswersPage.clickContinue();
         TermsAndConditionsPage termsAndConditionsPage = getPages().getTermsAndConditionsPage();

@@ -15,6 +15,7 @@ class PageNameTest {
             "CHECK_ANSWERS, check answers",
             "CHILD_DATE_OF_BIRTH, enter your childrens dates of birth",
             "CONFIRMATION, confirmation",
+            "CONFIRM_UPDATED, confirm updated",
             "DATE_OF_BIRTH, enter date of birth",
             "DO_YOU_HAVE_CHILDREN, do you have children under four years old",
             "EMAIL_ADDRESS, email address",
