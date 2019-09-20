@@ -158,7 +158,7 @@ public class CheckAnswersSteps extends CommonSteps {
 
     private void assertDueDateShownInSixMonths(List<CheckAnswersRowData> claimContents) {
         String dueDateValue = getValueForField(claimContents, "Baby’s due date");
-        assertThat(dueDateValue).isEqualTo(getFormattedDateInMonths(2));
+        assertThat(dueDateValue).isEqualTo(getFormattedDateInMonths(VALID_PREGNANCY_MONTH_INCREMENT));
     }
 
     private void assertFullAddressShown(List<CheckAnswersRowData> claimContents, String expectedAddress) {

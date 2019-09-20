@@ -34,9 +34,21 @@ public class CompleteFlowSteps extends CommonSteps {
         enterDetailsUpToPage(CHECK_ANSWERS, buildClaimValuesWithNoCounty());
     }
 
-    @When("I complete the application with valid details that contains malicious input")
+    @When("^I complete the application with valid details that contains malicious input")
     public void completeApplicationWithMaliciousContent() {
         enterDetailsUpToPage(CHECK_ANSWERS, buildClaimValuesWithMaliciousFirstName());
+    }
+
+    @When("^I submit an application with valid details")
+    public void submitApplicationWithValidDetails() {
+        enterDetailsUpToPage(CHECK_ANSWERS, buildClaimValuesForPregnantWoman());
+        acceptTermsAndConditionsAndSubmitApplication();
+    }
+
+    @When("^I submit an application to update an existing claim")
+    public void submitApplicationToUpdateAnExistingClaim() {
+        enterDetailsUpToPage(CHECK_ANSWERS, buildClaimValuesForPregnantWoman());
+        acceptTermsAndConditionsAndUpdateApplication();
     }
 
 }

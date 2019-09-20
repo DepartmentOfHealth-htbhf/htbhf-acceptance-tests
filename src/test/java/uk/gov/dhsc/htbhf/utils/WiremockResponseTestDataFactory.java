@@ -16,6 +16,15 @@ public class WiremockResponseTestDataFactory {
     private static final String DEFAULT_POSTCODE = "AA11BB";
     private static final Map<String, String> RESPONSE_TEMPLATES = new ConcurrentHashMap<>();
 
+    public static String anUpdatedClaimResponse() {
+        return "{\"claimStatus\": \"ACTIVE\", " +
+                "\"eligibilityStatus\": \"ELIGIBLE\", " +
+                "\"claimUpdated\": true," +
+                "\"updatedFields\": [\"expectedDeliveryDate\"]," +
+                "\"voucherEntitlement\": " + aValidVoucherEntitlement() +
+                "}";
+    }
+
     public static String aValidClaimResponseWithVoucherEntitlement(String eligibilityStatus) {
         return "{\"claimStatus\": \"NEW\", " +
                 "\"eligibilityStatus\": \"" + eligibilityStatus + "\", " +
