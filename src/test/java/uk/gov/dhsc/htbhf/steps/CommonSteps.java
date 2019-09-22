@@ -97,16 +97,30 @@ public class CommonSteps extends BaseSteps {
         sendCodePage.clickContinue();
     }
 
+    protected void selectEmailOnSendCode() {
+        SendCodePage sendCodePage = getPages().getSendCodePage();
+        sendCodePage.selectEmail();
+        sendCodePage.clickContinue();
+    }
+
     protected void enterEmailAddress() {
+        enterEmailAddress(Constants.EMAIL_ADDRESS);
+    }
+
+    protected void enterEmailAddress(String emailAddress) {
         EmailAddressPage emailAddressPage = getPages().getEmailAddressPage();
-        emailAddressPage.enterEmailAddress(Constants.EMAIL_ADDRESS);
+        emailAddressPage.enterEmailAddress(emailAddress);
         emailAddressPage.clickContinue();
     }
 
-    protected void enterPhoneNumber() {
+    protected void enterPhoneNumber(String phoneNumber) {
         PhoneNumberPage phoneNumberPage = getPages().getPhoneNumberPage();
-        phoneNumberPage.enterPhoneNumber(Constants.PHONE_NUMBER);
+        phoneNumberPage.enterPhoneNumber(phoneNumber);
         phoneNumberPage.clickContinue();
+    }
+
+    protected void enterPhoneNumber() {
+        enterPhoneNumber(Constants.PHONE_NUMBER);
     }
 
     protected void enterManualAddress(ClaimValues claimValues) {
