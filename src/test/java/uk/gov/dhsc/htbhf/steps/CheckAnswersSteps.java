@@ -42,6 +42,16 @@ public class CheckAnswersSteps extends CommonSteps {
         changeAnswerFor("Address");
     }
 
+    @When("^I choose to change my phone number")
+    public void changePhoneNumber() {
+        changeAnswerFor("Mobile telephone number");
+    }
+
+    @When("^I choose to change my email address")
+    public void changeEmailAddress() {
+        changeAnswerFor("Email address");
+    }
+
     @Then("^there are no children displayed")
     public void thereAreNoChildrenDisplayed() {
         CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();
