@@ -19,7 +19,6 @@ Feature: Do you have children under four years old?
     And I click continue
     Then I am shown the are you pregnant page
 
-
   Scenario: Select the Yes option and I am asked to enter my children's dates of birth
     When I say Yes to the do you have children under four years old question
     And I click continue

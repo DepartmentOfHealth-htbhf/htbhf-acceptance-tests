@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.gov.dhsc.htbhf.steps.Constants.LONG_NAME;
+import static uk.gov.dhsc.htbhf.steps.Constants.LONG_STRING;
 
 /**
  * Steps for the page where the claimant enters the date of birth of their children
@@ -101,16 +101,16 @@ public class ChildDateOfBirthSteps extends CommonSteps {
     @When("^I submit the details of my child who is under four years old with a very long name")
     public void enterChildsDobWithLongName() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
-        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_NAME, 0);
+        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_STRING, 0);
         childDateOfBirthPage.clickContinue();
     }
 
     @When("^I submit the details of my two children who are under four years both with very long names")
     public void enterTwoChildrensDobsWithLongName() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
-        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_NAME, 0);
+        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_STRING, 0);
         childDateOfBirthPage.clickAddAnotherChild();
-        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_NAME, 1);
+        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_STRING, 1);
         childDateOfBirthPage.clickContinue();
     }
 

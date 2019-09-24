@@ -25,6 +25,6 @@ public class Constants {
     public static final String PHONE_NUMBER_2 = "07111111111";
     public static final String EMAIL_ADDRESS = "test@email.com";
     public static final String EMAIL_ADDRESS_2 = "different-email-address@email.com";
-    public static final String LONG_NAME = CharBuffer.allocate(501).toString().replace('\0', 'A');
+    public static final String LONG_STRING = CharBuffer.allocate(501).toString().replace('\0', 'A');
     public static final int VALID_PREGNANCY_MONTH_INCREMENT = 6;
 }
