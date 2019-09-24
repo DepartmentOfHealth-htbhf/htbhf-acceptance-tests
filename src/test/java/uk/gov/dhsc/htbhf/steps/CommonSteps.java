@@ -2,8 +2,10 @@ package uk.gov.dhsc.htbhf.steps;
 
 import lombok.extern.slf4j.Slf4j;
 import uk.gov.dhsc.htbhf.page.*;
+import uk.gov.dhsc.htbhf.page.component.RadioButton;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -273,6 +275,11 @@ public class CommonSteps extends BaseSteps {
         assertThat(correctHref)
                 .as("back link url should be [" + expectedUrl + "], is [" + href + "]")
                 .isTrue();
+    }
+
+    protected void assertYesNoOptionsAreDisplayed(BasePage basePage) {
+        List<String> radioButtonLabels = basePage.getAllRadioLabels();
+        assertThat(radioButtonLabels).containsExactly(RadioButton.YES_LABEL, RadioButton.NO_LABEL);
     }
 
     private boolean isCorrectHref(String href, String expectedUrl) {

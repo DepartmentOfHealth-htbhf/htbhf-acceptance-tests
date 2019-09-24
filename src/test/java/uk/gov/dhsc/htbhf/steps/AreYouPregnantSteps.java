@@ -4,7 +4,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.AreYouPregnantPage;
-import uk.gov.dhsc.htbhf.page.component.RadioButton;
 
 import java.util.List;
 
@@ -76,9 +75,7 @@ public class AreYouPregnantSteps extends CommonSteps {
 
     @Then("^Yes and No options are displayed on the are you pregnant page$")
     public void yesAndNoOptionsAreDisplayed() {
-        AreYouPregnantPage areYouPregnantPage = getPages().getAreYouPregnantPage();
-        List<String> radioButtonLabels = areYouPregnantPage.getAllRadioLabels();
-        assertThat(radioButtonLabels).containsExactly(RadioButton.YES_LABEL, RadioButton.NO_LABEL);
+        assertYesNoOptionsAreDisplayed(getPages().getAreYouPregnantPage());
     }
 
     @Then("^expected date of delivery instructional text is displayed$")
