@@ -35,7 +35,8 @@ public enum PageName {
     WHAT_YOU_CAN_BUY("What you can buy"),
     USING_YOUR_CARD("Using your card"),
     APPLY("Apply for Healthy Start"),
-    REPORT_A_CHANGE("Report a change");
+    REPORT_A_CHANGE("Report a change"),
+    COOKIES("cookies");
 
     private String pageName;
     private Optional<ToggleName> toggleName;
