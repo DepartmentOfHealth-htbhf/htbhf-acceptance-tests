@@ -18,7 +18,7 @@ public abstract class BasePage extends BaseComponent {
     private static final String RADIO_INPUT_CLASSNAME = "govuk-radios__input";
     private static final String RADIO_LABEL_CLASSNAME = "govuk-radios__label";
     private static final String ERROR_HEADER_SELECTOR = "h2#error-summary-title";
-    private static final String BACK_LINK_CLASSNAME = "govuk-back-link";
+    private static final String BACK_LINK_CSS = ".govuk-back-link";
 
     protected final WebDriver webDriver;
     protected final WebDriverWait wait;
@@ -70,7 +70,7 @@ public abstract class BasePage extends BaseComponent {
     }
 
     public String getH1Text() {
-        return findH1().getText();
+        return findH1().getText().trim();
     }
 
     public WebElement findH2() {
@@ -78,7 +78,7 @@ public abstract class BasePage extends BaseComponent {
     }
 
     public String getH2Text() {
-        return findH2().getText();
+        return findH2().getText().trim();
     }
 
     public WebElement findLinkForHref(String href) {
@@ -102,7 +102,7 @@ public abstract class BasePage extends BaseComponent {
     }
 
     public WebElement getBackLink() {
-        return findByClassName(BACK_LINK_CLASSNAME);
+        return findByCss(BACK_LINK_CSS);
     }
 
     public String getBackLinkHref() {
@@ -110,8 +110,13 @@ public abstract class BasePage extends BaseComponent {
         return backLink.getAttribute("href");
     }
 
+    /*
+     * If checking for the absence of something, you need to get all elements otherwise if
+     * there are none, then an Exception will be thrown
+     */
     public boolean isBackLinkPresent() {
-        return getBackLink().isDisplayed();
+        List<WebElement> backLink = findAllByCss(BACK_LINK_CSS);
+        return !backLink.isEmpty();
     }
 
     private String getVisibleTextFromFieldError(WebElement errorElement) {

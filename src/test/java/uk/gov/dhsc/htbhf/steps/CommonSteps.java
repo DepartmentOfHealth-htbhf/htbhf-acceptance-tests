@@ -227,10 +227,14 @@ public class CommonSteps extends BaseSteps {
     }
 
     protected void enterDateOfBirthAndSubmit() {
+        enterDateOfBirthAndSubmit(DOB_DAY, DOB_MONTH, DOB_YEAR);
+    }
+
+    protected void enterDateOfBirthAndSubmit(String day, String month, String year) {
         DateOfBirthPage dateOfBirthPage = getPages().getDateOfBirthPage();
-        dateOfBirthPage.getDayInputField().enterValue(DOB_DAY);
-        dateOfBirthPage.getMonthInputField().enterValue(DOB_MONTH);
-        dateOfBirthPage.getYearInputField().enterValue(DOB_YEAR);
+        dateOfBirthPage.getDayInputField().enterValue(day);
+        dateOfBirthPage.getMonthInputField().enterValue(month);
+        dateOfBirthPage.getYearInputField().enterValue(year);
         dateOfBirthPage.clickContinue();
     }
 
