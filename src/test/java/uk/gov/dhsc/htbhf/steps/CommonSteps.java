@@ -111,6 +111,8 @@ public class CommonSteps extends BaseSteps {
 
     protected void enterEmailAddress(String emailAddress) {
         EmailAddressPage emailAddressPage = getPages().getEmailAddressPage();
+        // disable html5 form validation as this brings up a dialog box on chrome which interferes with the test.
+        emailAddressPage.executeSetNoValidateScript();
         emailAddressPage.enterEmailAddress(emailAddress);
         emailAddressPage.clickContinue();
     }

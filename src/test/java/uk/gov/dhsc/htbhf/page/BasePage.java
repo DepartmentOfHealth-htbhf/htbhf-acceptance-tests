@@ -1,6 +1,7 @@
 package uk.gov.dhsc.htbhf.page;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,6 +20,9 @@ public abstract class BasePage extends BaseComponent {
     private static final String RADIO_LABEL_CLASSNAME = "govuk-radios__label";
     private static final String ERROR_HEADER_SELECTOR = "h2#error-summary-title";
     private static final String BACK_LINK_CSS = ".govuk-back-link";
+    private static final String SET_NO_VALIDATE =
+            "const form = document.querySelectorAll('form')[0]; " +
+                    "form.setAttribute('novalidate', true);";
 
     protected final WebDriver webDriver;
     protected final WebDriverWait wait;
@@ -110,13 +114,22 @@ public abstract class BasePage extends BaseComponent {
         return backLink.getAttribute("href");
     }
 
-    /*
+    /**
      * If checking for the absence of something, you need to get all elements otherwise if
      * there are none, then an Exception will be thrown
      */
     public boolean isBackLinkPresent() {
         List<WebElement> backLink = findAllByCss(BACK_LINK_CSS);
         return !backLink.isEmpty();
+    }
+
+    /**
+     * Used to disable html5 form validation as this brings up a dialog box on chrome which interferes with the test.
+     * This is most prevalent in the enter email address tests.
+     */
+    public void executeSetNoValidateScript() {
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) webDriver;
+        javascriptExecutor.executeScript(SET_NO_VALIDATE);
     }
 
     private String getVisibleTextFromFieldError(WebElement errorElement) {
