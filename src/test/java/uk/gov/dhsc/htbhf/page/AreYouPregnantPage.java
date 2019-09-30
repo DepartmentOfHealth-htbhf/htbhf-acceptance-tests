@@ -17,7 +17,7 @@ public class AreYouPregnantPage extends SubmittablePage {
     private static final String MONTH_INPUT_FIELD_ID = "expectedDeliveryDate-month";
     private static final String YEAR_INPUT_FIELD_ID = "expectedDeliveryDate-year";
     private static final String ARE_YOU_PREGNANT_ERROR_LINK_CSS = "a[href=\"#are-you-pregnant-error\"]";
-    private static final String ARE_YOU_PREGNANT_FIELD_ERROR_ID = "areYouPregnant-error";
+    private static final String ARE_YOU_PREGNANT_FIELD_ERROR_ID = "are-you-pregnant-error";
     private static final String EXPECTED_DELIVERY_DATE_ERROR_LINK_CSS = "a[href=\"#expected-delivery-date-error\"]";
     private static final String EXPECTED_DELIVERY_DATE_FIELD_ERROR_ID = "expected-delivery-date-error";
 
