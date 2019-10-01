@@ -29,7 +29,7 @@ download_web_ui(){
             | wget -qO web-tests-tmp.zip -i -
     else
         echo "Downloading  web ui branch '${WEB_UI_BRANCH}' for tests"
-        wget -qO web-tests-tmp.zip https://github.com/DepartmentOfHealth-htbhf/htbhf-acceptance-tests/archive/${WEB_UI_BRANCH}.zip
+        wget -qO web-tests-tmp.zip https://github.com/DepartmentOfHealth-htbhf/htbhf-applicant-web-ui/archive/${WEB_UI_BRANCH}.zip
     fi
     unzip web-tests-tmp.zip
     mv -f */* ${WEB_UI_DIR}
