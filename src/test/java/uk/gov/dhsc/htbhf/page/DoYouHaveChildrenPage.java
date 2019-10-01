@@ -10,7 +10,7 @@ import uk.gov.dhsc.htbhf.page.component.RadioButton;
 public class DoYouHaveChildrenPage extends SubmittablePage {
 
     private static final String DO_YOU_HAVE_CHILDREN_ERROR_LINK_CSS = "a[href=\"#do-you-have-children-error\"]";
-    private static final String DO_YOU_HAVE_CHILDREN_FIELD_ERROR_ID = "doYouHaveChildren-error";
+    private static final String DO_YOU_HAVE_CHILDREN_FIELD_ERROR_ID = "do-you-have-children-error";
 
     private RadioButton yesRadioButton;
     private RadioButton noRadioButton;
