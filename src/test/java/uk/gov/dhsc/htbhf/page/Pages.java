@@ -48,6 +48,7 @@ public class Pages {
         pages.add(new PostcodePage(webDriver, baseUrl, webDriverWait));
         pages.add(new SelectAddressPage(webDriver, baseUrl, webDriverWait));
         pages.add(new CookiesPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new ServerErrorPage(webDriver, baseUrl, webDriverWait));
         //Guidance pages
         Arrays.stream(GuidancePageMetadata.values()).forEach(
                 guidancePageMetadata -> pages.add(new GuidancePage(webDriver, baseUrl, webDriverWait, guidancePageMetadata.getPageName()))

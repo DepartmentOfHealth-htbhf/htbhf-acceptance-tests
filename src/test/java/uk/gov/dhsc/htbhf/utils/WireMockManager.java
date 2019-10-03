@@ -31,4 +31,7 @@ public interface WireMockManager {
 
     default void verifyClaimantServiceRequestMatching(String expectedBody) {
     }
+
+    default void setupErrorWiremockClaimMapping() {
+    }
 }

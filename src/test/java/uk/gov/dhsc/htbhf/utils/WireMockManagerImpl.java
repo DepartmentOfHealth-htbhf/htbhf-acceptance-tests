@@ -87,6 +87,15 @@ public class WireMockManagerImpl implements WireMockManager {
     }
 
     @Override
+    public void setupErrorWiremockClaimMapping() {
+        claimantServiceMock.stubFor(post(urlEqualTo(CLAIMS_ENDPOINT))
+                .withHeader(REQUEST_ID_HEADER, matching(ID_HEADERS_REGEX))
+                .withHeader(SESSION_ID_HEADER, matching(ID_HEADERS_REGEX))
+                .willReturn(aResponse()
+                        .withStatus(500)));
+    }
+
+    @Override
     public void setupPostcodeLookupWithResultsMapping(String postcode) {
         String wireMockBody = (postcode.equalsIgnoreCase(Constants.POSTCODE_WITH_NO_RESULTS))
                 ? aPostcodeLookupResponseWithNoResults()

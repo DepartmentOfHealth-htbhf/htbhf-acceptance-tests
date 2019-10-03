@@ -7,9 +7,14 @@ import io.cucumber.java.en.When;
  */
 public class TermsAndConditionsSteps extends CommonSteps {
 
-    @When("/^I accept the terms and conditions and submit my application$/")
+    @When("^I accept the terms and conditions and submit my application")
     public void iAcceptTheTermsAndConditionsAndSubmitMyApplication() {
         acceptTermsAndConditionsAndSubmitApplication();
+    }
+
+    @When("^I accept the terms and conditions")
+    public void iAcceptTheTermsAndConditions() {
+        checkAnswersAndAcceptTsAndCs();
     }
 
 }

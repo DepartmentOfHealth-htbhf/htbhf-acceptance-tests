@@ -36,7 +36,8 @@ public enum PageName {
     USING_YOUR_CARD("Using your card"),
     APPLY("Apply for Healthy Start"),
     REPORT_A_CHANGE("Report a change"),
-    COOKIES("cookies");
+    COOKIES("cookies"),
+    SERVER_ERROR("Server Error");
 
     private String pageName;
     private Optional<ToggleName> toggleName;
