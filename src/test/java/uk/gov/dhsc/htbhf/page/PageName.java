@@ -37,7 +37,8 @@ public enum PageName {
     APPLY("Apply for Healthy Start"),
     REPORT_A_CHANGE("Report a change"),
     COOKIES("cookies"),
-    SERVER_ERROR("Server Error");
+    SERVER_ERROR("Server Error"),
+    PRIVACY_NOTICE("privacy notice");
 
     private String pageName;
     private Optional<ToggleName> toggleName;

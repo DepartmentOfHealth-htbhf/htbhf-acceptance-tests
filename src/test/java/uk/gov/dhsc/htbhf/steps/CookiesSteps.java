@@ -13,11 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class CookiesSteps extends BaseSteps {
 
-    @Then("^the cookies page is shown")
-    public void waitForCookiesPageToLoad() {
-        getPages().getCookiesPage();
-    }
-
     @Then("^all page content is present on the cookies page")
     public void allContentPresentOnCookiesPage() {
         checkAllCookiePageContentIsPresentAndCorrect();
