@@ -5,10 +5,10 @@ Feature: Cookies page
 
   Scenario: The back link on the Cookies page is not shown if we navigate to it directly
     When I navigate to the cookies page
-    Then the cookies page is shown
+    Then I am shown the cookies page
     And no back link is shown
 
   Scenario: The Cookies page is shown correctly
     When I navigate to the cookies page
-    Then the cookies page is shown
+    Then I am shown the cookies page
     And all page content is present on the cookies page
