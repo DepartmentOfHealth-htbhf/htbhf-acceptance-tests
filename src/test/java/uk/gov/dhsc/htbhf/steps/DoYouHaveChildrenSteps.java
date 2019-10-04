@@ -3,7 +3,6 @@ package uk.gov.dhsc.htbhf.steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import uk.gov.dhsc.htbhf.page.DoYouHaveChildrenPage;
-import uk.gov.dhsc.htbhf.page.PageName;
 
 /**
  * Contains steps definitions for the Do You Have Children page.
@@ -43,11 +42,6 @@ public class DoYouHaveChildrenSteps extends CommonSteps {
                 doYouHaveChildrenPage.getFieldErrorId(),
                 doYouHaveChildrenPage.getErrorLinkCss(),
                 "Select yes if you have children who are under 4 years old");
-    }
-
-    @Then("^The back link points to the Do you have children under four years old page")
-    public void backLinkPointsToDoYouHaveChildren() {
-        assertBackLinkPointsToPage(PageName.DO_YOU_HAVE_CHILDREN);
     }
 
 }

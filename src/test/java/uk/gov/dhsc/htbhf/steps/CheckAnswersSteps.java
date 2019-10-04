@@ -5,7 +5,6 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.CheckAnswersPage;
 import uk.gov.dhsc.htbhf.page.CheckAnswersRowData;
-import uk.gov.dhsc.htbhf.page.PageName;
 
 import java.util.List;
 import java.util.Map;
@@ -108,11 +107,6 @@ public class CheckAnswersSteps extends CommonSteps {
     @Then("^the check answers page contains all data entered for an applicant with no county")
     public void checkAnswerPageContainsAllDataForApplicantWithNoCounty() {
         assertCheckAnswersWithAddressForClaimantWithChildrenAndNotPregnant(FULL_ADDRESS_NO_COUNTY);
-    }
-
-    @Then("^The back link on the check answers page links to the email address page")
-    public void backLinkPointsToEmailAddressPage() {
-        assertBackLinkPointsToPage(PageName.EMAIL_ADDRESS);
     }
 
     private void changeAnswerFor(String linkText) {

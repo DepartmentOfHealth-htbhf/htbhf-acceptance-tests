@@ -9,7 +9,7 @@ Feature: Enter your children’s dates of birth
   Scenario: Children’s dates of birth is navigable via the back button if I’ve said I have children
     Given I submit the details of my child who is under four years old
     When I am shown the are you pregnant page
-    Then The back link points to the Enter your children’s dates of birth page
+    Then the back link points to the enter your childrens dates of birth page
 
   Scenario: Enter one child's date of birth
     Given I enter the details of my child who is under four years old
