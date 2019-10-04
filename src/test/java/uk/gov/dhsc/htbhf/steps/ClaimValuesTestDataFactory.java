@@ -12,6 +12,12 @@ public class ClaimValuesTestDataFactory {
         return buildDefaultClaimValuesBuilder().build();
     }
 
+    public static ClaimValues buildClaimValuesForManualAddress() {
+        return buildDefaultClaimValuesBuilder()
+                .selectAddress(false)
+                .build();
+    }
+
     public static ClaimValues buildClaimValuesWithNoAddressLine2() {
         return buildDefaultClaimValuesBuilder()
                 .addressLine2("")
