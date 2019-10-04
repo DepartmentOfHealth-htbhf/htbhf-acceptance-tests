@@ -9,12 +9,12 @@ Feature: Tests for features available to all pages
   Scenario: The Privacy notice page is accessible via a link on an application page and the back link is shown
     When I click on the privacy notice link
     Then I am shown the privacy notice page
-    And the back link on the page links to the do you live in Scotland page
+    And the back link points to the do you live in Scotland page
 
   Scenario: The Cookies page is accessible via a link on an application page and the back link is shown
     When I click on the cookies link
     Then I am shown the cookies page
-    And the back link on the page links to the do you live in Scotland page
+    And the back link points to the do you live in Scotland page
 
   Scenario: The Beta banner is shown and has the correct survey link
     Then the beta banner is shown

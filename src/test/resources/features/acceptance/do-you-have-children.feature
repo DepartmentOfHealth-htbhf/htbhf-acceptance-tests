@@ -27,4 +27,4 @@ Feature: Do you have children under four years old?
   Scenario: Children’s dates of birth is not navigable via the back button if I’ve said I have no children
     When I have said No to the do you have children under four years old question
     And I am shown the are you pregnant page
-    Then The back link points to the Do you have children under four years old page
+    Then the back link points to the do you have children under four years old page

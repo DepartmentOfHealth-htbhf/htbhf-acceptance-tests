@@ -3,6 +3,7 @@ package uk.gov.dhsc.htbhf.steps;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import uk.gov.dhsc.htbhf.page.GenericPage;
+import uk.gov.dhsc.htbhf.page.PageName;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,6 +45,12 @@ public class GenericSteps extends CommonSteps {
     public void betaBannerHasCorrectLink() {
         String feedbackUrl = getPages().getGenericPage().getBetaBannerFeedbackLinkHref();
         assertThat(feedbackUrl).isEqualTo("https://www.smartsurvey.co.uk/s/apply-for-healthy-start-feedback/");
+    }
+
+    @Then("^the back link points to the (.*) page")
+    public void verifyBackLink(String pageNameString) {
+        PageName pageName = PageName.toPageName(pageNameString);
+        assertBackLinkPointsToPage(pageName);
     }
 
 }
