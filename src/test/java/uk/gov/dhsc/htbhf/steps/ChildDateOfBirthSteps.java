@@ -5,7 +5,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.ChildDateOfBirthPage;
-import uk.gov.dhsc.htbhf.page.PageName;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -112,11 +111,6 @@ public class ChildDateOfBirthSteps extends CommonSteps {
         childDateOfBirthPage.clickAddAnotherChild();
         childDateOfBirthPage.enterChild3OrUnderDetails(LONG_STRING, 1);
         childDateOfBirthPage.clickContinue();
-    }
-
-    @Then("^The back link points to the Enter your children’s dates of birth page")
-    public void assertBackLinkPointsToChildsDateOfBirthPage() {
-        assertBackLinkPointsToPage(PageName.CHILD_DATE_OF_BIRTH);
     }
 
     @Then("^there are no Remove Child buttons visible")
