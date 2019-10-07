@@ -40,4 +40,28 @@ public class NamePage extends SubmittablePage {
         firstNameInputField.enterValue(firstName);
         lastNameInputField.enterValue(lastName);
     }
+
+    public String getFirstName() {
+        return firstNameInputField.getValue();
+    }
+
+    public String getLastName() {
+        return lastNameInputField.getValue();
+    }
+
+    public String getFirstNameInputErrorId() {
+        return firstNameInputField.getInputErrorId();
+    }
+
+    public String getFirstNameInputErrorLinkCss() {
+        return firstNameInputField.getInputErrorLinkCss();
+    }
+
+    public String getLastNameInputErrorId() {
+        return lastNameInputField.getInputErrorId();
+    }
+
+    public String getLastNameInputErrorLinkCss() {
+        return lastNameInputField.getInputErrorLinkCss();
+    }
 }
