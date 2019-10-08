@@ -16,6 +16,7 @@ public class WireMockManagerImpl implements WireMockManager {
 
     private static final String CLAIMS_ENDPOINT = "/v2/claims";
     private static final String POSTCODE_LOOKUP_ENDPOINT = "/places/v1/addresses/postcode";
+    private static final String GOOGLE_ANALYTICS_ENDPOINT = "/collect";
     private static final String REQUEST_ID_HEADER = "X-Request-ID";
     private static final String SESSION_ID_HEADER = "X-Session-ID";
     private static final String ID_HEADERS_REGEX = "([A-Za-z0-9_-])+";
@@ -97,6 +98,7 @@ public class WireMockManagerImpl implements WireMockManager {
 
     @Override
     public void setupPostcodeLookupWithResultsMapping(String postcode) {
+        setupGoogleAnalyticsMapping();
         String wireMockBody = (postcode.equalsIgnoreCase(Constants.POSTCODE_WITH_NO_RESULTS))
                 ? aPostcodeLookupResponseWithNoResults()
                 : aPostcodeLookupResponseWithResults(postcode);
@@ -111,6 +113,7 @@ public class WireMockManagerImpl implements WireMockManager {
 
     @Override
     public void setupPostcodeLookupErrorResponse() {
+        setupGoogleAnalyticsMapping();
         osPlacesMock.stubFor(get(urlPathEqualTo(POSTCODE_LOOKUP_ENDPOINT))
                 .withQueryParam("key", matching(".*"))
                 .willReturn(aResponse()
@@ -121,8 +124,16 @@ public class WireMockManagerImpl implements WireMockManager {
 
     @Override
     public void setupPostcodeLookupConnectionResetResponse() {
+        setupGoogleAnalyticsMapping();
         osPlacesMock.stubFor(get(urlPathEqualTo(POSTCODE_LOOKUP_ENDPOINT))
                 .withQueryParam("key", matching(".*"))
                 .willReturn(aResponse().withFault(Fault.CONNECTION_RESET_BY_PEER)));
     }
+
+    private void setupGoogleAnalyticsMapping() {
+        osPlacesMock.stubFor(get(urlPathMatching(GOOGLE_ANALYTICS_ENDPOINT))
+                .willReturn(aResponse()
+                        .withStatus(200)));
+    }
+
 }
