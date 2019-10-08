@@ -34,7 +34,11 @@ class PageNameTest {
             "WHAT_YOU_CAN_BUY, What you can buy",
             "USING_YOUR_CARD, Using your card",
             "APPLY, Apply for Healthy Start",
-            "REPORT_A_CHANGE, Report a change"
+            "REPORT_A_CHANGE, Report a change",
+            "COOKIES, cookies",
+            "SERVER_ERROR, Server Error",
+            "PRIVACY_NOTICE, privacy notice",
+            "PAGE_NOT_FOUND, page not found"
     })
     @ParameterizedTest
     void shouldGetPageName(PageName pageName, String name) {
