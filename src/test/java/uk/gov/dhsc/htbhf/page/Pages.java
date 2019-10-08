@@ -50,6 +50,7 @@ public class Pages {
         pages.add(new CookiesPage(webDriver, baseUrl, webDriverWait));
         pages.add(new ServerErrorPage(webDriver, baseUrl, webDriverWait));
         pages.add(new PrivacyNoticePage(webDriver, baseUrl, webDriverWait));
+        pages.add(new PageNotFoundPage(webDriver, baseUrl, webDriverWait));
         //Guidance pages
         Arrays.stream(GuidancePageMetadata.values()).forEach(
                 guidancePageMetadata -> pages.add(new GuidancePage(webDriver, baseUrl, webDriverWait, guidancePageMetadata.getPageName()))
@@ -163,5 +164,9 @@ public class Pages {
 
     public CookiesPage getCookiesPage() {
         return (CookiesPage) getAndWaitForPageByName(PageName.COOKIES);
+    }
+
+    public PageNotFoundPage getPageNotFoundPage() {
+        return (PageNotFoundPage) getAndWaitForPageByName(PageName.PAGE_NOT_FOUND);
     }
 }

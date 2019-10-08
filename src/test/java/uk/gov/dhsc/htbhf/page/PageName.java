@@ -38,7 +38,8 @@ public enum PageName {
     REPORT_A_CHANGE("Report a change"),
     COOKIES("cookies"),
     SERVER_ERROR("Server Error"),
-    PRIVACY_NOTICE("privacy notice");
+    PRIVACY_NOTICE("privacy notice"),
+    PAGE_NOT_FOUND("page not found");
 
     private String pageName;
     private Optional<ToggleName> toggleName;
