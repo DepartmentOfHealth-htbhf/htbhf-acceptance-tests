@@ -34,4 +34,16 @@ public class PhoneNumberPage extends SubmittablePage {
     public void enterPhoneNumber(String phoneNumber) {
         phoneNumberInput.enterValue(phoneNumber);
     }
+
+    public String getPhoneNumber() {
+        return phoneNumberInput.getValue();
+    }
+
+    public String getPhoneNumberInputErrorId() {
+        return phoneNumberInput.getInputErrorId();
+    }
+
+    public String getPhoneNumberInputErrorLinkCss() {
+        return phoneNumberInput.getInputErrorLinkCss();
+    }
 }

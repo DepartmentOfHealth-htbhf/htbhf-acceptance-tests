@@ -5,6 +5,7 @@ import io.cucumber.java.en.When;
 import uk.gov.dhsc.htbhf.page.NamePage;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.gov.dhsc.htbhf.steps.Constants.BLANK_STRING;
 import static uk.gov.dhsc.htbhf.steps.Constants.FIRST_NAME;
 import static uk.gov.dhsc.htbhf.steps.Constants.LAST_NAME;
 import static uk.gov.dhsc.htbhf.steps.Constants.LONG_STRING;
@@ -13,8 +14,6 @@ import static uk.gov.dhsc.htbhf.steps.Constants.LONG_STRING;
  * Steps for the enter name page
  */
 public class NameSteps extends CommonSteps {
-
-    private static final String BLANK_STRING = "";
 
     @When("^I enter a first name which is too long")
     public void enterFirstNameWhichIsTooLong() {
