@@ -4,6 +4,7 @@ import java.nio.CharBuffer;
 
 public class Constants {
 
+    public static final String BLANK_STRING = "";
     public static final String DOB_DAY = "30";
     public static final String DOB_MONTH = "12";
     public static final String DOB_YEAR = "1980";

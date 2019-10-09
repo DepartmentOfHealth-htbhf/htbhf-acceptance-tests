@@ -14,8 +14,6 @@ import static uk.gov.dhsc.htbhf.steps.Constants.*;
  */
 public class ManualAddressSteps extends CommonSteps {
 
-    private static final String BLANK_STRING = "";
-
     @Given("^I have entered my details and wish to manually enter my address")
     public void enterDetailsUpToPage() {
         enterDetailsUpToPage(PageName.MANUAL_ADDRESS, buildClaimValuesForManualAddress());
