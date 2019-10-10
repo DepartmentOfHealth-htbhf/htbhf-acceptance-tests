@@ -18,20 +18,14 @@ public class CookiesSteps extends BaseSteps {
         checkAllCookiePageContentIsPresentAndCorrect();
     }
 
-    @Then("^no back link is shown")
-    public void noBackLinkShownOnCookiesPage() {
-        boolean backLinkPresent = getPages().getCookiesPage().isBackLinkPresent();
-        assertThat(backLinkPresent).isFalse();
-    }
-
     private void checkAllCookiePageContentIsPresentAndCorrect() {
         CookiesPage cookiesPage = getPages().getCookiesPage();
         assertThat(cookiesPage.getH1Text()).isEqualTo("Cookies");
         assertThat(cookiesPage.getH2Text()).isEqualTo("Cookie settings");
 
         // Make sure that there is a table on the page (this is the specific cookie details)
-        List<WebElement> allTables = cookiesPage.getCookieDetailsTables();
-        assertThat(allTables.size()).isGreaterThanOrEqualTo(1);
+        List<WebElement> allTables = cookiesPage.findAllTablesOnPage();
+        assertThat(allTables).hasSizeGreaterThanOrEqualTo(1);
     }
 
 }

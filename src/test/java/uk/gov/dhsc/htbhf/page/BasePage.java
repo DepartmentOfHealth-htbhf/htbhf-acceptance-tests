@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  */
 public abstract class BasePage extends BaseComponent {
 
+    private static final String GOV_UK_TABLE_CSS = ".govuk-table";
     private static final String RADIO_INPUT_CLASSNAME = "govuk-radios__input";
     private static final String RADIO_LABEL_CLASSNAME = "govuk-radios__label";
     private static final String ERROR_HEADER_SELECTOR = "h2#error-summary-title";
@@ -130,6 +131,10 @@ public abstract class BasePage extends BaseComponent {
     public void executeSetNoValidateScript() {
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) webDriver;
         javascriptExecutor.executeScript(SET_NO_VALIDATE);
+    }
+
+    public List<WebElement> findAllTablesOnPage() {
+        return findAllByCss(GOV_UK_TABLE_CSS);
     }
 
     private String getVisibleTextFromFieldError(WebElement errorElement) {

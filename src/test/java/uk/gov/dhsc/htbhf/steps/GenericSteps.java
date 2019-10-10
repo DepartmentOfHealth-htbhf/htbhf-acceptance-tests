@@ -53,4 +53,11 @@ public class GenericSteps extends CommonSteps {
         assertBackLinkPointsToPage(pageName);
     }
 
+    @Then("^no back link is shown on the (.*) page")
+    public void noBackLinkShownOnCookiesPage(String pageNameString) {
+        PageName pageName = PageName.toPageName(pageNameString);
+        boolean backLinkPresent = getPages().getPageByName(pageName).isBackLinkPresent();
+        assertThat(backLinkPresent).isFalse();
+    }
+
 }
