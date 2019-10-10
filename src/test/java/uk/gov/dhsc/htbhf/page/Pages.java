@@ -169,4 +169,8 @@ public class Pages {
     public PageNotFoundPage getPageNotFoundPage() {
         return (PageNotFoundPage) getAndWaitForPageByName(PageName.PAGE_NOT_FOUND);
     }
+
+    public PrivacyNoticePage getPrivacyNoticePage() {
+        return (PrivacyNoticePage) getAndWaitForPageByName(PageName.PRIVACY_NOTICE);
+    }
 }
