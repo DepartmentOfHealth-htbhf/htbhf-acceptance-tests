@@ -24,6 +24,7 @@ import static uk.gov.dhsc.htbhf.steps.Constants.VALID_PREGNANCY_MONTH_INCREMENT;
 public class CommonSteps extends BaseSteps {
 
     protected static ThreadLocal<ClaimValues> claimValuesThreadLocal = new ThreadLocal<>();
+    protected static ThreadLocal<String> sessionIdThreadLocal = new ThreadLocal<>();
 
     protected void enterDetailsUpToPage(PageName pageName) {
         performPageActions(pageName, buildDefaultClaimValues());
@@ -50,6 +51,7 @@ public class CommonSteps extends BaseSteps {
     protected GuidancePage openApplyPage() {
         GuidancePage applyPage = getPages().getGuidancePageNoWait(PageName.APPLY);
         applyPage.open();
+        sessionIdThreadLocal.set(applyPage.getCurrentSessionId());
         return applyPage;
     }
 
