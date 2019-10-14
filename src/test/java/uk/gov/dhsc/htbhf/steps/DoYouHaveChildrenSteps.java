@@ -28,11 +28,6 @@ public class DoYouHaveChildrenSteps extends CommonSteps {
         doYouHaveChildrenPage.selectYesRadioButton();
     }
 
-    @Then("^Yes and No options are displayed on the do you have children under four years old page")
-    public void yesAndNoOptionsAreDisplayed() {
-        assertYesNoOptionsAreDisplayed(getPages().getDoYouHaveChildrenPage());
-    }
-
     @Then("^I am informed that I need to select an option for do you have children under four years old")
     public void verifyNoOptionSelectedOnPage() {
         DoYouHaveChildrenPage doYouHaveChildrenPage = getPages().getDoYouHaveChildrenPage();

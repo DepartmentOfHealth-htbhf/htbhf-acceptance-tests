@@ -1,9 +1,6 @@
 package uk.gov.dhsc.htbhf.page;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.BaseComponent;
@@ -17,6 +14,7 @@ import java.util.stream.Collectors;
 public abstract class BasePage extends BaseComponent {
 
     private static final String GOV_UK_TABLE_CSS = ".govuk-table";
+    private static final String GOV_UK_BODY_CSS = ".govuk-body";
     private static final String RADIO_INPUT_CLASSNAME = "govuk-radios__input";
     private static final String RADIO_LABEL_CLASSNAME = "govuk-radios__label";
     private static final String ERROR_HEADER_SELECTOR = "h2#error-summary-title";
@@ -135,6 +133,23 @@ public abstract class BasePage extends BaseComponent {
 
     public List<WebElement> findAllTablesOnPage() {
         return findAllByCss(GOV_UK_TABLE_CSS);
+    }
+
+    public List<WebElement> findAllBodyElementsOnPage() {
+        return findAllByCss(GOV_UK_BODY_CSS);
+    }
+
+    public String getCurrentSessionId() {
+        Cookie sessionCookie = getCookieByName("htbhf.sid");
+        return sessionCookie.getValue();
+    }
+
+    public Cookie getLangCookie() {
+        return this.getCookieByName("lang");
+    }
+
+    private Cookie getCookieByName(String cookieName) {
+        return webDriver.manage().getCookieNamed(cookieName);
     }
 
     private String getVisibleTextFromFieldError(WebElement errorElement) {

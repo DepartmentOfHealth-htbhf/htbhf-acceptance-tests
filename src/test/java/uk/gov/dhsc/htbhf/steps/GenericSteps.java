@@ -2,6 +2,7 @@ package uk.gov.dhsc.htbhf.steps;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import uk.gov.dhsc.htbhf.page.BasePage;
 import uk.gov.dhsc.htbhf.page.GenericPage;
 import uk.gov.dhsc.htbhf.page.PageName;
 
@@ -58,6 +59,12 @@ public class GenericSteps extends CommonSteps {
         PageName pageName = PageName.toPageName(pageNameString);
         boolean backLinkPresent = getPages().getPageByName(pageName).isBackLinkPresent();
         assertThat(backLinkPresent).isFalse();
+    }
+
+    @Then("^Yes and No options are displayed on the (.*) page$")
+    public void yesAndNoOptionsAreDisplayed(String pageNameString) {
+        BasePage basePage = getPages().getPageByName(PageName.toPageName(pageNameString));
+        assertYesNoOptionsAreDisplayed(basePage);
     }
 
 }

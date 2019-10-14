@@ -51,6 +51,11 @@ public class CheckAnswersSteps extends CommonSteps {
         changeAnswerFor("Email address");
     }
 
+    @When("^I choose to change my answer to Do you live in Scotland")
+    public void changeDoYouLiveInScotland() {
+        changeAnswerFor("Do you live in Scotland?");
+    }
+
     @Then("^there are no children displayed")
     public void thereAreNoChildrenDisplayed() {
         CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();
