@@ -73,11 +73,6 @@ public class AreYouPregnantSteps extends CommonSteps {
         }
     }
 
-    @Then("^Yes and No options are displayed on the are you pregnant page$")
-    public void yesAndNoOptionsAreDisplayed() {
-        assertYesNoOptionsAreDisplayed(getPages().getAreYouPregnantPage());
-    }
-
     @Then("^expected date of delivery instructional text is displayed$")
     public void expectedDeliveryDateInstructionalTextIsDisplayed() {
         AreYouPregnantPage areYouPregnantPage = getPages().getAreYouPregnantPage();
