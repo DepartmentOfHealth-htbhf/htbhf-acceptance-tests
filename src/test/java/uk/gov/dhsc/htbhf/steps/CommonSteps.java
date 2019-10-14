@@ -279,10 +279,15 @@ public class CommonSteps extends BaseSteps {
                 .isTrue();
 
         String href = page.getBackLinkHref();
+        assertLinkPointsToPage(href, expectedPage);
+    }
+
+    protected void assertLinkPointsToPage(String link, PageName expectedPageName) {
+        BasePage page = getPages().getPageByName(expectedPageName);
         String expectedUrl = page.getFullPath();
-        boolean correctHref = isCorrectHref(href, expectedUrl);
+        boolean correctHref = isCorrectHref(link, expectedUrl);
         assertThat(correctHref)
-                .as("back link url should be [" + expectedUrl + "], is [" + href + "]")
+                .as("back link url should be [" + expectedUrl + "], is [" + link + "]")
                 .isTrue();
     }
 
