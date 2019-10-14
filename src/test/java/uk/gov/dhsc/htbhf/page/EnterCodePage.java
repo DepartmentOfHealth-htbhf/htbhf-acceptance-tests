@@ -48,6 +48,6 @@ public class EnterCodePage extends SubmittablePage {
 
     public String getRequestNewCodeLinkHref() {
         WebElement requestNewCodeLink = findById("request-new-code");
-        return requestNewCodeLink.getAttribute("href");
+        return getHrefForElement(requestNewCodeLink);
     }
 }
