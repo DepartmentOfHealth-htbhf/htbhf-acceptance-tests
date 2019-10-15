@@ -51,7 +51,7 @@ public class GenericPage extends SubmittablePage {
 
     public String getBetaBannerFeedbackLinkHref() {
         WebElement bannerLink = getBetaBanner().findElement(By.className("govuk-link"));
-        return bannerLink.getAttribute("href");
+        return getHrefForElement(bannerLink);
     }
 
     private WebElement getBetaBanner() {
