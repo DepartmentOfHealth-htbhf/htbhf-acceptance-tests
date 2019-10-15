@@ -110,7 +110,7 @@ public abstract class BasePage extends BaseComponent {
 
     public String getBackLinkHref() {
         WebElement backLink = getBackLink();
-        return backLink.getAttribute("href");
+        return getHrefForElement(backLink);
     }
 
     /**

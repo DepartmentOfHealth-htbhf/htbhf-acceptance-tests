@@ -131,6 +131,10 @@ public class Pages {
         return (TermsAndConditionsPage) getAndWaitForPageByName(PageName.TERMS_AND_CONDITIONS);
     }
 
+    public TermsAndConditionsPage getTermsAndConditionsPageNoWait() {
+        return (TermsAndConditionsPage) getPageByName(PageName.TERMS_AND_CONDITIONS);
+    }
+
     public ConfirmationPage getConfirmationPage() {
         return (ConfirmationPage) getAndWaitForPageByName(PageName.CONFIRMATION);
     }
