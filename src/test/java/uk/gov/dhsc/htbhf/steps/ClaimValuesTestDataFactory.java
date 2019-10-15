@@ -8,7 +8,7 @@ import static uk.gov.dhsc.htbhf.utils.NinoGenerator.generateEligibleNino;
  */
 public class ClaimValuesTestDataFactory {
 
-    public static ClaimValues buildDefaultClaimValues() {
+    public static ClaimValues buildClaimValuesForANonPregnantWoman() {
         return buildDefaultClaimValuesBuilder().build();
     }
 

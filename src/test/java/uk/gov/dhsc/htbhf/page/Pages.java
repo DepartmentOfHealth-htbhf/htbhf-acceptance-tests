@@ -51,6 +51,7 @@ public class Pages {
         pages.add(new ServerErrorPage(webDriver, baseUrl, webDriverWait));
         pages.add(new PrivacyNoticePage(webDriver, baseUrl, webDriverWait));
         pages.add(new PageNotFoundPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new UnsuccessfulApplicationPage(webDriver, baseUrl, webDriverWait));
         //Guidance pages
         Arrays.stream(GuidancePageMetadata.values()).forEach(
                 guidancePageMetadata -> pages.add(new GuidancePage(webDriver, baseUrl, webDriverWait, guidancePageMetadata.getPageName()))
@@ -172,5 +173,9 @@ public class Pages {
 
     public PrivacyNoticePage getPrivacyNoticePage() {
         return (PrivacyNoticePage) getAndWaitForPageByName(PageName.PRIVACY_NOTICE);
+    }
+
+    public UnsuccessfulApplicationPage getUnsuccessfulApplicationPage() {
+        return (UnsuccessfulApplicationPage) getAndWaitForPageByName(PageName.UNSUCCESSFUL_APPLICATION);
     }
 }
