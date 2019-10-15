@@ -10,6 +10,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class TermsAndConditionsPage extends SubmittablePage {
 
+    private static final String FIELD_ERROR_ID = "agree-error";
+    private static final String ERROR_LINK_CSS = "a[href=\"#agree-error\"]";
+
     public TermsAndConditionsPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
     }
@@ -34,5 +37,13 @@ public class TermsAndConditionsPage extends SubmittablePage {
         WebElement parentDiv = checkbox.findElement(By.xpath(".."));
         WebElement label = parentDiv.findElement(By.className("govuk-checkboxes__label"));
         label.click();
+    }
+
+    public String getFieldErrorId() {
+        return FIELD_ERROR_ID;
+    }
+
+    public String getErrorLinkCss() {
+        return ERROR_LINK_CSS;
     }
 }
