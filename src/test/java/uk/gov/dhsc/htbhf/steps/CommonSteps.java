@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.dhsc.htbhf.page.PageName.*;
-import static uk.gov.dhsc.htbhf.steps.ClaimValuesTestDataFactory.buildDefaultClaimValues;
+import static uk.gov.dhsc.htbhf.steps.ClaimValuesTestDataFactory.buildClaimValuesForANonPregnantWoman;
 import static uk.gov.dhsc.htbhf.steps.Constants.DOB_DAY;
 import static uk.gov.dhsc.htbhf.steps.Constants.DOB_MONTH;
 import static uk.gov.dhsc.htbhf.steps.Constants.DOB_YEAR;
@@ -26,8 +26,12 @@ public class CommonSteps extends BaseSteps {
     protected static ThreadLocal<ClaimValues> claimValuesThreadLocal = new ThreadLocal<>();
     protected static ThreadLocal<String> sessionIdThreadLocal = new ThreadLocal<>();
 
+    protected void enterDetailsUpToCheckAnswersPage(ClaimValues claimValues) {
+        performPageActions(CHECK_ANSWERS, claimValues);
+    }
+
     protected void enterDetailsUpToPage(PageName pageName) {
-        performPageActions(pageName, buildDefaultClaimValues());
+        performPageActions(pageName, buildClaimValuesForANonPregnantWoman());
     }
 
     protected void enterDetailsUpToPage(PageName pageName, ClaimValues claimValues) {
@@ -249,7 +253,11 @@ public class CommonSteps extends BaseSteps {
     }
 
     protected void acceptTermsAndConditionsAndSubmitApplication() {
-        wireMockManager.setupClaimantServiceMappingsWithStatus("ELIGIBLE");
+        acceptTermsAndConditionsAndSubmitApplicationWithStatus("ELIGIBLE");
+    }
+
+    protected void acceptTermsAndConditionsAndSubmitApplicationWithStatus(String status) {
+        wireMockManager.setupClaimantServiceMappingsWithStatus(status);
         checkAnswersAndAcceptTsAndCsAndContinue();
     }
 

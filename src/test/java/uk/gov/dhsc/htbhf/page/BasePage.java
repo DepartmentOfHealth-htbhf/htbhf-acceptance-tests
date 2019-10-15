@@ -139,6 +139,11 @@ public abstract class BasePage extends BaseComponent {
         return findAllByCss(GOV_UK_BODY_CSS);
     }
 
+    public String getBodyText() {
+        WebElement body = findByCss(GOV_UK_BODY_CSS);
+        return body.getText().trim();
+    }
+
     public String getCurrentSessionId() {
         Cookie sessionCookie = getCookieByName("htbhf.sid");
         return sessionCookie.getValue();

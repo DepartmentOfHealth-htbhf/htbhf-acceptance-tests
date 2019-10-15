@@ -39,7 +39,8 @@ public enum PageName {
     COOKIES("cookies"),
     SERVER_ERROR("Server Error"),
     PRIVACY_NOTICE("privacy notice"),
-    PAGE_NOT_FOUND("page not found");
+    PAGE_NOT_FOUND("page not found"),
+    UNSUCCESSFUL_APPLICATION("application unsuccessful");
 
     private String pageName;
     private Optional<ToggleName> toggleName;
