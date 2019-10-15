@@ -54,4 +54,8 @@ public abstract class BaseComponent {
         WebElement element = webDriver.findElement(by);
         element.click();
     }
+
+    protected String getHrefForElement(WebElement webElement) {
+        return webElement.getAttribute("href");
+    }
 }

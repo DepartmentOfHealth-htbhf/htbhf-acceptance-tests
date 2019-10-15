@@ -48,8 +48,7 @@ public class SelectAddressPage extends SubmittablePage {
     }
 
     public String getAddressNotListedLinkHref() {
-        WebElement addressNotListedLink = getAddressNotListedLink();
-        return addressNotListedLink.getAttribute("href");
+        return getHrefForElement(getAddressNotListedLink());
     }
 
     private WebElement getChangePostcodeLink() {
@@ -57,7 +56,7 @@ public class SelectAddressPage extends SubmittablePage {
     }
 
     public String getChangePostcodeLinkHref() {
-        return getChangePostcodeLink().getAttribute("href");
+        return getHrefForElement(getChangePostcodeLink());
     }
 
     public void clickAddressNotListedLink () {
@@ -72,7 +71,7 @@ public class SelectAddressPage extends SubmittablePage {
 
     public String getManualAddressLinkHref() {
         WebElement manualAddressLink = findByXpath("//a[contains(text(), \"Enter address manually\")]");
-        return manualAddressLink.getAttribute("href");
+        return getHrefForElement(manualAddressLink);
     }
 
     public void selectFirstAddress() {

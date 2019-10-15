@@ -95,7 +95,7 @@ public class CheckAnswersPage extends SubmittablePage {
 
     private CheckAnswersAction getActionFromElement(WebElement actionElement) {
         WebElement changeLink = actionElement.findElement(By.className(GOV_LINK_CLASSNAME));
-        String changeUrl = changeLink.getAttribute("href");
+        String changeUrl = getHrefForElement(changeLink);
         String changeText = changeLink.getText();
         WebElement hiddenSpan = changeLink.findElement(By.className(GOV_HIDDEN_CLASSNAME));
         String hiddenText = hiddenSpan.getText();

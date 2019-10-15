@@ -55,13 +55,12 @@ public class SendCodePage extends SubmittablePage {
 
     public String getChangeTextLink() {
         WebElement changeTextLink = this.findById("change-text");
-        return changeTextLink.getAttribute("href");
+        return getHrefForElement(changeTextLink);
     }
 
     public String getChangeEmailLink() {
         WebElement changeEmailLink = this.findById("change-email");
-        //TODO MRS 11/10/2019: Create method to get href from a WebElement
-        return changeEmailLink.getAttribute("href");
+        return getHrefForElement(changeEmailLink);
     }
 
     public String getFieldErrorId() {
