@@ -146,7 +146,9 @@ public abstract class BasePage extends BaseComponent {
 
     public String getCurrentSessionId() {
         Cookie sessionCookie = getCookieByName("htbhf.sid");
-        return sessionCookie.getValue();
+        //TODO MRS 16/10/2019: This will not retrieve secure cookies (iOS devices) so won't work for compatibility tests, but is ok at the moment
+        // because the value isn't used by compatibility tests even though it is retrieved when the apply page is opened.
+        return (sessionCookie != null) ? sessionCookie.getValue() : null;
     }
 
     public Cookie getLangCookie() {
