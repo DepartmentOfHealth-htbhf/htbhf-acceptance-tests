@@ -16,6 +16,9 @@ import uk.gov.dhsc.htbhf.steps.Hooks;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -33,42 +36,26 @@ public class BrowserStackLauncher {
     private static final int TOTAL_TIMEOUT_MINS = 15;
     private static final String COMPATIBILITY_REPORT_DIR = "build/reports/compatibility-report";
     private static final String COMPATIBILITY_REPORT_FILE = COMPATIBILITY_REPORT_DIR + "/index.html";
-    private static ThreadLocal<String> testNameLocal = new ThreadLocal<>();
+    private static final String BROWSERSTACK_RESOURCE_DIR = "src/test/resources/browserstack";
+    private static ThreadLocal<Path> testFilePathLocal = new ThreadLocal<>();
     private static ExecutorService executorService;
     private static final List<TestResultSummary> results = new CopyOnWriteArrayList<>();
 
-    private static final List<String> TEST_NAMES = List.of(
-            "mobile-android-galaxys8",
-            "mobile-android-pixel",
-            "mobile-android-pixel3",
-            "mobile-ios-iphone8",
-            "mobile-ios-iphonexs",
-            "tablet-ios-ipad6",
-            "tablet-ios-ipad-mini4",
-            "tablet-ios-ipad-pro-11",
-            "windows-win10-chrome",
-            "windows-win10-firefox",
-            "windows-win10-edge",
-            "windows-win10-ie",
-            "mac-mojave-safari",
-            "mac-mojave-chrome",
-            "mac-mojave-firefox"
-    );
-
-    public static String getTestName() {
-        return testNameLocal.get();
+    public static Path getTestFilePath() {
+        return testFilePathLocal.get();
     }
 
-    public static void setTestName(String testName) {
-        testNameLocal.set(testName);
+    public static void setTestFilePath(Path testFilePath) {
+        testFilePathLocal.set(testFilePath);
     }
 
     public static void main(String[] args) throws InterruptedException, ExecutionException, TimeoutException, IOException {
         try {
             executorService = Executors.newFixedThreadPool(MAX_THREADS);
 
-            CompletableFuture[] completableFuturesArray = TEST_NAMES.stream()
-                    .map(testName -> CompletableFuture.supplyAsync(() -> runTest(testName), executorService))
+            Path browserstackResourceDir = Paths.get(BROWSERSTACK_RESOURCE_DIR);
+            CompletableFuture[] completableFuturesArray = Files.list(browserstackResourceDir)
+                    .map(filePath -> CompletableFuture.supplyAsync(() -> runTestForPath(filePath), executorService))
                     .toArray(CompletableFuture[]::new);
             CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(completableFuturesArray);
 
@@ -85,9 +72,10 @@ public class BrowserStackLauncher {
         }
     }
 
-    private static TestExecutionSummary runTest(String testName) {
+    private static TestExecutionSummary runTestForPath(Path testFilePath) {
+        String testName = testFilePath.getFileName().toString();
         log.info("Running compatibility test: [{}]", testName);
-        setTestName(testName);
+        setTestFilePath(testFilePath);
 
         try {
             RetryTemplate retryTemplate = buildRetryTemplate();
@@ -95,7 +83,7 @@ public class BrowserStackLauncher {
         } catch (RetryTriggerException r) {
             log.error("Max retries of [{}] exceeded for test [{}], compatibility test failed.", MAX_RETRY_ATTEMPTS, testName);
         } catch (Throwable t) {
-            log.error("Unexpected exception caught trying to run the test: {}" + testName, t);
+            log.error("Unexpected exception caught trying to run the test: " + testName, t);
         }
         return null;
     }

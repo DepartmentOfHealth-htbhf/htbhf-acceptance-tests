@@ -3,18 +3,19 @@ package uk.gov.dhsc.htbhf.browserstack;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.nio.file.Path;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
-import static uk.gov.dhsc.htbhf.browserstack.BrowserStackLauncher.setTestName;
+import static uk.gov.dhsc.htbhf.browserstack.BrowserStackLauncher.setTestFilePath;
 
 class BrowserStackCapabilitiesTest {
 
     @Test
     void shouldGetBrowserStackCapabilities() {
         //Given
-        setTestName("mobile-ios-iphone8");
+        setTestFilePath(Path.of("src/test/resources/browserstack/mobile-ios-iphone8.properties"));
         //When
         Map<String, String> result = BrowserStackCapabilities.getBrowserStackCapabilities();
         //Then
