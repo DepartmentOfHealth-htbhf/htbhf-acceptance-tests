@@ -1,6 +1,7 @@
 package uk.gov.dhsc.htbhf.browserstack;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
@@ -73,7 +74,7 @@ public class BrowserStackLauncher {
     }
 
     private static TestExecutionSummary runTestForPath(Path testFilePath) {
-        String testName = testFilePath.getFileName().toString();
+        String testName = buildTestNameFromPath(testFilePath);
         log.info("Running compatibility test: [{}]", testName);
         setTestFilePath(testFilePath);
 
@@ -138,6 +139,12 @@ public class BrowserStackLauncher {
 
     private static boolean anyTestsFailed() {
         return results.stream().anyMatch(summary -> !summary.isPassed() && summary.getAttempts() == MAX_RETRY_ATTEMPTS);
+    }
+
+    private static String buildTestNameFromPath(Path testFilePath) {
+        String filename = testFilePath.getFileName().toString();
+        String filenameWithoutProperties = StringUtils.substringBefore(filename, ".");
+        return filenameWithoutProperties.replace('-', ' ');
     }
 
 }
