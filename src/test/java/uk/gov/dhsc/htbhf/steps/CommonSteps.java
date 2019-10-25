@@ -42,6 +42,7 @@ public class CommonSteps extends BaseSteps {
         claimValuesThreadLocal.set(claimValues);
         GuidancePage applyPage = openApplyPage();
         applyPage.clickStartButton();
+        setSessionId();
         Map<PageName, Consumer<ClaimValues>> pageActions = buildStepPageActions(claimValues);
         for (Map.Entry<PageName, Consumer<ClaimValues>> entry : pageActions.entrySet()) {
             if (pageName == entry.getKey()) {
@@ -52,10 +53,14 @@ public class CommonSteps extends BaseSteps {
         }
     }
 
+    private void setSessionId() {
+        BasePage basePage = getPages().getFirstPage();
+        sessionIdThreadLocal.set(basePage.getCurrentSessionId());
+    }
+
     protected GuidancePage openApplyPage() {
         GuidancePage applyPage = getPages().getGuidancePageNoWait(PageName.APPLY);
         applyPage.open();
-        sessionIdThreadLocal.set(applyPage.getCurrentSessionId());
         return applyPage;
     }
 

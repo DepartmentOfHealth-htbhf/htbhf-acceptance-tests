@@ -58,6 +58,14 @@ public class Pages {
         );
     }
 
+    public BasePage getFirstPage() {
+        return getScotlandPage();
+    }
+
+    public BasePage getFirstPageNoWait() {
+        return getScotlandPageNoWait();
+    }
+
     public BasePage getAndWaitForPageByName(PageName name) {
         BasePage page = getPageByName(name);
         page.waitForPageToLoad();
@@ -121,6 +129,10 @@ public class Pages {
 
     public ScotlandPage getScotlandPage() {
         return (ScotlandPage) getAndWaitForPageByName(PageName.SCOTLAND);
+    }
+
+    public ScotlandPage getScotlandPageNoWait() {
+        return (ScotlandPage) getPageByName(PageName.SCOTLAND);
     }
 
     public InScotlandPage getInScotlandPage() {

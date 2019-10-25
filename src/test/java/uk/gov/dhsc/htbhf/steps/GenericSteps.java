@@ -2,6 +2,7 @@ package uk.gov.dhsc.htbhf.steps;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.Cookie;
 import uk.gov.dhsc.htbhf.page.BasePage;
 import uk.gov.dhsc.htbhf.page.GenericPage;
 import uk.gov.dhsc.htbhf.page.PageName;
@@ -65,6 +66,30 @@ public class GenericSteps extends CommonSteps {
     public void yesAndNoOptionsAreDisplayed(String pageNameString) {
         BasePage basePage = getPages().getPageByName(PageName.toPageName(pageNameString));
         assertYesNoOptionsAreDisplayed(basePage);
+    }
+
+    @Then("^my session has not been destroyed")
+    public void verifySessionNotDestroyed() {
+        String pageSessionId = sessionIdThreadLocal.get();
+        //Navigate to the first page of the application so we can assert the session id
+        BasePage basePage = getPages().getFirstPageNoWait();
+        basePage.open();
+        Cookie langCookie = basePage.getLangCookie();
+        assertThat(langCookie).isNotNull();
+        String newSessionId = basePage.getCurrentSessionId();
+        assertThat(pageSessionId).isEqualTo(newSessionId);
+    }
+
+    @Then("^my session has been destroyed")
+    public void verifySessionDestroyed() {
+        String pageSessionId = sessionIdThreadLocal.get();
+        //Navigate to the first page of the application so we can assert the session id
+        BasePage basePage = getPages().getFirstPageNoWait();
+        basePage.open();
+        Cookie langCookie = basePage.getLangCookie();
+        assertThat(langCookie).isNotNull();
+        String newSessionId = basePage.getCurrentSessionId();
+        assertThat(pageSessionId).isNotEqualTo(newSessionId);
     }
 
 }
