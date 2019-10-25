@@ -3,7 +3,6 @@ package uk.gov.dhsc.htbhf.steps;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.GuidancePage;
 import uk.gov.dhsc.htbhf.page.PageName;
@@ -36,32 +35,6 @@ public class GuidanceSteps extends CommonSteps {
         assertGuidancePageHeadersCorrect(pageName);
         assertGuidancePageContentsCorrect();
         assertGuidancePageNavigationLinksCorrect();
-    }
-
-    @Then("^my session has not been destroyed")
-    public void verifySessionNotDestroyed() {
-        String pageSessionId = sessionIdThreadLocal.get();
-        //Navigate to another page so we can assert the session id
-        GuidancePage guidancePage = getPages().getGuidancePageNoWait(PageName.APPLY);
-        guidancePage.open();
-        Cookie langCookie = guidancePage.getLangCookie();
-        assertThat(langCookie).isNotNull();
-        String newSessionId = guidancePage.getCurrentSessionId();
-        assertThat(pageSessionId).isEqualTo(newSessionId);
-    }
-
-    // To verify that the session has been destroyed we need to navigate to a subsequent page
-    // (back to the Guidance page is sufficient) to check for a new session id
-    @Then("^my session has been destroyed")
-    public void verifySessionDestroyed() {
-        String pageSessionId = sessionIdThreadLocal.get();
-        //Navigate to another page so we can assert the session id
-        GuidancePage guidancePage = getPages().getGuidancePageNoWait(PageName.APPLY);
-        guidancePage.open();
-        Cookie langCookie = guidancePage.getLangCookie();
-        assertThat(langCookie).isNotNull();
-        String newSessionId = guidancePage.getCurrentSessionId();
-        assertThat(pageSessionId).isNotEqualTo(newSessionId);
     }
 
     // Make sure there are the correct previous and/or next links on the page
