@@ -9,7 +9,9 @@ check_variable_is_set(){
 
 export WORKING_DIR=$(pwd)
 export BIN_DIR=${WORKING_DIR}/bin
-export WEB_UI_DIR=${WORKING_DIR}/tmp-web-ui
+if [[ -z "${WEB_UI_DIR}" ]]; then
+  export WEB_UI_DIR=${WORKING_DIR}/tmp-web-ui
+fi
 
 check_variable_is_set NOTIFY_API_KEY
 
@@ -27,7 +29,7 @@ download_web_ui(){
             | wget -qO web-tests-tmp.zip -i -
     else
         echo "Downloading  web ui branch '${WEB_UI_BRANCH}' for tests"
-        wget -qO web-tests-tmp.zip https://github.com/DepartmentOfHealth-htbhf/htbhf-acceptance-tests/archive/${WEB_UI_BRANCH}.zip
+        wget -qO web-tests-tmp.zip https://github.com/DepartmentOfHealth-htbhf/htbhf-applicant-web-ui/archive/${WEB_UI_BRANCH}.zip
     fi
     unzip web-tests-tmp.zip
     mv -f */* ${WEB_UI_DIR}

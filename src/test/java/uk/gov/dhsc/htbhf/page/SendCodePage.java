@@ -1,16 +1,18 @@
 package uk.gov.dhsc.htbhf.page;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.RadioButton;
+
+import static uk.gov.dhsc.htbhf.page.component.RadioButton.EMAIL;
+import static uk.gov.dhsc.htbhf.page.component.RadioButton.TEXT;
 
 /**
  * Page object for the page where the claimant chooses how to receive their code.
  */
 public class SendCodePage extends SubmittablePage {
 
-    private static final String TEXT = "text";
-    private static final String EMAIL = "email";
     private RadioButton selectTextRadioButton;
     private RadioButton selectEmailRadioButton;
 
@@ -41,6 +43,32 @@ public class SendCodePage extends SubmittablePage {
 
     public void selectEmail() {
         selectEmailRadioButton.select();
+    }
+
+    public String getTextHint() {
+        return selectTextRadioButton.getHint();
+    }
+
+    public String getEmailHint() {
+        return selectEmailRadioButton.getHint();
+    }
+
+    public String getChangeTextLink() {
+        WebElement changeTextLink = this.findById("change-text");
+        return getHrefForElement(changeTextLink);
+    }
+
+    public String getChangeEmailLink() {
+        WebElement changeEmailLink = this.findById("change-email");
+        return getHrefForElement(changeEmailLink);
+    }
+
+    public String getFieldErrorId() {
+        return "channel-for-code-error";
+    }
+
+    public String getErrorLinkCss() {
+        return "a[href=\"#channel-for-code-error\"]";
     }
 
 }

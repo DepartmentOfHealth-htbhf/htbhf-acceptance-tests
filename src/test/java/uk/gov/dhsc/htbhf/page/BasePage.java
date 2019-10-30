@@ -1,8 +1,6 @@
 package uk.gov.dhsc.htbhf.page;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.BaseComponent;
@@ -15,10 +13,15 @@ import java.util.stream.Collectors;
  */
 public abstract class BasePage extends BaseComponent {
 
+    private static final String GOV_UK_TABLE_CSS = ".govuk-table";
+    private static final String GOV_UK_BODY_CSS = ".govuk-body";
     private static final String RADIO_INPUT_CLASSNAME = "govuk-radios__input";
     private static final String RADIO_LABEL_CLASSNAME = "govuk-radios__label";
     private static final String ERROR_HEADER_SELECTOR = "h2#error-summary-title";
-    private static final String BACK_LINK_CLASSNAME = "govuk-back-link";
+    private static final String BACK_LINK_CSS = ".govuk-back-link";
+    private static final String SET_NO_VALIDATE =
+            "const form = document.querySelectorAll('form')[0]; " +
+                    "form.setAttribute('novalidate', true);";
 
     protected final WebDriver webDriver;
     protected final WebDriverWait wait;
@@ -70,7 +73,7 @@ public abstract class BasePage extends BaseComponent {
     }
 
     public String getH1Text() {
-        return findH1().getText();
+        return findH1().getText().trim();
     }
 
     public WebElement findH2() {
@@ -78,7 +81,7 @@ public abstract class BasePage extends BaseComponent {
     }
 
     public String getH2Text() {
-        return findH2().getText();
+        return findH2().getText().trim();
     }
 
     public WebElement findLinkForHref(String href) {
@@ -102,16 +105,58 @@ public abstract class BasePage extends BaseComponent {
     }
 
     public WebElement getBackLink() {
-        return findByClassName(BACK_LINK_CLASSNAME);
+        return findByCss(BACK_LINK_CSS);
     }
 
     public String getBackLinkHref() {
         WebElement backLink = getBackLink();
-        return backLink.getAttribute("href");
+        return getHrefForElement(backLink);
     }
 
+    /**
+     * If checking for the absence of something, you need to get all elements otherwise if
+     * there are none, then an Exception will be thrown
+     */
     public boolean isBackLinkPresent() {
-        return getBackLink().isDisplayed();
+        List<WebElement> backLink = findAllByCss(BACK_LINK_CSS);
+        return !backLink.isEmpty();
+    }
+
+    /**
+     * Used to disable html5 form validation as this brings up a dialog box on chrome which interferes with the test.
+     * This is most prevalent in the enter email address tests.
+     */
+    public void executeSetNoValidateScript() {
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) webDriver;
+        javascriptExecutor.executeScript(SET_NO_VALIDATE);
+    }
+
+    public List<WebElement> findAllTablesOnPage() {
+        return findAllByCss(GOV_UK_TABLE_CSS);
+    }
+
+    public List<WebElement> findAllBodyElementsOnPage() {
+        return findAllByCss(GOV_UK_BODY_CSS);
+    }
+
+    public String getBodyText() {
+        WebElement body = findByCss(GOV_UK_BODY_CSS);
+        return body.getText().trim();
+    }
+
+    public String getCurrentSessionId() {
+        Cookie sessionCookie = getCookieByName("htbhf.sid");
+        //TODO MRS 16/10/2019: This will not retrieve secure cookies (iOS devices) so won't work for compatibility tests, but is ok at the moment
+        // because the value isn't used by compatibility tests even though it is retrieved when the apply page is opened.
+        return (sessionCookie != null) ? sessionCookie.getValue() : null;
+    }
+
+    public Cookie getLangCookie() {
+        return this.getCookieByName("lang");
+    }
+
+    private Cookie getCookieByName(String cookieName) {
+        return webDriver.manage().getCookieNamed(cookieName);
     }
 
     private String getVisibleTextFromFieldError(WebElement errorElement) {

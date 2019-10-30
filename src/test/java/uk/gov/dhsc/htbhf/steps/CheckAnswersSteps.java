@@ -5,7 +5,6 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.CheckAnswersPage;
 import uk.gov.dhsc.htbhf.page.CheckAnswersRowData;
-import uk.gov.dhsc.htbhf.page.PageName;
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +34,26 @@ public class CheckAnswersSteps extends CommonSteps {
     @When("^I choose to change my answer to are you pregnant")
     public void changeAreYouPregnantAnswer() {
         changeAnswerFor("Are you pregnant?");
+    }
+
+    @When("^I choose to change my address")
+    public void changeAddress() {
+        changeAnswerFor("Address");
+    }
+
+    @When("^I choose to change my phone number")
+    public void changePhoneNumber() {
+        changeAnswerFor("Mobile telephone number");
+    }
+
+    @When("^I choose to change my email address")
+    public void changeEmailAddress() {
+        changeAnswerFor("Email address");
+    }
+
+    @When("^I choose to change my answer to Do you live in Scotland")
+    public void changeDoYouLiveInScotland() {
+        changeAnswerFor("Do you live in Scotland?");
     }
 
     @Then("^there are no children displayed")
@@ -95,11 +114,6 @@ public class CheckAnswersSteps extends CommonSteps {
         assertCheckAnswersWithAddressForClaimantWithChildrenAndNotPregnant(FULL_ADDRESS_NO_COUNTY);
     }
 
-    @Then("^The back link on the check answers page links to the email address page")
-    public void backLinkPointsToEmailAddressPage() {
-        assertBackLinkPointsToPage(PageName.EMAIL_ADDRESS);
-    }
-
     private void changeAnswerFor(String linkText) {
         CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();
         checkAnswersPage.clickChangeLinkFor(linkText);
@@ -137,7 +151,7 @@ public class CheckAnswersSteps extends CommonSteps {
 
     private void assertNinoShown(List<CheckAnswersRowData> claimContents) {
         String ninoValueOnPage = getValueForField(claimContents, "National Insurance number");
-        String originalNinoSet = actionOptionsThreadLocal.get().getNino();
+        String originalNinoSet = claimValuesThreadLocal.get().getNino();
         assertThat(ninoValueOnPage).isEqualTo(originalNinoSet);
     }
 
@@ -153,7 +167,7 @@ public class CheckAnswersSteps extends CommonSteps {
 
     private void assertDueDateShownInSixMonths(List<CheckAnswersRowData> claimContents) {
         String dueDateValue = getValueForField(claimContents, "Baby’s due date");
-        assertThat(dueDateValue).isEqualTo(getFormattedDateInMonths(2));
+        assertThat(dueDateValue).isEqualTo(getFormattedDateInMonths(VALID_PREGNANCY_MONTH_INCREMENT));
     }
 
     private void assertFullAddressShown(List<CheckAnswersRowData> claimContents, String expectedAddress) {

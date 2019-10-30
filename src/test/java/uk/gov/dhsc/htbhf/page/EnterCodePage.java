@@ -1,6 +1,7 @@
 package uk.gov.dhsc.htbhf.page;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import uk.gov.dhsc.htbhf.page.component.InputField;
 
@@ -35,5 +36,18 @@ public class EnterCodePage extends SubmittablePage {
 
     public void enterCode(String code) {
         enterCodeInputField.enterValue(code);
+    }
+
+    public String getInputErrorId() {
+        return enterCodeInputField.getInputErrorId();
+    }
+
+    public String getInputErrorLinkCss() {
+        return enterCodeInputField.getInputErrorLinkCss();
+    }
+
+    public String getRequestNewCodeLinkHref() {
+        WebElement requestNewCodeLink = findById("request-new-code");
+        return getHrefForElement(requestNewCodeLink);
     }
 }

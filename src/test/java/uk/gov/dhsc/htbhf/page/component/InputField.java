@@ -21,11 +21,9 @@ public class InputField extends BaseComponent {
     }
 
     public void enterValue(String value) {
-        getElement().sendKeys(value);
-    }
-
-    public void clearValue() {
-        getElement().clear();
+        WebElement inputElement = getElement();
+        inputElement.clear();
+        inputElement.sendKeys(value);
     }
 
     public WebElement getElement() {

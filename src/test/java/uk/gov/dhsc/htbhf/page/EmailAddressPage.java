@@ -34,4 +34,16 @@ public class EmailAddressPage extends SubmittablePage {
     public void enterEmailAddress(String emailAddress) {
         emailAddressInput.enterValue(emailAddress);
     }
+
+    public String getEmailAddress() {
+        return emailAddressInput.getValue();
+    }
+
+    public String getInputErrorId() {
+        return emailAddressInput.getInputErrorId();
+    }
+
+    public String getInputErrorLinkCss() {
+        return emailAddressInput.getInputErrorLinkCss();
+    }
 }

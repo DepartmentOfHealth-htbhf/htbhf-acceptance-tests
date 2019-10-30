@@ -8,6 +8,8 @@ import uk.gov.dhsc.htbhf.page.component.RadioButton;
  * Page object for Scotland page where the claimant enters whether they live in Scotland or not.
  */
 public class ScotlandPage extends SubmittablePage {
+    private static final String DO_YOU_LIVE_IN_SCOTLAND_ERROR_LINK_CSS = "a[href=\"#scotland-error\"]";
+    private static final String DO_YOU_LIVE_IN_SCOTLAND_FIELD_ERROR_ID = "scotland-error";
 
     private RadioButton yesRadioButton;
     private RadioButton noRadioButton;
@@ -39,5 +41,13 @@ public class ScotlandPage extends SubmittablePage {
 
     public void selectNoRadioButton() {
         noRadioButton.select();
+    }
+
+    public String getFieldErrorId() {
+        return DO_YOU_LIVE_IN_SCOTLAND_FIELD_ERROR_ID;
+    }
+
+    public String getFieldErrorLinkCss() {
+        return DO_YOU_LIVE_IN_SCOTLAND_ERROR_LINK_CSS;
     }
 }

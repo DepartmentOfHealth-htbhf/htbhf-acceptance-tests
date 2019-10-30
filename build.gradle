@@ -42,7 +42,6 @@ dependencies {
     implementation "org.springframework:spring-context:${springVersion}"
     implementation "org.springframework:spring-beans:${springVersion}"
     implementation "org.springframework.retry:spring-retry:1.2.4.RELEASE"
-    implementation "javax.annotation:javax.annotation-api:1.3.2"
 
     testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
@@ -84,6 +83,8 @@ test {
     dependsOn findChromedriver
     doFirst {
         println("Chromedriver path: ${project.ext.chromedriverPath}")
+        println("Cucumber options: ${System.getProperty("cucumber.options")}")
+        println("Feature Toggles: ${System.getenv("FEATURE_TOGGLES")}")
         systemProperty "webdriver.chrome.driver", "${project.ext.chromedriverPath}"
         systemProperty "cucumber.options", System.getProperty("cucumber.options")
     }

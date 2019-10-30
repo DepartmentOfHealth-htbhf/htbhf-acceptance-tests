@@ -1,12 +1,16 @@
 package uk.gov.dhsc.htbhf.page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
 public class SelectAddressPage extends SubmittablePage {
+
+    private static final String ADDRESS_RESULTS_OPTION_CSS = "#address-results > option";
 
     public SelectAddressPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
@@ -36,15 +40,23 @@ public class SelectAddressPage extends SubmittablePage {
     }
 
     public List<WebElement> getAddressOptions () {
-        return findAllByCss("#address-results > option");
+        return findAllByCss(ADDRESS_RESULTS_OPTION_CSS);
     }
 
-    public WebElement getAddressNotListedLink () {
+    private WebElement getAddressNotListedLink() {
         return findByXpath("//a[contains(text(), \"My address is not listed\")]");
     }
 
-    public WebElement getChangePostcodeLink () {
+    public String getAddressNotListedLinkHref() {
+        return getHrefForElement(getAddressNotListedLink());
+    }
+
+    private WebElement getChangePostcodeLink() {
         return findByXpath("//a[contains(text(), \"Change\")]");
+    }
+
+    public String getChangePostcodeLinkHref() {
+        return getHrefForElement(getChangePostcodeLink());
     }
 
     public void clickAddressNotListedLink () {
@@ -57,7 +69,15 @@ public class SelectAddressPage extends SubmittablePage {
         changePostcodeLink.click();
     }
 
-    public WebElement getManualAddressLink () {
-        return findByXpath("//a[contains(text(), \"Enter address manually\")]");
+    public String getManualAddressLinkHref() {
+        WebElement manualAddressLink = findByXpath("//a[contains(text(), \"Enter address manually\")]");
+        return getHrefForElement(manualAddressLink);
+    }
+
+    public void selectFirstAddress() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(ADDRESS_RESULTS_OPTION_CSS)));
+        List<WebElement> addressOptions = getAddressOptions();
+        WebElement option = addressOptions.get(0);
+        option.click();
     }
 }

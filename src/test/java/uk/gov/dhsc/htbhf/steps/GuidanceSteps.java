@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Steps for the overview page of the application
  */
-public class GuidanceSteps extends BaseSteps {
+public class GuidanceSteps extends CommonSteps {
 
     private GuidancePage guidancePage;
 

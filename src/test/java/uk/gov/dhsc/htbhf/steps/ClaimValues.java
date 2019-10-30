@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class ActionOptions {
+public class ClaimValues {
     private boolean isClaimantPregnant;
     private String firstName;
     private String lastName;
@@ -18,4 +18,5 @@ public class ActionOptions {
     private String county;
     private String postcode;
     private String nino;
+    private boolean selectAddress;
 }

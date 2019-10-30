@@ -63,4 +63,44 @@ public class ManualAddressPage extends SubmittablePage {
     public void enterPostcode(String postcode) {
         postcodeInputField.enterValue(postcode);
     }
+
+    public String getLine1InputErrorId() {
+        return line1InputField.getInputErrorId();
+    }
+
+    public String getLine2InputErrorId() {
+        return line2InputField.getInputErrorId();
+    }
+
+    public String getTownInputErrorId() {
+        return townOrCityInputField.getInputErrorId();
+    }
+
+    public String getCountyInputErrorId() {
+        return countyInputField.getInputErrorId();
+    }
+
+    public String getPostcodeInputErrorId() {
+        return postcodeInputField.getInputErrorId();
+    }
+
+    public String getLine1InputErrorLinkCss() {
+        return line1InputField.getInputErrorLinkCss();
+    }
+
+    public String getLine2InputErrorLinkCss() {
+        return line2InputField.getInputErrorLinkCss();
+    }
+
+    public String getTownInputErrorLinkCss() {
+        return townOrCityInputField.getInputErrorLinkCss();
+    }
+
+    public String getCountyInputErrorLinkCss() {
+        return countyInputField.getInputErrorLinkCss();
+    }
+
+    public String getPostcodeInputErrorLinkCss() {
+        return postcodeInputField.getInputErrorLinkCss();
+    }
 }

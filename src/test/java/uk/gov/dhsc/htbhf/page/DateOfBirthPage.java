@@ -9,6 +9,9 @@ import uk.gov.dhsc.htbhf.page.component.InputField;
  */
 public class DateOfBirthPage extends SubmittablePage {
 
+    private static final String DATE_OF_BIRTH_ERROR_LINK_CSS = "a[href=\"#date-of-birth-error\"]";
+    private static final String DATE_OF_BIRTH_FIELD_ERROR_ID = "date-of-birth-error";
+
     private static final String DOB_DAY_INPUT_FIELD_ID = "dateOfBirth-day";
     private static final String DOB_MONTH_INPUT_FIELD_ID = "dateOfBirth-month";
     private static final String DOB_YEAR_INPUT_FIELD_ID = "dateOfBirth-year";
@@ -49,5 +52,13 @@ public class DateOfBirthPage extends SubmittablePage {
 
     public InputField getYearInputField() {
         return yearInputField;
+    }
+
+    public String getDateOfBirthFieldErrorId() {
+        return DATE_OF_BIRTH_FIELD_ERROR_ID;
+    }
+
+    public String getDateOfBirthErrorLinkCss() {
+        return DATE_OF_BIRTH_ERROR_LINK_CSS;
     }
 }

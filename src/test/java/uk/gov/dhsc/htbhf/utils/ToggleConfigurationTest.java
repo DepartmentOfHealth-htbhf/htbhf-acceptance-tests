@@ -2,6 +2,7 @@ package uk.gov.dhsc.htbhf.utils;
 
 import org.junit.jupiter.api.Test;
 import uk.gov.dhsc.htbhf.page.PageName;
+import uk.gov.dhsc.htbhf.page.ToggleName;
 
 import java.util.Map;
 
@@ -22,22 +23,10 @@ class ToggleConfigurationTest {
         ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG);
         //When
         Map<String, Boolean> allToggles = toggleConfiguration.getAllToggles();
-        boolean addressToggled = toggleConfiguration.isEnabled("ADDRESS_LOOKUP_ENABLED");
-        boolean fooBarToggled = toggleConfiguration.isEnabled("FOOBAR_ENABLED");
+        boolean addressToggled = toggleConfiguration.isEnabled(ToggleName.ADDRESS_LOOKUP);
         //Then
         assertThat(allToggles).hasSize(2);
         assertThat(addressToggled).isFalse();
-        assertThat(fooBarToggled).isTrue();
-    }
-
-    @Test
-    void shouldNotBeEnabledForMissingToggle() {
-        //Given
-        ToggleConfiguration toggleConfiguration = new ToggleConfiguration(VALID_TOGGLE_CONFIG);
-        //When
-        boolean somethingEnabled = toggleConfiguration.isEnabled("SOMETHING_ENABLED");
-        //Then
-        assertThat(somethingEnabled).isFalse();
     }
 
     @Test
@@ -51,7 +40,7 @@ class ToggleConfigurationTest {
     }
 
     @Test
-    void shouldBeToggledOffForToggledPageWithNoConfig() {
+    void shouldNotBeEnabledForToggledPageWithNoConfig() {
         //Given
         ToggleConfiguration toggleConfiguration = new ToggleConfiguration(EMPTY_TOGGLE_JSON);
         //When
@@ -61,7 +50,7 @@ class ToggleConfigurationTest {
     }
 
     @Test
-    void shouldBeToggledOnForPageWithNoToggleWithNoConfig() {
+    void shouldBeEnabledForPageWithNoToggleWithNoConfig() {
         //Given
         ToggleConfiguration toggleConfiguration = new ToggleConfiguration(EMPTY_TOGGLE_JSON);
         //When

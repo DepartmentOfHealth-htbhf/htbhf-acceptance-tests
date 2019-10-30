@@ -32,6 +32,7 @@ public class Pages {
         pages.add(new CheckAnswersPage(webDriver, baseUrl, webDriverWait));
         pages.add(new ChildDateOfBirthPage(webDriver, baseUrl, webDriverWait));
         pages.add(new ConfirmationPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new ConfirmUpdatedPage(webDriver, baseUrl, webDriverWait));
         pages.add(new DateOfBirthPage(webDriver, baseUrl, webDriverWait));
         pages.add(new DoYouHaveChildrenPage(webDriver, baseUrl, webDriverWait));
         pages.add(new EmailAddressPage(webDriver, baseUrl, webDriverWait));
@@ -46,10 +47,23 @@ public class Pages {
         pages.add(new TermsAndConditionsPage(webDriver, baseUrl, webDriverWait));
         pages.add(new PostcodePage(webDriver, baseUrl, webDriverWait));
         pages.add(new SelectAddressPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new CookiesPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new ServerErrorPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new PrivacyNoticePage(webDriver, baseUrl, webDriverWait));
+        pages.add(new PageNotFoundPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new UnsuccessfulApplicationPage(webDriver, baseUrl, webDriverWait));
         //Guidance pages
         Arrays.stream(GuidancePageMetadata.values()).forEach(
                 guidancePageMetadata -> pages.add(new GuidancePage(webDriver, baseUrl, webDriverWait, guidancePageMetadata.getPageName()))
         );
+    }
+
+    public BasePage getFirstPage() {
+        return getScotlandPage();
+    }
+
+    public BasePage getFirstPageNoWait() {
+        return getScotlandPageNoWait();
     }
 
     public BasePage getAndWaitForPageByName(PageName name) {
@@ -117,6 +131,10 @@ public class Pages {
         return (ScotlandPage) getAndWaitForPageByName(PageName.SCOTLAND);
     }
 
+    public ScotlandPage getScotlandPageNoWait() {
+        return (ScotlandPage) getPageByName(PageName.SCOTLAND);
+    }
+
     public InScotlandPage getInScotlandPage() {
         return (InScotlandPage) getAndWaitForPageByName(PageName.IN_SCOTLAND);
     }
@@ -125,8 +143,20 @@ public class Pages {
         return (TermsAndConditionsPage) getAndWaitForPageByName(PageName.TERMS_AND_CONDITIONS);
     }
 
+    public TermsAndConditionsPage getTermsAndConditionsPageNoWait() {
+        return (TermsAndConditionsPage) getPageByName(PageName.TERMS_AND_CONDITIONS);
+    }
+
     public ConfirmationPage getConfirmationPage() {
         return (ConfirmationPage) getAndWaitForPageByName(PageName.CONFIRMATION);
+    }
+
+    public ConfirmationPage getConfirmationPageNoWait() {
+        return (ConfirmationPage) getPageByName(PageName.CONFIRMATION);
+    }
+
+    public ConfirmUpdatedPage getConfirmUpdatedPage() {
+        return (ConfirmUpdatedPage) getAndWaitForPageByName(PageName.CONFIRM_UPDATED);
     }
 
     public GuidancePage getGuidancePage(PageName pageName) {
@@ -147,5 +177,21 @@ public class Pages {
 
     public SelectAddressPage getSelectAddressPage() {
         return (SelectAddressPage) getAndWaitForPageByName(PageName.SELECT_ADDRESS);
+    }
+
+    public CookiesPage getCookiesPage() {
+        return (CookiesPage) getAndWaitForPageByName(PageName.COOKIES);
+    }
+
+    public PageNotFoundPage getPageNotFoundPage() {
+        return (PageNotFoundPage) getAndWaitForPageByName(PageName.PAGE_NOT_FOUND);
+    }
+
+    public PrivacyNoticePage getPrivacyNoticePage() {
+        return (PrivacyNoticePage) getAndWaitForPageByName(PageName.PRIVACY_NOTICE);
+    }
+
+    public UnsuccessfulApplicationPage getUnsuccessfulApplicationPage() {
+        return (UnsuccessfulApplicationPage) getAndWaitForPageByName(PageName.UNSUCCESSFUL_APPLICATION);
     }
 }

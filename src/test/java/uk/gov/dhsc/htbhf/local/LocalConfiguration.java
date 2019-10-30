@@ -29,13 +29,16 @@ public class LocalConfiguration {
     @Value("${wait.timeout.seconds}")
     private int waitTimeoutInSeconds;
 
-    @Value("${wiremock.port}")
-    private int wiremockPort;
+    @Value("${claimant.service.port}")
+    private int claimantServicePort;
+
+    @Value("${os.places.port}")
+    private int osPlacesPort;
 
     @Value("${base.url}")
     private String baseUrl;
 
-    @Value("${FEATURE_TOGGLES}")
+    @Value("${FEATURE_TOGGLES:}")
     private String featureToggles;
 
     @Bean()
@@ -43,18 +46,25 @@ public class LocalConfiguration {
         return new LocalWebDriverWrapper(browser, headless, waitTimeoutInSeconds, baseUrl);
     }
 
-    @Bean(destroyMethod = "stop")
-    public WireMockServer wireMockServer() {
-        WireMockServer wireMockServer = new WireMockServer(wireMockConfig().port(wiremockPort));
+    @Bean(name="claimantServiceMock", destroyMethod = "stop")
+    public WireMockServer claimantServiceMock() {
+        return startWireMockServer(this.claimantServicePort);
+    }
+
+    @Bean(name="osPlacesMock", destroyMethod = "stop")
+    public WireMockServer osPlacesMock() {
+        return startWireMockServer(this.osPlacesPort);
+    }
+
+    private WireMockServer startWireMockServer(int port) {
+        WireMockServer wireMockServer = new WireMockServer(wireMockConfig().port(port));
         wireMockServer.start();
-        //Configure the WireMock client to use the same port configured for the server.
-        WireMock.configureFor(wiremockPort);
         return wireMockServer;
     }
 
     @Bean
-    public WireMockManager wireMockManagerImpl(WireMockServer wireMockServer) {
-        return new WireMockManagerImpl(wireMockServer);
+    public WireMockManager wireMockManagerImpl(WireMockServer claimantServiceMock, WireMockServer osPlacesMock) {
+        return new WireMockManagerImpl(claimantServiceMock, osPlacesMock);
     }
 
     @Bean

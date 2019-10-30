@@ -43,4 +43,4 @@ Feature: Check answers
 
   Scenario: Clicking on the back link takes me to the last navigable page
     Given I have entered my details up to the check answers page
-    Then The back link on the check answers page links to the email address page
+    Then the back link points to the email address page

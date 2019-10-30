@@ -5,19 +5,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Properties;
 
-import static uk.gov.dhsc.htbhf.browserstack.BrowserStackLauncher.getTestName;
+import static uk.gov.dhsc.htbhf.browserstack.BrowserStackLauncher.getTestFilePath;
 
 /**
  * Retrieves and builds the BrowserStack capabilities from the values stored in the capabilities files
- * in src/test/resources/browserstack
+ * in src/test/resources/browserstack. The path is provided by the ThreadLocal value stored in BrowserStackLauncher.
  */
 @Slf4j
 public class BrowserStackCapabilities {
-
-    private static final String BROWSERSTACK_DIRECTORY = "browserstack/";
 
     /**
      * Get the browser stack properties from a Properties file for the test specified from the
@@ -26,21 +26,15 @@ public class BrowserStackCapabilities {
      * @return A Map of the properties for the requested test
      */
     public static Map<String, String> getBrowserStackCapabilities() {
-        Properties properties = new Properties();
-        String capabilitiesFileName = buildTestFileName();
-
+        Path capabilitiesPath = getTestFilePath();
         try {
-            log.info("Loading BrowserStack capabilities from: {}", capabilitiesFileName);
-            properties.load(BrowserStackCapabilities.class.getClassLoader().getResourceAsStream(capabilitiesFileName));
+            Properties properties = new Properties();
+            log.info("Loading BrowserStack capabilities from: {}", capabilitiesPath);
+            properties.load(Files.newInputStream(capabilitiesPath));
+            return Maps.fromProperties(properties);
         } catch (Exception e) {
-            throw new RuntimeException("Unable to load capabilities from file: " + capabilitiesFileName, e);
+            throw new RuntimeException("Unable to load capabilities from file: " + capabilitiesPath, e);
         }
-
-        return Maps.fromProperties(properties);
-    }
-
-    private static String buildTestFileName() {
-        return BROWSERSTACK_DIRECTORY + getTestName() + ".properties";
     }
 
     /**

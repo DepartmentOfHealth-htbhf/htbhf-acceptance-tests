@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
+import static uk.gov.dhsc.htbhf.page.ToggleName.ADDRESS_LOOKUP;
 
 class PageNameTest {
 
@@ -14,6 +15,7 @@ class PageNameTest {
             "CHECK_ANSWERS, check answers",
             "CHILD_DATE_OF_BIRTH, enter your childrens dates of birth",
             "CONFIRMATION, confirmation",
+            "CONFIRM_UPDATED, confirm updated",
             "DATE_OF_BIRTH, enter date of birth",
             "DO_YOU_HAVE_CHILDREN, do you have children under four years old",
             "EMAIL_ADDRESS, email address",
@@ -32,7 +34,11 @@ class PageNameTest {
             "WHAT_YOU_CAN_BUY, What you can buy",
             "USING_YOUR_CARD, Using your card",
             "APPLY, Apply for Healthy Start",
-            "REPORT_A_CHANGE, Report a change"
+            "REPORT_A_CHANGE, Report a change",
+            "COOKIES, cookies",
+            "SERVER_ERROR, Server Error",
+            "PRIVACY_NOTICE, privacy notice",
+            "PAGE_NOT_FOUND, page not found"
     })
     @ParameterizedTest
     void shouldGetPageName(PageName pageName, String name) {
@@ -54,6 +60,6 @@ class PageNameTest {
     @Test
     void shouldReturnNoToggle() {
         assertThat(PageName.HOW_IT_WORKS.getToggle()).isEmpty();
-        assertThat(PageName.POSTCODE.getToggle()).hasValue("ADDRESS_LOOKUP_ENABLED");
+        assertThat(PageName.POSTCODE.getToggle()).hasValue(ADDRESS_LOOKUP);
     }
 }

@@ -14,6 +14,10 @@ public class RadioButton extends BaseComponent {
     public static final String YES_LABEL = "Yes";
     public static final String NO = "no";
     public static final String NO_LABEL = "No";
+    public static final String TEXT_LABEL = "Text";
+    public static final String EMAIL_LABEL = "Email";
+    public static final String TEXT = "text";
+    public static final String EMAIL = "email";
     private String option;
 
     public RadioButton(WebDriver webDriver, WebDriverWait webDriverWait, String option) {
@@ -31,5 +35,12 @@ public class RadioButton extends BaseComponent {
     public WebElement get() {
         String formattedCss = String.format("input[value=\"%s\"]", option);
         return findByCss(formattedCss);
+    }
+
+    public String getHint() {
+        WebElement radioButton = get();
+        WebElement div = radioButton.findElement(By.xpath(".."));
+        WebElement hint = div.findElement(By.className("govuk-radios__hint"));
+        return hint.getText();
     }
 }
