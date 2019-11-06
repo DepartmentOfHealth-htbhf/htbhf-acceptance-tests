@@ -3,6 +3,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Test results</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        td.pass-true {
+            color: darkgreen;
+        }
+        td.pass-false {
+            color: darkred;
+        }
+    </style>
 </head>
 <body>
 <h1>Compatibility Test Summary</h1>
@@ -10,24 +21,24 @@
 <table border="1">
     <tr>
         <th>Test</th>
-        <th>Passed</th>
+        <th>Attempt</th>
+        <th>Result</th>
         <th>Start Time</th>
         <th>Finished Time</th>
         <th>Duration</th>
-        <th>Attempt</th>
         <th>Session Id</th>
-        <th>Failure</th>
+        <th></th>
     </tr>
     #foreach( $resultSummary in $resultSummaries )
         <tr>
-            <td>$resultSummary.getTestName()</td>
-            <td>$resultSummary.isPassed()</td>
+            <th>#if( $resultSummary.getAttempts() == 1 )$resultSummary.getTestName()#else<!--$resultSummary.getTestName()-->#end</th>
+            <td>$resultSummary.getAttempts()</td>
+            <td class="pass-$resultSummary.isPassed()">#if( $resultSummary.isPassed() ) Pass #else Fail #end</td>
             <td>$resultSummary.getFormattedStartTime()</td>
             <td>$resultSummary.getFormattedEndTime()</td>
             <td>$resultSummary.getDuration()</td>
-            <td>$resultSummary.getAttempts()</td>
             <td>$resultSummary.getSessionId()</td>
-            <td>#if( $resultSummary.getFailure() ) $resultSummary.getFailure() #end</td>
+            <td>#if( $resultSummary.getFailure() ) <details><summary>Failure details</summary>$resultSummary.getFailure()</details> #end</td>
         </tr>
     #end
 </table>

@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -19,7 +21,9 @@ public class TestOutputHtmlGenerator {
 
     private static final String VELOCITY_TEMPLATE_LOCATION = "velocity/results-summary.vm";
 
-    public static void generateHtmlReport(List<TestResultSummary> resultSummaries, String reportLocation) throws IOException {
+    public static void generateHtmlReport(List<TestResultSummary> results, String reportLocation) throws IOException {
+        List<TestResultSummary> resultSummaries = new ArrayList<>(results);
+        resultSummaries.sort(Comparator.naturalOrder());
         VelocityEngine velocityEngine = setupVelocityEngine();
 
         Template velocityEngineTemplate = velocityEngine.getTemplate(VELOCITY_TEMPLATE_LOCATION);

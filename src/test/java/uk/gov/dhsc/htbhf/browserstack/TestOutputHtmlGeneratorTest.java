@@ -24,7 +24,7 @@ class TestOutputHtmlGeneratorTest {
     private static final String REPORT_LOCATION = "test-report.html";
     private static final String SESSION_ID = "kjhndfsd98rkbnjsdfh";
     private static final String TEST_NAME = "Test1";
-    private static final int ATTEMPTS = 3;
+    private static final int ATTEMPTS = 1;
 
     @Test
     void shouldOutputReportFile() throws IOException {
@@ -43,10 +43,10 @@ class TestOutputHtmlGeneratorTest {
             assertThat(reportContents).startsWith("<!DOCTYPE html>");
             assertThat(reportContents).contains(
                     "<h1>Compatibility Test Summary</h1>",
-                    "<td>Test1</td>",
-                    "<td>true</td>",
+                    "<th>Test1</th>",
+                    "<td>1</td>",
+                    "<td class=\"pass-true\"> Pass </td>",
                     "<td>00:09</td>",
-                    "<td>3</td>",
                     "<td>kjhndfsd98rkbnjsdfh</td>",
                     "<td>" + testResultSummary.getFormattedStartTime() + "</td>",
                     "<td>" + testResultSummary.getFormattedEndTime() + "</td>"
@@ -54,6 +54,37 @@ class TestOutputHtmlGeneratorTest {
         } finally {
             Files.delete(Path.of(REPORT_LOCATION));
         }
+    }
+
+    @Test
+    void shouldSortTestResults() throws IOException {
+
+        try {
+            //Given
+            TestExecutionSummary testExecutionSummary = setupMockTestExecutionSummary();
+            TestResultSummary summary1 = new TestResultSummary(testExecutionSummary, "aaaa", 1, SESSION_ID);
+            TestResultSummary summary2 = new TestResultSummary(testExecutionSummary, "aaaa", 2, SESSION_ID);
+            TestResultSummary summary3 = new TestResultSummary(testExecutionSummary, "bbbb", 1, SESSION_ID);
+            TestResultSummary summary4 = new TestResultSummary(testExecutionSummary, "cccc", 1, SESSION_ID);
+            List<TestResultSummary> resultSummaries = List.of(summary3, summary2, summary4, summary1);
+
+            //When
+            TestOutputHtmlGenerator.generateHtmlReport(resultSummaries, REPORT_LOCATION);
+
+            //Then
+            String reportContents = Files.readString(Path.of(REPORT_LOCATION));
+            assertThat(reportContents).isNotBlank();
+            assertThat(reportContents).startsWith("<!DOCTYPE html>");
+            assertThat(reportContents).containsSubsequence(
+                    "<th>aaaa</th>\n            <td>1</td>",
+                    "<th><!--aaaa--></th>\n            <td>2</td>",
+                    "<th>bbbb</th>\n            <td>1</td>",
+                    "<th>cccc</th>\n            <td>1</td>"
+            );
+        } finally {
+            Files.delete(Path.of(REPORT_LOCATION));
+        }
+
     }
 
     private TestExecutionSummary setupMockTestExecutionSummary() {

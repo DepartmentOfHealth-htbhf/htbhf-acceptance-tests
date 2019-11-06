@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
  * The summary of an individual compatibility test run
  */
 @Data
-public class TestResultSummary {
+public class TestResultSummary implements Comparable<TestResultSummary>{
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -46,4 +46,12 @@ public class TestResultSummary {
         return LocalDateTime.ofInstant(Instant.ofEpochMilli(timeMillis), ZoneId.systemDefault());
     }
 
+    @Override
+    public int compareTo(TestResultSummary o) {
+        int compare = testName.compareTo(o.testName);
+        if (compare == 0) {
+            compare = attempts - o.attempts;
+        }
+        return compare;
+    }
 }
