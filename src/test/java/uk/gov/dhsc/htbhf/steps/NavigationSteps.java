@@ -42,4 +42,10 @@ public class NavigationSteps extends CommonSteps {
         page.waitForPageToLoad();
     }
 
+    @Then("^I am shown the first page of the application")
+    public void verifyOnFirstPageOfApplication() {
+        BasePage page = getPages().getFirstPage();
+        page.waitForPageToLoad();
+    }
+
 }
