@@ -23,12 +23,12 @@ Feature: Application process navigation is controlled
   Scenario Outline: Navigation after completing application returns to start of process and clears the session
     Given I have completed my application
     When I navigate to the <page> page
-    Then I am shown the How it works page
+    Then I am shown the first page of the application
     Examples:
-      | page                    |
-      | enter name              |
-      | do you live in Scotland |
-      | I live in Scotland      |
+      | page                            |
+      | enter name                      |
+      | enter national insurance number |
+      | I live in Scotland              |
 
   Scenario Outline: Navigation is not allowed past the current page in the flow
     Given I have entered my details up to the <application page> page
