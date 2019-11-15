@@ -22,7 +22,7 @@ public class ConfirmDetailsSteps extends CommonSteps {
                 .isEqualTo("What happens next");
         assertThat(confirmationPage.getPanelTitleText().trim())
                 .as("expected confirmation header to be correct")
-                .isEqualTo("Application complete");
+                .isEqualTo("Application successful");
     }
 
     @Then("^my entitlement is 12.40 per week with a first payment of 49.60")

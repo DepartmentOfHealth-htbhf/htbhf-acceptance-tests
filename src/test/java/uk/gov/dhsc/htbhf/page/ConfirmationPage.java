@@ -28,7 +28,7 @@ public class ConfirmationPage extends BasePage {
 
     @Override
     String getPageTitle() {
-        return "GOV.UK - Application complete";
+        return "GOV.UK - Application successful";
     }
 
     public String getPanelTitleText() {
