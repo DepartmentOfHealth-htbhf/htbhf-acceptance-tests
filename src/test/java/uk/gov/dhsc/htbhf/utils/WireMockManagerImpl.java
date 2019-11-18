@@ -105,6 +105,7 @@ public class WireMockManagerImpl implements WireMockManager {
         osPlacesMock.stubFor(get(urlPathEqualTo(POSTCODE_LOOKUP_ENDPOINT))
                 .withQueryParam("postcode", equalTo(postcode))
                 .withQueryParam("key", matching(".*"))
+                .withQueryParam("lr", equalTo("en"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
