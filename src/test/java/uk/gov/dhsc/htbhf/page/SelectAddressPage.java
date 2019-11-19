@@ -10,7 +10,8 @@ import java.util.List;
 
 public class SelectAddressPage extends SubmittablePage {
 
-    private static final String ADDRESS_RESULTS_OPTION_CSS = "#address-results > option";
+    private static final String SELECTABLE_ADDRESS_RESULTS_OPTION_CSS = "#address-results > option:not([disabled])";
+    private static final String ALL_ADDRESS_RESULTS_OPTION_CSS = "#address-results > option";
 
     public SelectAddressPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
@@ -39,12 +40,16 @@ public class SelectAddressPage extends SubmittablePage {
         return findByXpath("//h1[contains(text(), \"There’s a problem with the postcode finder\")]");
     }
 
-    public List<WebElement> getAddressOptions () {
-        return findAllByCss(ADDRESS_RESULTS_OPTION_CSS);
+    public List<WebElement> getSelectableAddressOptions() {
+        return findAllByCss(SELECTABLE_ADDRESS_RESULTS_OPTION_CSS);
+    }
+
+    public List<WebElement> getAllAddressOptions () {
+        return findAllByCss(ALL_ADDRESS_RESULTS_OPTION_CSS);
     }
 
     private WebElement getAddressNotListedLink() {
-        return findByXpath("//a[contains(text(), \"My address is not listed\")]");
+        return findByXpath("//a[contains(text(), \"I can’t find my address in the list\")]");
     }
 
     public String getAddressNotListedLinkHref() {
@@ -75,8 +80,8 @@ public class SelectAddressPage extends SubmittablePage {
     }
 
     public void selectFirstAddress() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(ADDRESS_RESULTS_OPTION_CSS)));
-        List<WebElement> addressOptions = getAddressOptions();
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SELECTABLE_ADDRESS_RESULTS_OPTION_CSS)));
+        List<WebElement> addressOptions = getSelectableAddressOptions();
         WebElement option = addressOptions.get(0);
         option.click();
     }

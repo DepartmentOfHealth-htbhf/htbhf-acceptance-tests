@@ -68,9 +68,17 @@ public class AddressLookupSteps extends CommonSteps {
 
     @Then("^I am shown a list of addresses")
     public void listOfAddressesAreShown() {
-        List<WebElement> addressOptions = getPages().getSelectAddressPage().getAddressOptions();
+        List<WebElement> addressOptions = getPages().getSelectAddressPage().getSelectableAddressOptions();
         assertThat(addressOptions).hasSize(2);
         verifyAddressOptionsText(POSTCODE, addressOptions);
+    }
+
+    @Then("^the list of addresses starts with a count of matching addresses")
+    public void listOfAddressesIncludesCountOfMatchingAddresses() {
+        List<WebElement> addressOptions = getPages().getSelectAddressPage().getAllAddressOptions();
+        assertThat(addressOptions).hasSizeGreaterThan(1);
+        assertThat(addressOptions.get(0).getText()).endsWith("addresses found");
+        assertThat(addressOptions.get(0).isEnabled()).isFalse();
     }
 
     @Then("^I am informed that no addresses were found for my postcode")

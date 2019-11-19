@@ -17,6 +17,7 @@ Feature: Select address
     When I enter a postcode that returns search results
     Then I am shown the select address page
     And I am shown a list of addresses
+    And the list of addresses starts with a count of matching addresses
     And I am shown an address not listed link
     And I am shown a continue button
 
