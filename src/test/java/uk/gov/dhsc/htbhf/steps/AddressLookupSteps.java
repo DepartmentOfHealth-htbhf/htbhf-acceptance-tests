@@ -9,6 +9,7 @@ import uk.gov.dhsc.htbhf.page.PostcodePage;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.StringUtils.substringBefore;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.dhsc.htbhf.steps.Constants.POSTCODE;
 import static uk.gov.dhsc.htbhf.steps.Constants.POSTCODE_WITH_NO_RESULTS;
@@ -18,6 +19,8 @@ import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.aPostcodeL
  * Steps for looking up addresses for a claimant
  */
 public class AddressLookupSteps extends CommonSteps {
+
+    private static final String ADDRESSES_FOUND_SUMMARY = " addresses found";
 
     @Given("OS places returns an error response")
     public void givenOsPlacesReturnsAnError() {
@@ -68,9 +71,25 @@ public class AddressLookupSteps extends CommonSteps {
 
     @Then("^I am shown a list of addresses")
     public void listOfAddressesAreShown() {
-        List<WebElement> addressOptions = getPages().getSelectAddressPage().getAddressOptions();
+        List<WebElement> addressOptions = getPages().getSelectAddressPage().getSelectableAddressOptions();
         assertThat(addressOptions).hasSize(2);
         verifyAddressOptionsText(POSTCODE, addressOptions);
+    }
+
+    @Then("^the list of addresses starts with a count of matching addresses")
+    public void listOfAddressesIncludesCountOfMatchingAddresses() {
+        List<WebElement> addressOptions = getPages().getSelectAddressPage().getAllAddressOptions();
+        assertThat(addressOptions).hasSizeGreaterThan(1);
+        WebElement countOption = addressOptions.get(0);
+        assertThat(countOption.isEnabled()).isFalse();
+        assertSummaryRowMatchesAddressList(addressOptions, countOption);
+    }
+
+    private void assertSummaryRowMatchesAddressList(List<WebElement> addressOptions, WebElement countOption) {
+        String countText = countOption.getText();
+        assertThat(countText).endsWith(ADDRESSES_FOUND_SUMMARY);
+        int addressCount = Integer.parseInt(substringBefore(countText, ADDRESSES_FOUND_SUMMARY));
+        assertThat(addressOptions).hasSize(addressCount + 1);
     }
 
     @Then("^I am informed that no addresses were found for my postcode")
