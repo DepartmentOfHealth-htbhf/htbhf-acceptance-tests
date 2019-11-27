@@ -15,7 +15,7 @@ public class UnsuccessfulApplicationPage extends BasePage {
     @Override
     String getPath() {
         // uses the same url as confirm but has different page content.
-        return "/confirm";
+        return "/decision";
     }
 
     @Override
