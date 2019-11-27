@@ -18,7 +18,7 @@ public class ConfirmationPage extends BasePage {
 
     @Override
     String getPath() {
-        return "/confirm";
+        return "/decision";
     }
 
     @Override
