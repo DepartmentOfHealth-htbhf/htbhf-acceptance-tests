@@ -4,17 +4,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Page object for the confirm updated page.
+ * Page object for the decision updated page.
  */
-public class ConfirmUpdatedPage extends ConfirmationPage {
+public class DecisionUpdatedPage extends DecisionPage {
 
-    public ConfirmUpdatedPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+    public DecisionUpdatedPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
     }
 
     @Override
     PageName getPageName() {
-        return PageName.CONFIRM_UPDATED;
+        return PageName.DECISION_UPDATED;
     }
 
     @Override

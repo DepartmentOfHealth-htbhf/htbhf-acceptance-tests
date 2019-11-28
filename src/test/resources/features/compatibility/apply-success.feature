@@ -8,5 +8,5 @@ Feature: Complete application journey
     When I complete the application with valid details for a pregnant woman
     Then I am shown the check answers page with correct page content
     And I accept the terms and conditions and submit my application
-    And I am shown a successful confirmation page
+    And I am shown a successful decision page
     And my entitlement is 12.40 per week with a first payment of 49.60
