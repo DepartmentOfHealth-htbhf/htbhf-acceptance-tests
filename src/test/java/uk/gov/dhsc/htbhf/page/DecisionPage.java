@@ -5,14 +5,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Page object for the confirmation page.
+ * Page object for the decision page.
  */
-public class ConfirmationPage extends BasePage {
+public class DecisionPage extends BasePage {
 
     private static final String PANEL_TITLE_CLASS = "govuk-panel__title";
     private static final String PANEL_BODY_CLASS = "govuk-panel__body";
 
-    public ConfirmationPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
+    public DecisionPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
         super(webDriver, baseUrl, wait);
     }
 
@@ -23,7 +23,7 @@ public class ConfirmationPage extends BasePage {
 
     @Override
     PageName getPageName() {
-        return PageName.CONFIRMATION;
+        return PageName.DECISION;
     }
 
     @Override

@@ -14,10 +14,10 @@ Feature: Application process navigation is controlled
       | enter date of birth             |
 
   @RequiresWiremock
-  Scenario: Navigation to confirm page after completing application stays on the confirm page
+  Scenario: Navigation to decision page after completing application stays on the decision page
     Given I have completed my application
-    When I navigate to the confirmation page
-    Then I am shown the confirmation page
+    When I navigate to the decision page
+    Then I am shown the decision page
 
   @RequiresWiremock
   Scenario Outline: Navigation after completing application returns to start of process and clears the session
@@ -38,7 +38,7 @@ Feature: Application process navigation is controlled
       | application page    | navigation page |
       | enter name          | manual address  |
       | enter date of birth | check answers   |
-      | are you pregnant    | confirmation    |
+      | are you pregnant    | decision        |
 
   Scenario Outline: Navigation to previous navigable steps in an unsubmitted application flow is allowed
     Given I have entered my details up to the check answers page

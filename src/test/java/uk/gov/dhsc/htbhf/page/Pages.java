@@ -31,8 +31,8 @@ public class Pages {
         pages.add(new AreYouPregnantPage(webDriver, baseUrl, webDriverWait));
         pages.add(new CheckAnswersPage(webDriver, baseUrl, webDriverWait));
         pages.add(new ChildDateOfBirthPage(webDriver, baseUrl, webDriverWait));
-        pages.add(new ConfirmationPage(webDriver, baseUrl, webDriverWait));
-        pages.add(new ConfirmUpdatedPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new DecisionPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new DecisionUpdatedPage(webDriver, baseUrl, webDriverWait));
         pages.add(new DateOfBirthPage(webDriver, baseUrl, webDriverWait));
         pages.add(new DoYouHaveChildrenPage(webDriver, baseUrl, webDriverWait));
         pages.add(new EmailAddressPage(webDriver, baseUrl, webDriverWait));
@@ -147,16 +147,16 @@ public class Pages {
         return (TermsAndConditionsPage) getPageByName(PageName.TERMS_AND_CONDITIONS);
     }
 
-    public ConfirmationPage getConfirmationPage() {
-        return (ConfirmationPage) getAndWaitForPageByName(PageName.CONFIRMATION);
+    public DecisionPage getDecisionPage() {
+        return (DecisionPage) getAndWaitForPageByName(PageName.DECISION);
     }
 
-    public ConfirmationPage getConfirmationPageNoWait() {
-        return (ConfirmationPage) getPageByName(PageName.CONFIRMATION);
+    public DecisionPage getDecisionPageNoWait() {
+        return (DecisionPage) getPageByName(PageName.DECISION);
     }
 
-    public ConfirmUpdatedPage getConfirmUpdatedPage() {
-        return (ConfirmUpdatedPage) getAndWaitForPageByName(PageName.CONFIRM_UPDATED);
+    public DecisionUpdatedPage getDecisionUpdatedPage() {
+        return (DecisionUpdatedPage) getAndWaitForPageByName(PageName.DECISION_UPDATED);
     }
 
     public GuidancePage getGuidancePage(PageName pageName) {

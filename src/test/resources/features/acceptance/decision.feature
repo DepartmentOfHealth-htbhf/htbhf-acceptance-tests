@@ -7,15 +7,15 @@ Feature: Confirm application
   Scenario: Valid application progresses to the confirmation page
     Given I am on the first page of the application
     When I submit an application with valid details
-    Then I am shown the confirmation page
+    Then I am shown the decision page
     And all page content is present on the confirm details page
     And my entitlement is 12.40 per week with a first payment of 49.60
     And my claim is sent to the back end
 
   @RequiresWiremock
-  Scenario: Valid application to update existing claim progresses to the confirmation page
+  Scenario: Valid application to update existing claim progresses to the decision page
     Given I am on the first page of the application
     When I submit an application to update an existing claim
-    Then I am shown the confirm updated page
+    Then I am shown the decision updated page
     And I am informed that my claim has been updated
     And my entitlement is 12.40 per week with a first payment of 49.60

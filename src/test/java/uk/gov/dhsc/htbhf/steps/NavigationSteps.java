@@ -27,7 +27,7 @@ public class NavigationSteps extends CommonSteps {
     public void givenIHaveCompletedMyApplication() {
         enterDetailsUpToPage(CHECK_ANSWERS);
         acceptTermsAndConditionsAndSubmitApplication();
-        getPages().getConfirmationPage();
+        getPages().getDecisionPage();
     }
 
     @When("^I navigate to the (.*) page")
