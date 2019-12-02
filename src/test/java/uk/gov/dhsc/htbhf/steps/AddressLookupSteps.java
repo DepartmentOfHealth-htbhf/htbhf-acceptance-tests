@@ -5,6 +5,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import uk.gov.dhsc.htbhf.page.PostcodePage;
+import uk.gov.dhsc.htbhf.page.SelectAddressPage;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -132,6 +133,11 @@ public class AddressLookupSteps extends CommonSteps {
         assertPostcodeErrorPresent("You can only apply if you live in England, Wales or Northern Ireland");
     }
 
+    @Then("^I am informed that I need to select an address")
+    public void assertNeedToSelectAnAddress() {
+        assertSelectAddressErrorPresent("Select an address");
+    }
+
     @Then("^I am informed that there's a problem with the address lookup")
     public void postcodeLookupNotWorkingErrorShown() {
         WebElement postcodeLookupNotWorkingElement = getPages().getSelectAddressPage().getPostcodeLookupNotWorkingElement();
@@ -150,6 +156,15 @@ public class AddressLookupSteps extends CommonSteps {
         assertFieldErrorAndLinkTextPresentAndCorrect(postcodePage,
                 postcodePage.getPostcodeInputErrorId(),
                 postcodePage.getPostcodeInputErrorLinkCss(),
+                expectedErrorMessage);
+    }
+
+    private void assertSelectAddressErrorPresent(String expectedErrorMessage) {
+        SelectAddressPage addressPage = getPages().getSelectAddressPage();
+        assertErrorHeaderTextPresent(addressPage);
+        assertFieldErrorAndLinkTextPresentAndCorrect(addressPage,
+                addressPage.getErrorId(),
+                addressPage.getErrorLinkCss(),
                 expectedErrorMessage);
     }
 

@@ -87,3 +87,8 @@ Feature: Select address
     Then I am shown the select address page
     And I am informed that there's a problem with the address lookup
     And I am shown a link to enter my address manually
+
+  Scenario: I am shown an error response when I click continue without selecting an address
+    Given I have entered my details up to the select address page
+    When I click continue
+    Then I am informed that I need to select an address

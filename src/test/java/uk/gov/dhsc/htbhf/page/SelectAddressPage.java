@@ -85,4 +85,13 @@ public class SelectAddressPage extends SubmittablePage {
         WebElement option = addressOptions.get(0);
         option.click();
     }
+
+    public String getErrorId() {
+        return "address-results-error";
+    }
+
+    public String getErrorLinkCss() {
+        return "a[href=\"#selected-address-error\"]";
+    }
+
 }
