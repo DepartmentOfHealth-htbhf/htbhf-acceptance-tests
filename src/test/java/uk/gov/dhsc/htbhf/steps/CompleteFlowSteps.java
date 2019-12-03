@@ -41,12 +41,6 @@ public class CompleteFlowSteps extends CommonSteps {
         acceptTermsAndConditionsAndSubmitApplication();
     }
 
-    @When("^I submit an application to update an existing claim")
-    public void submitApplicationToUpdateAnExistingClaim() {
-        enterDetailsUpToCheckAnswersPage(buildClaimValuesForPregnantWoman());
-        acceptTermsAndConditionsAndUpdateApplication();
-    }
-
     @When("^I submit an application which returns a (.*) eligibility status")
     public void submitApplicationWithStatus(String status) {
         enterDetailsUpToCheckAnswersPage(buildClaimValuesForPregnantWoman());

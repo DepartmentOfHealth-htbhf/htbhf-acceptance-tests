@@ -2,7 +2,6 @@ package uk.gov.dhsc.htbhf.steps;
 
 import io.cucumber.java.en.Then;
 import org.apache.commons.lang3.StringUtils;
-import uk.gov.dhsc.htbhf.page.DecisionUpdatedPage;
 import uk.gov.dhsc.htbhf.page.DecisionPage;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,16 +37,5 @@ public class DecisionSteps extends CommonSteps {
     public void claimsSuccessfullySentToBackEnd() {
         String expectedBody = buildClaimantRequestJson(claimValuesThreadLocal.get());
         wireMockManager.verifyClaimantServiceRequestMatching(expectedBody);
-    }
-
-    @Then("^I am informed that my claim has been updated")
-    public void checkClaimHasBeenUpdated() {
-        DecisionUpdatedPage decisionUpdatedPage = getPages().getDecisionUpdatedPage();
-        assertThat(decisionUpdatedPage.getH2Text())
-                .as("expected decision page H2 text to be correct")
-                .isEqualTo("What happens next");
-        assertThat(decisionUpdatedPage.getPanelTitleText().trim())
-                .as("expected decision header to be correct")
-                .isEqualTo("Application updated");
     }
 }
