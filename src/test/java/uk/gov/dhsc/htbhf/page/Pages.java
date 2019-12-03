@@ -32,7 +32,6 @@ public class Pages {
         pages.add(new CheckAnswersPage(webDriver, baseUrl, webDriverWait));
         pages.add(new ChildDateOfBirthPage(webDriver, baseUrl, webDriverWait));
         pages.add(new DecisionPage(webDriver, baseUrl, webDriverWait));
-        pages.add(new DecisionUpdatedPage(webDriver, baseUrl, webDriverWait));
         pages.add(new DateOfBirthPage(webDriver, baseUrl, webDriverWait));
         pages.add(new DoYouHaveChildrenPage(webDriver, baseUrl, webDriverWait));
         pages.add(new EmailAddressPage(webDriver, baseUrl, webDriverWait));
@@ -153,10 +152,6 @@ public class Pages {
 
     public DecisionPage getDecisionPageNoWait() {
         return (DecisionPage) getPageByName(PageName.DECISION);
-    }
-
-    public DecisionUpdatedPage getDecisionUpdatedPage() {
-        return (DecisionUpdatedPage) getAndWaitForPageByName(PageName.DECISION_UPDATED);
     }
 
     public GuidancePage getGuidancePage(PageName pageName) {
