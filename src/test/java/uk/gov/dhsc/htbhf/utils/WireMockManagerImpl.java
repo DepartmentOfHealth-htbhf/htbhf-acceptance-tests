@@ -14,7 +14,7 @@ import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.*;
  */
 public class WireMockManagerImpl implements WireMockManager {
 
-    private static final String CLAIMS_ENDPOINT = "/v2/claims";
+    private static final String CLAIMS_ENDPOINT = "/v3/claims";
     private static final String POSTCODE_LOOKUP_ENDPOINT = "/places/v1/addresses/postcode";
     private static final String GOOGLE_ANALYTICS_ENDPOINT = "/collect";
     private static final String REQUEST_ID_HEADER = "X-Request-ID";
