@@ -1,0 +1,16 @@
+{
+  "claimStatus": "ACTIVE",
+  "eligibilityStatus": "ELIGIBLE",
+  "claimUpdated": true,
+  "updatedFields": [
+    "expectedDeliveryDate"
+  ],
+  "voucherEntitlement": {
+    "vouchersForChildrenUnderOne": 2,
+    "vouchersForChildrenBetweenOneAndFour": 1,
+    "vouchersForPregnancy": 1,
+    "totalVoucherEntitlement": 4,
+    "singleVoucherValueInPence": 310,
+    "totalVoucherValueInPence": 1240
+  }
+}

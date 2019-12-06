@@ -14,38 +14,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WiremockResponseTestDataFactory {
 
     private static final String DEFAULT_POSTCODE = "AA11BB";
+    private static final String ELIGIBILITY_STATUS = "ELIGIBILITY_STATUS";
     private static final Map<String, String> RESPONSE_TEMPLATES = new ConcurrentHashMap<>();
 
     public static String anUpdatedClaimResponse() {
-        return "{\"claimStatus\": \"ACTIVE\", " +
-                "\"eligibilityStatus\": \"ELIGIBLE\", " +
-                "\"claimUpdated\": true," +
-                "\"updatedFields\": [\"expectedDeliveryDate\"]," +
-                "\"voucherEntitlement\": " + aValidVoucherEntitlement() +
-                "}";
+        return getResponseTemplate("claim-updated.json");
     }
 
-    public static String aValidClaimResponseWithVoucherEntitlement(String eligibilityStatus) {
-        return "{\"claimStatus\": \"NEW\", " +
-                "\"eligibilityStatus\": \"" + eligibilityStatus + "\", " +
-                "\"voucherEntitlement\": " + aValidVoucherEntitlement() +
-                "}";
+    public static String anEligibleClaimResponseWithVoucherEntitlement() {
+        return getResponseTemplate("claim-eligible-with-vouchers.json");
     }
 
-    public static String aValidClaimResponseWithoutVoucherEntitlement(String eligibilityStatus) {
-        return "{\"claimStatus\": \"NEW\"," +
-                "\"eligibilityStatus\": \"" + eligibilityStatus + "\"" +
-                "}";
-    }
-
-    private static String aValidVoucherEntitlement() {
-        return "{\"vouchersForChildrenUnderOne\": 2, " +
-                "\"vouchersForChildrenBetweenOneAndFour\": 1, " +
-                "\"vouchersForPregnancy\": 1, " +
-                "\"totalVoucherEntitlement\": 4, " +
-                "\"singleVoucherValueInPence\": 310, " +
-                "\"totalVoucherValueInPence\": 1240" +
-                "}";
+    public static String aClaimResponseWithoutVoucherEntitlement(String eligibilityStatus) {
+        String template = getResponseTemplate("claim-without-vouchers.json");
+        return template.replace(ELIGIBILITY_STATUS, eligibilityStatus);
     }
 
     public static String aPostcodeLookup500ErrorResponse() {
