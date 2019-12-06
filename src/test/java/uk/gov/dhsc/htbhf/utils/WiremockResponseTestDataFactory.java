@@ -26,6 +26,7 @@ public class WiremockResponseTestDataFactory {
     }
 
     public static String aClaimResponseWithoutVoucherEntitlement(String eligibilityStatus) {
+        //TODO MRS 06/12/2019: HTBHF-2701 This will need to change to read different JSON based off the status/scenario requested, can't really replace strings
         String template = getResponseTemplate("claim-without-vouchers.json");
         return template.replace(ELIGIBILITY_STATUS, eligibilityStatus);
     }
