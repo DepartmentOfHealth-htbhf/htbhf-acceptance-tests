@@ -8,6 +8,6 @@ Feature: Confirm application
     Given I am on the first page of the application
     When I submit an application with valid details
     Then I am shown the decision page
-    And all page content is present on the confirm details page
+    And all page content is present on the decision details page
     And my entitlement is 12.40 per week with a first payment of 49.60
     And my claim is sent to the back end
