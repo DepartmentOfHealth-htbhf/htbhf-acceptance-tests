@@ -17,10 +17,6 @@ public class WiremockResponseTestDataFactory {
     private static final String ELIGIBILITY_STATUS = "ELIGIBILITY_STATUS";
     private static final Map<String, String> RESPONSE_TEMPLATES = new ConcurrentHashMap<>();
 
-    public static String anUpdatedClaimResponse() {
-        return getResponseTemplate("claim-updated.json");
-    }
-
     public static String anEligibleClaimResponseWithVoucherEntitlement() {
         return getResponseTemplate("claim-eligible-with-vouchers.json");
     }
