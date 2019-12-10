@@ -15,7 +15,7 @@ public class DecisionSteps extends CommonSteps {
     @Then("^I am shown a successful decision page|" +
             "all page content is present on the decision details page")
     public void iAmShownASuccessfulDecisionPage() {
-        DecisionPage decisionPage = getPages().getDecisionPage();
+        DecisionPage decisionPage = getPages().getSuccessfulDecisionPage();
         assertThat(decisionPage.getH2Text())
                 .as("expected decision page H2 text to be correct")
                 .isEqualTo("What happens next");

@@ -56,7 +56,11 @@ public abstract class BasePage extends BaseComponent {
     }
 
     public void waitForPageToLoad() {
-        wait.until(ExpectedConditions.titleIs(getPageTitle()));
+        waitForPageToLoad(getPageTitle());
+    }
+
+    public void waitForPageToLoad(String title) {
+        wait.until(ExpectedConditions.titleIs(title));
     }
 
     public List<WebElement> getRadioButtons() {
