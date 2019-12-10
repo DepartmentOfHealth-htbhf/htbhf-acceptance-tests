@@ -71,6 +71,12 @@ public class Pages {
         return page;
     }
 
+    public BasePage getAndWaitForPageByNameWithTitle(PageName name, String pageTitle) {
+        BasePage page = getPageByName(name);
+        page.waitForPageToLoad(pageTitle);
+        return page;
+    }
+
     public BasePage getPageByName(PageName name) {
         return pages.stream()
                 .filter(basePage -> basePage.getPageName().equals(name))
@@ -146,8 +152,16 @@ public class Pages {
         return (TermsAndConditionsPage) getPageByName(PageName.TERMS_AND_CONDITIONS);
     }
 
-    public DecisionPage getDecisionPage() {
-        return (DecisionPage) getAndWaitForPageByName(PageName.DECISION);
+    public DecisionPage getSuccessfulDecisionPage() {
+        return (DecisionPage) getAndWaitForPageByNameWithTitle(PageName.DECISION, DecisionPage.APPLICATION_SUCCESSFUL_TITLE);
+    }
+
+    public DecisionPage getUnsuccessfulDecisionPage() {
+        return (DecisionPage) getAndWaitForPageByNameWithTitle(PageName.DECISION, DecisionPage.APPLICATION_UNSUCCESSFUL_TITLE);
+    }
+
+    public DecisionPage getPendingDecisionPage() {
+        return (DecisionPage) getAndWaitForPageByNameWithTitle(PageName.DECISION, DecisionPage.APPLICATION_PENDING_TITLE);
     }
 
     public DecisionPage getDecisionPageNoWait() {
