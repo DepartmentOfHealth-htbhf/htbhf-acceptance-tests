@@ -16,11 +16,16 @@ public class NinoGenerator {
     private static final String NINO_PREFIX_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String ELIGIBLE_CHAR = "E";
     private static final String NINO_SUFFIX_CHARS = "ABC";
+    private static final String NINO_REGEX = "^(?!BG|GB|NK|KN|TN|NT|ZZ)[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z](\\d{6})[A-D]$";
 
     private static final Random RANDOM = new Random();
 
     public static String generateEligibleNino() {
-        return randomEligibleTwoChars() + CHILDREN_NUMBER + randomFourDigitInteger() + randomCharAtoC();
+        String generatedNino;
+        do {
+            generatedNino = randomEligibleTwoChars() + CHILDREN_NUMBER + randomFourDigitInteger() + randomCharAtoC();
+        } while (!generatedNino.matches(NINO_REGEX));
+        return generatedNino;
     }
 
     private static String randomFourDigitInteger() {
