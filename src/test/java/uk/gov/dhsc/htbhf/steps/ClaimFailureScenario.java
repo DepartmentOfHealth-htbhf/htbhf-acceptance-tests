@@ -10,7 +10,8 @@ import java.util.Arrays;
 public enum ClaimFailureScenario {
 
     IDENTITY("claim-identity-failed.json"),
-    ELIGIBILITY("claim-eligibility-failed.json");
+    ELIGIBILITY("claim-eligibility-failed.json"),
+    DUPLICATE("claim-duplicate.json");
 
     private String jsonFile;
 

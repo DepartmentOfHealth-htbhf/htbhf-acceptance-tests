@@ -14,3 +14,4 @@ Feature: Unsuccessful application
       | failureReason |
       | identity      |
       | eligibility   |
+      | duplicate     |
