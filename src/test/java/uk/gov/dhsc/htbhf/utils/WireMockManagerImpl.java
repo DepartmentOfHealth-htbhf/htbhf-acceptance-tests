@@ -2,9 +2,8 @@ package uk.gov.dhsc.htbhf.utils;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.http.Fault;
+import uk.gov.dhsc.htbhf.steps.ClaimFailureScenario;
 import uk.gov.dhsc.htbhf.steps.Constants;
-
-import java.util.Map;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static uk.gov.dhsc.htbhf.utils.WiremockResponseTestDataFactory.*;
@@ -20,15 +19,6 @@ public class WireMockManagerImpl implements WireMockManager {
     private static final String REQUEST_ID_HEADER = "X-Request-ID";
     private static final String SESSION_ID_HEADER = "X-Session-ID";
     private static final String ID_HEADERS_REGEX = "([A-Za-z0-9_-])+";
-
-    private Map<String, Integer> ELIGIBILITY_RESPONSE_MAPPINGS = Map.of(
-            "ELIGIBLE", 201,
-            "INELIGIBLE", 200,
-            "PENDING", 200,
-            "NO_MATCH", 404,
-            "ERROR", 200,
-            "DUPLICATE", 200
-    );
 
     private WireMockServer claimantServiceMock;
     private WireMockServer osPlacesMock;
@@ -58,16 +48,25 @@ public class WireMockManagerImpl implements WireMockManager {
     }
 
     @Override
-    public void setupClaimantServiceMappingsWithStatus(String eligibilityStatus) {
-        String wireMockBody = (eligibilityStatus.equals("ELIGIBLE") ?
-                anEligibleClaimResponseWithVoucherEntitlement() : aClaimResponseWithoutVoucherEntitlement(eligibilityStatus));
+    public void setupClaimantServiceMappingsForSuccess() {
         claimantServiceMock.stubFor(post(urlEqualTo(CLAIMS_ENDPOINT))
                 .withHeader(REQUEST_ID_HEADER, matching(ID_HEADERS_REGEX))
                 .withHeader(SESSION_ID_HEADER, matching(ID_HEADERS_REGEX))
                 .willReturn(aResponse()
-                        .withStatus(ELIGIBILITY_RESPONSE_MAPPINGS.get(eligibilityStatus))
+                        .withStatus(200)
                         .withHeader("Content-Type", "application/json")
-                        .withBody(wireMockBody)));
+                        .withBody(anEligibleClaimResponseWithVoucherEntitlement())));
+    }
+
+    @Override
+    public void setupClaimantServiceMappingsForFailureScenario(ClaimFailureScenario failureScenario) {
+        claimantServiceMock.stubFor(post(urlEqualTo(CLAIMS_ENDPOINT))
+                .withHeader(REQUEST_ID_HEADER, matching(ID_HEADERS_REGEX))
+                .withHeader(SESSION_ID_HEADER, matching(ID_HEADERS_REGEX))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody(aFailedClaimResponse(failureScenario))));
     }
 
     @Override

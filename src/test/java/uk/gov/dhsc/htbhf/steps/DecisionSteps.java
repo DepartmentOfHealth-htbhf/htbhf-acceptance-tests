@@ -12,6 +12,11 @@ import static uk.gov.dhsc.htbhf.utils.ClaimantRequestTestDataFactory.buildClaima
  */
 public class DecisionSteps extends CommonSteps {
 
+    @Then("^I am shown an instant failure")
+    public void verifyOnCorrectPage() {
+        getPages().getUnsuccessfulDecisionPage();
+    }
+
     @Then("^I am shown a successful decision page|" +
             "all page content is present on the decision details page")
     public void iAmShownASuccessfulDecisionPage() {
@@ -37,5 +42,16 @@ public class DecisionSteps extends CommonSteps {
     public void claimsSuccessfullySentToBackEnd() {
         String expectedBody = buildClaimantRequestJson(claimValuesThreadLocal.get());
         wireMockManager.verifyClaimantServiceRequestMatching(expectedBody);
+    }
+
+    @Then("^the page content displays that my application was not successful")
+    public void unsuccessfulApplicationShown() {
+        DecisionPage unsuccessfulApplicationPage = getPages().getUnsuccessfulDecisionPage();
+        assertThat(unsuccessfulApplicationPage.getPanelTitleText().trim())
+                .as("expected decision header to be correct")
+                .isEqualTo("Application not successful");
+        assertThat(unsuccessfulApplicationPage.getPanelBodyText().trim())
+                .as("expected decision body to be correct")
+                .isEqualTo("You will not be sent a prepaid money card");
     }
 }

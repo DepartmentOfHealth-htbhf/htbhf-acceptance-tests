@@ -11,7 +11,7 @@ public class TermsAndConditionsSteps extends CommonSteps {
 
     @When("^I accept the terms and conditions and submit my application")
     public void iAcceptTheTermsAndConditionsAndSubmitMyApplication() {
-        acceptTermsAndConditionsAndSubmitApplication();
+        acceptTermsAndConditionsAndSubmitSuccessfulApplication();
     }
 
     @When("^I accept the terms and conditions")
