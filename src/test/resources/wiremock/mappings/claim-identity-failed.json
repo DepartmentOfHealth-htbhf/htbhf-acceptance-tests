@@ -1,6 +1,6 @@
 {
-  "claimStatus": "NEW",
-  "eligibilityStatus": "ELIGIBILITY_STATUS",
+  "claimStatus": "REJECTED",
+  "eligibilityStatus": "INELIGIBLE",
   "verificationResult": {
     "deathVerificationFlag": "n/a",
     "mobilePhoneMatch": "not_set",

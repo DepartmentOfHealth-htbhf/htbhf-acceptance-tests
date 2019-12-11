@@ -4,16 +4,13 @@ Feature: Unsuccessful application
   If my claim is unsuccessful I want feedback about why my claim was unsuccessful
 
   @RequiresWiremock
-  Scenario Outline: When a claimant applies for Apply for Healthy Start and is unsuccessful they are told why
+  Scenario Outline: An application where the claimant's identity has not been matched fails
     Given I am on the first page of the application
-    When I submit an application which returns a <status> eligibility status
-    Then I am shown the application unsuccessful page
-    And the page content displays that I am not eligible because my eligibility status is <status>
-
+    When I submit an application with details which fail due to <failureReason>
+    Then I am shown an instant failure
+    And the page content displays that my application was not successful
+    And my claim is sent to the back end
     Examples:
-      | status     |
-      | INELIGIBLE |
-      | PENDING    |
-      | NO_MATCH   |
-      | ERROR      |
-      | DUPLICATE  |
+      | failureReason |
+      | identity      |
+      | eligibility   |

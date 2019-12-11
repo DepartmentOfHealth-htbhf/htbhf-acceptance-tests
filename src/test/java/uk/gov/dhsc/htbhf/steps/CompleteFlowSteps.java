@@ -38,13 +38,12 @@ public class CompleteFlowSteps extends CommonSteps {
     @When("^I submit an application with valid details")
     public void submitApplicationWithValidDetails() {
         enterDetailsUpToCheckAnswersPage(buildClaimValuesForPregnantWoman());
-        acceptTermsAndConditionsAndSubmitApplication();
+        acceptTermsAndConditionsAndSubmitSuccessfulApplication();
     }
 
-    @When("^I submit an application which returns a (.*) eligibility status")
-    public void submitApplicationWithStatus(String status) {
+    @When("^I submit an application with details which fail due to (.*)")
+    public void submitApplicationWithDetailsWhichFails(String failureScenarioString) {
         enterDetailsUpToCheckAnswersPage(buildClaimValuesForPregnantWoman());
-        acceptTermsAndConditionsAndSubmitApplicationWithStatus(status);
+        acceptTermsAndConditionsSetupFailureScenarioAndSubmitApplication(ClaimFailureScenario.fromString(failureScenarioString));
     }
-
 }

@@ -257,12 +257,13 @@ public class CommonSteps extends BaseSteps {
         scotlandPage.clickContinue();
     }
 
-    protected void acceptTermsAndConditionsAndSubmitApplication() {
-        acceptTermsAndConditionsAndSubmitApplicationWithStatus("ELIGIBLE");
+    protected void acceptTermsAndConditionsAndSubmitSuccessfulApplication() {
+        wireMockManager.setupClaimantServiceMappingsForSuccess();
+        checkAnswersAndAcceptTsAndCsAndContinue();
     }
 
-    protected void acceptTermsAndConditionsAndSubmitApplicationWithStatus(String status) {
-        wireMockManager.setupClaimantServiceMappingsWithStatus(status);
+    protected void acceptTermsAndConditionsSetupFailureScenarioAndSubmitApplication(ClaimFailureScenario failureScenario) {
+        wireMockManager.setupClaimantServiceMappingsForFailureScenario(failureScenario);
         checkAnswersAndAcceptTsAndCsAndContinue();
     }
 

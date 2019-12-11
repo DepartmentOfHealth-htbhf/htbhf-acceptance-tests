@@ -12,7 +12,7 @@ public class DecisionPage extends BasePage {
     private static final String PANEL_TITLE_CLASS = "govuk-panel__title";
     private static final String PANEL_BODY_CLASS = "govuk-panel__body";
     public static final String APPLICATION_SUCCESSFUL_TITLE = "GOV.UK - Application successful";
-    public static final String APPLICATION_UNSUCCESSFUL_TITLE = "GOV.UK - Application unsuccessful";
+    public static final String APPLICATION_UNSUCCESSFUL_TITLE = "GOV.UK - Application not successful";
     public static final String APPLICATION_PENDING_TITLE = "GOV.UK - We’ll let you know";
 
     public DecisionPage(WebDriver webDriver, String baseUrl, WebDriverWait wait) {
