@@ -266,11 +266,6 @@ public class CommonSteps extends BaseSteps {
         checkAnswersAndAcceptTsAndCsAndContinue();
     }
 
-    protected void acceptTermsAndConditionsAndUpdateApplication() {
-        wireMockManager.setupClaimantServiceUpdatedClaimMapping();
-        checkAnswersAndAcceptTsAndCsAndContinue();
-    }
-
     protected TermsAndConditionsPage checkAnswersAndAcceptTsAndCs() {
         CheckAnswersPage checkAnswersPage = getPages().getCheckAnswersPage();
         checkAnswersPage.clickContinue();
