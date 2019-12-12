@@ -3,9 +3,12 @@ package uk.gov.dhsc.htbhf.steps;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.SessionId;
 import uk.gov.dhsc.htbhf.TestResult;
 
+@Slf4j
 public class Hooks extends BaseSteps {
 
     private static ThreadLocal<String> sessionIdThreadLocal = new ThreadLocal<>();
@@ -35,6 +38,8 @@ public class Hooks extends BaseSteps {
                 testResultHandler.handleResults(sessionDetails, sessionId);
             }
             wireMockManager.resetWireMockStubs();
+        } catch (Exception e) {
+            log.error("Unexpected Exception caught finalising scenario: " + scenario.getName(), e);
         } finally {
             webDriverWrapper.quitDriver();
         }
@@ -46,6 +51,7 @@ public class Hooks extends BaseSteps {
 
     private String getSessionId() {
         RemoteWebDriver remoteWebDriver = (RemoteWebDriver) getWebDriver();
-        return remoteWebDriver.getSessionId().toString();
+        SessionId sessionId = remoteWebDriver.getSessionId();
+        return (sessionId != null) ? sessionId.toString() : "Not available";
     }
 }
