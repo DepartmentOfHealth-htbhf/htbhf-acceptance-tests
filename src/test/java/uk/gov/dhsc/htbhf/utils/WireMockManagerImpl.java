@@ -2,7 +2,7 @@ package uk.gov.dhsc.htbhf.utils;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.http.Fault;
-import uk.gov.dhsc.htbhf.steps.ClaimFailureScenario;
+import uk.gov.dhsc.htbhf.steps.ClaimScenario;
 import uk.gov.dhsc.htbhf.steps.Constants;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
@@ -59,14 +59,14 @@ public class WireMockManagerImpl implements WireMockManager {
     }
 
     @Override
-    public void setupClaimantServiceMappingsForFailureScenario(ClaimFailureScenario failureScenario) {
+    public void setupClaimantServiceMappingsForScenario(ClaimScenario scenario) {
         claimantServiceMock.stubFor(post(urlEqualTo(CLAIMS_ENDPOINT))
                 .withHeader(REQUEST_ID_HEADER, matching(ID_HEADERS_REGEX))
                 .withHeader(SESSION_ID_HEADER, matching(ID_HEADERS_REGEX))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
-                        .withBody(aFailedClaimResponse(failureScenario))));
+                        .withBody(aClaimResponseForScenario(scenario))));
     }
 
     @Override

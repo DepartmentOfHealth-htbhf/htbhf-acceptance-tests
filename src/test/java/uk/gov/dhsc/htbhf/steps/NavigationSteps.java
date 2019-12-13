@@ -36,7 +36,7 @@ public class NavigationSteps extends CommonSteps {
         page.openDirect();
     }
 
-    @Then("^I am shown the (.*) page")
+    @Then("^I am shown the (.*) page$")
     public void verifyOnCorrectPage(String pageName) {
         BasePage page = getPages().getPageByName(PageName.toPageName(pageName));
         page.waitForPageToLoad();

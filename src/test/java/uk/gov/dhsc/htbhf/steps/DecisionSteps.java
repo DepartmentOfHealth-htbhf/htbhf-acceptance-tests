@@ -13,8 +13,13 @@ import static uk.gov.dhsc.htbhf.utils.ClaimantRequestTestDataFactory.buildClaima
 public class DecisionSteps extends CommonSteps {
 
     @Then("^I am shown an instant failure")
-    public void verifyOnCorrectPage() {
+    public void verifyOnInstantFailurePage() {
         getPages().getUnsuccessfulDecisionPage();
+    }
+
+    @Then("^I am shown the decision page saying we'll let you know")
+    public void verifyOnWeWillLetYouKnowPage() {
+        getPages().getPendingDecisionPage();
     }
 
     @Then("^I am shown a successful decision page|" +
@@ -53,5 +58,13 @@ public class DecisionSteps extends CommonSteps {
         assertThat(unsuccessfulApplicationPage.getPanelBodyText().trim())
                 .as("expected decision body to be correct")
                 .isEqualTo("You will not be sent a prepaid money card");
+    }
+
+    @Then("^the page content displays that my application is being considered")
+    public void pendingApplicationShown() {
+        DecisionPage unsuccessfulApplicationPage = getPages().getPendingDecisionPage();
+        assertThat(unsuccessfulApplicationPage.getPanelTitleText().trim())
+                .as("expected decision header to be correct")
+                .isEqualTo("We’re considering your application");
     }
 }
