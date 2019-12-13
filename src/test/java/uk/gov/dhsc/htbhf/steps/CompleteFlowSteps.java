@@ -41,9 +41,18 @@ public class CompleteFlowSteps extends CommonSteps {
         acceptTermsAndConditionsAndSubmitSuccessfulApplication();
     }
 
-    @When("^I submit an application with details which fail due to (.*)")
-    public void submitApplicationWithDetailsWhichFails(String failureScenarioString) {
+    @When("^I submit an application with details which fail due to (.*)$")
+    public void submitApplicationForFailureScenario(String scenarioString) {
+        setupAndSubmitScenario(scenarioString);
+    }
+
+    @When("^I submit an application that doesn't get an instant answer due to: (.*)$")
+    public void submitApplicationForPendingScenario(String scenarioString) {
+        setupAndSubmitScenario(scenarioString);
+    }
+
+    private void setupAndSubmitScenario(String scenarioString) {
         enterDetailsUpToCheckAnswersPage(buildClaimValuesForPregnantWoman());
-        acceptTermsAndConditionsSetupFailureScenarioAndSubmitApplication(ClaimFailureScenario.fromString(failureScenarioString));
+        acceptTermsAndConditionsSetupScenarioResponseAndSubmitApplication(ClaimScenario.fromString(scenarioString));
     }
 }

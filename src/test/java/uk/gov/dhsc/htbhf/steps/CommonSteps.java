@@ -262,8 +262,8 @@ public class CommonSteps extends BaseSteps {
         checkAnswersAndAcceptTsAndCsAndContinue();
     }
 
-    protected void acceptTermsAndConditionsSetupFailureScenarioAndSubmitApplication(ClaimFailureScenario failureScenario) {
-        wireMockManager.setupClaimantServiceMappingsForFailureScenario(failureScenario);
+    protected void acceptTermsAndConditionsSetupScenarioResponseAndSubmitApplication(ClaimScenario scenario) {
+        wireMockManager.setupClaimantServiceMappingsForScenario(scenario);
         checkAnswersAndAcceptTsAndCsAndContinue();
     }
 

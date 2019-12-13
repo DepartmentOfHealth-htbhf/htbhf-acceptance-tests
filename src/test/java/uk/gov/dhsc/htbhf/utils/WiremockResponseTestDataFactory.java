@@ -1,6 +1,6 @@
 package uk.gov.dhsc.htbhf.utils;
 
-import uk.gov.dhsc.htbhf.steps.ClaimFailureScenario;
+import uk.gov.dhsc.htbhf.steps.ClaimScenario;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -22,7 +22,7 @@ public class WiremockResponseTestDataFactory {
         return getResponseTemplate("claim-eligible-with-vouchers.json");
     }
 
-    public static String aFailedClaimResponse(ClaimFailureScenario failureScenario) {
+    public static String aClaimResponseForScenario(ClaimScenario failureScenario) {
         return getResponseTemplate(failureScenario.getJsonFile());
     }
 
