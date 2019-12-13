@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import uk.gov.dhsc.htbhf.page.*;
 import uk.gov.dhsc.htbhf.page.component.RadioButton;
 
+import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -229,8 +230,9 @@ public class CommonSteps extends BaseSteps {
 
     protected void enterOneChildsDateOfBirth() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
-        childDateOfBirthPage.enterChild3OrUnderDetails(0);
+        LocalDate dob = childDateOfBirthPage.enterChild3OrUnderDetails();
         childDateOfBirthPage.clickContinue();
+        claimValuesThreadLocal.get().addChildDob(dob);
     }
 
     protected void enterDoYouHaveChildrenYesAndSubmit() {

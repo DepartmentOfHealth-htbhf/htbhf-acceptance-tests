@@ -3,6 +3,10 @@ package uk.gov.dhsc.htbhf.steps;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Values that can be given to a page action to alter the default behaviour
  */
@@ -19,4 +23,10 @@ public class ClaimValues {
     private String postcode;
     private String nino;
     private boolean selectAddress;
+    @Builder.Default
+    private List<LocalDate> childrenDob = new ArrayList<>();
+
+    public void addChildDob(LocalDate dob) {
+        this.childrenDob.add(dob);
+    }
 }

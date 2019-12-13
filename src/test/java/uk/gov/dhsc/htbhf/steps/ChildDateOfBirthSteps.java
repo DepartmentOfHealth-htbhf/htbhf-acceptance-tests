@@ -4,6 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
+import uk.gov.dhsc.htbhf.eligibility.model.testhelper.ChildDobGenerator;
 import uk.gov.dhsc.htbhf.page.ChildDateOfBirthPage;
 
 import java.time.LocalDate;
@@ -26,22 +27,23 @@ public class ChildDateOfBirthSteps extends CommonSteps {
     @Given("^I enter the details of my child who is under four years old")
     public void enterChild3OrUnderDetails() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
-        childDateOfBirthPage.enterChild3OrUnderDetails(0);
+        LocalDate dob = childDateOfBirthPage.enterChild3OrUnderDetails();
+        claimValuesThreadLocal.get().addChildDob(dob);
     }
 
     @Given("^I submit the details of my child who is under four years old without a name")
     public void enterChild3OrUnderDetailsWithNoName() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
-        childDateOfBirthPage.enterChild3OrUnderDetails("", 0);
+        childDateOfBirthPage.enterChild3OrUnderDetails("");
         childDateOfBirthPage.clickContinue();
     }
 
     @Given("I enter the details of my two children who are under four years old")
     public void enterTwoSetsOfChildren3OrUnderDetails() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
-        childDateOfBirthPage.enterChild3OrUnderDetails("Joe", 0);
+        childDateOfBirthPage.enterChildUnder1Details("Joe");
         childDateOfBirthPage.clickAddAnotherChild();
-        childDateOfBirthPage.enterChild3OrUnderDetails("Joanne", 1);
+        childDateOfBirthPage.enterChild3OrUnderDetails("Joanne");
     }
 
     @Given("^there is a Remove Button for both children's date of birth")
@@ -77,7 +79,7 @@ public class ChildDateOfBirthSteps extends CommonSteps {
     }
 
     private void enterChildDetailsAndClickAddAnother(ChildDateOfBirthPage childDateOfBirthPage, int childIndex, boolean shouldClickAddAnother) {
-        childDateOfBirthPage.enterChild3OrUnderDetails("Child" + childIndex, childIndex);
+        childDateOfBirthPage.enterChild3OrUnderDetails("Child" + childIndex);
         if (shouldClickAddAnother) {
             childDateOfBirthPage.clickAddAnotherChild();
         }
@@ -87,7 +89,7 @@ public class ChildDateOfBirthSteps extends CommonSteps {
     public void enterChildDateOfBirthInFuture() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
         LocalDate dateInFuture = LocalDate.now().plusYears(5);
-        childDateOfBirthPage.enterChild3OrUnderDateOfBirth(dateInFuture);
+        childDateOfBirthPage.enterChildsDateOfBirth(dateInFuture);
         childDateOfBirthPage.clickContinue();
     }
 
@@ -100,16 +102,16 @@ public class ChildDateOfBirthSteps extends CommonSteps {
     @When("^I submit the details of my child who is under four years old with a very long name")
     public void enterChildsDobWithLongName() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
-        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_STRING, 0);
+        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_STRING);
         childDateOfBirthPage.clickContinue();
     }
 
     @When("^I submit the details of my two children who are under four years both with very long names")
     public void enterTwoChildrensDobsWithLongName() {
         ChildDateOfBirthPage childDateOfBirthPage = getPages().getChildDateOfBirthPage();
-        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_STRING, 0);
+        childDateOfBirthPage.enterChildUnder1Details(LONG_STRING);
         childDateOfBirthPage.clickAddAnotherChild();
-        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_STRING, 1);
+        childDateOfBirthPage.enterChild3OrUnderDetails(LONG_STRING);
         childDateOfBirthPage.clickContinue();
     }
 
@@ -126,8 +128,8 @@ public class ChildDateOfBirthSteps extends CommonSteps {
         String childDobMonth = childDateOfBirthPage.getChildDateOfBirthMonth(1);
         String childDobYear = childDateOfBirthPage.getChildDateOfBirthYear(1);
 
-        // The second child will have the date incremented by 1 day
-        LocalDate dateOfBirthForSecondChild = LocalDate.now().minusYears(1).plusDays(1);
+        // The second child will be 3 years old
+        LocalDate dateOfBirthForSecondChild = ChildDobGenerator.getDateOfBirthOfThreeYearOld();
 
         assertThat(childDobDay).isEqualTo(String.valueOf(dateOfBirthForSecondChild.getDayOfMonth()));
         assertThat(childDobMonth).isEqualTo(String.valueOf(dateOfBirthForSecondChild.getMonthValue()));

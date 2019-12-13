@@ -3,6 +3,7 @@ package uk.gov.dhsc.htbhf.page;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import uk.gov.dhsc.htbhf.eligibility.model.testhelper.ChildDobGenerator;
 import uk.gov.dhsc.htbhf.page.component.InputField;
 
 import java.time.LocalDate;
@@ -39,14 +40,22 @@ public class ChildDateOfBirthPage extends SubmittablePage {
         addAnotherChildLink.click();
     }
 
-    public void enterChild3OrUnderDetails(int dayIncrement) {
-        enterChild3OrUnderDetails("Child" + this.childIndex, dayIncrement);
+    public LocalDate enterChild3OrUnderDetails() {
+        return enterChild3OrUnderDetails("Child" + this.childIndex);
     }
 
-    public void enterChild3OrUnderDetails(String childName, int dayIncrement) {
+    public LocalDate enterChild3OrUnderDetails(String childName) {
         enterChildName(childName);
-        LocalDate dateOfBirthLastYear = LocalDate.now().plusDays(dayIncrement).minusYears(1);
-        enterChild3OrUnderDateOfBirth(dateOfBirthLastYear);
+        LocalDate dateOfBirth = ChildDobGenerator.getDateOfBirthOfThreeYearOld();
+        enterChildsDateOfBirth(dateOfBirth);
+        this.childIndex++;
+        return dateOfBirth;
+    }
+
+    public void enterChildUnder1Details(String childName) {
+        enterChildName(childName);
+        LocalDate dateOfBirthLastYear = ChildDobGenerator.getDateOfBirthOfUnderOneYearOld();
+        enterChildsDateOfBirth(dateOfBirthLastYear);
         this.childIndex++;
     }
 
@@ -81,10 +90,11 @@ public class ChildDateOfBirthPage extends SubmittablePage {
         return "a[href=\"#child-dob-name-" + childIndex + "-error\"]";
     }
 
-    public void enterChild3OrUnderDateOfBirth(LocalDate dateOfBirth) {
+    public void enterChildsDateOfBirth(LocalDate dateOfBirth) {
         enterDay(dateOfBirth.getDayOfMonth());
         enterMonth(dateOfBirth.getMonthValue());
         enterYear(dateOfBirth.getYear());
+
     }
 
     private void enterDay(int day) {
