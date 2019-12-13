@@ -15,7 +15,7 @@ import static uk.gov.dhsc.htbhf.page.component.RadioButton.NO_LABEL;
 import static uk.gov.dhsc.htbhf.page.component.RadioButton.YES_LABEL;
 import static uk.gov.dhsc.htbhf.steps.Constants.*;
 import static uk.gov.dhsc.htbhf.utils.DateUtils.getFormattedDateInMonths;
-import static uk.gov.dhsc.htbhf.utils.DateUtils.getFormattedDateLastYear;
+import static uk.gov.dhsc.htbhf.utils.DateUtils.getFormatted3YearOldDateOfBirth;
 
 /**
  * Contains step definitions for the Check Your Details page.
@@ -24,7 +24,7 @@ public class CheckAnswersSteps extends CommonSteps {
 
     private static final Map<String, String> CHILDRENS_DATE_OF_BIRTH = Map.of(
             "Name", "Child1",
-            "Date of birth", getFormattedDateLastYear());
+            "Date of birth", getFormatted3YearOldDateOfBirth());
 
     @When("^I choose to change my answer to Do you have children")
     public void changeDoYouHaveChildrenAnswer() {

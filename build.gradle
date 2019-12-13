@@ -28,6 +28,9 @@ lombok {
 
 repositories {
     jcenter()
+    maven {
+        url  "https://dl.bintray.com/departmentofhealth-htbhf/maven"
+    }
 }
 
 
@@ -42,6 +45,7 @@ dependencies {
     implementation "org.springframework:spring-context:${springVersion}"
     implementation "org.springframework:spring-beans:${springVersion}"
     implementation "org.springframework.retry:spring-retry:1.2.4.RELEASE"
+    implementation "uk.gov.dhsc.htbhf:htbhf-common-test:latest.release"
 
     testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"

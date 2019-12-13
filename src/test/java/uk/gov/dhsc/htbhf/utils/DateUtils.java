@@ -1,6 +1,7 @@
 package uk.gov.dhsc.htbhf.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import uk.gov.dhsc.htbhf.eligibility.model.testhelper.ChildDobGenerator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,8 +16,8 @@ public class DateUtils {
         return date.format(DATE_TIME_FORMATTER);
     }
 
-    public static String getFormattedDateLastYear() {
-        LocalDate date = LocalDate.now().minusYears(1);
+    public static String getFormatted3YearOldDateOfBirth() {
+        LocalDate date = ChildDobGenerator.getDateOfBirthOfThreeYearOld();
         return date.format(DATE_TIME_FORMATTER);
     }
 

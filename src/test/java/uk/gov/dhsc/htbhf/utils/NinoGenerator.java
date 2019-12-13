@@ -12,8 +12,8 @@ public class NinoGenerator {
     /**
      * Represents 1 child under 1 and 2 under 4 to make the value returned from the stub consistent
      */
-    private static final String CHILDREN_NUMBER = "12";
-    private static final String NINO_PREFIX_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String CHILDREN_NUMBER = "11";
+    private static final String NINO_PREFIX_CHARS = "ABCDEFGHIJKLMNOPRSTUVWYZ";
     private static final String ELIGIBLE_CHAR = "E";
     private static final String NINO_SUFFIX_CHARS = "ABC";
     private static final String NINO_REGEX = "^(?!BG|GB|NK|KN|TN|NT|ZZ)[A-CEGHJ-PR-TW-Z][A-CEGHJ-NPR-TW-Z](\\d{6})[A-D]$";
