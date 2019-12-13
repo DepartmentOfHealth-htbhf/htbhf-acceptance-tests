@@ -1,6 +1,6 @@
 package uk.gov.dhsc.htbhf.utils;
 
-import uk.gov.dhsc.htbhf.steps.ClaimFailureScenario;
+import uk.gov.dhsc.htbhf.steps.ClaimScenario;
 
 /**
  * Interface for WireMock manager implementations so that we can have a No-op implementation
@@ -19,7 +19,7 @@ public interface WireMockManager {
     default void setupClaimantServiceMappingsForSuccess() {
     }
 
-    default void setupClaimantServiceMappingsForFailureScenario(ClaimFailureScenario failureScenario) {
+    default void setupClaimantServiceMappingsForScenario(ClaimScenario scenario) {
     }
 
     default void setupPostcodeLookupWithResultsMapping(String postcode){
