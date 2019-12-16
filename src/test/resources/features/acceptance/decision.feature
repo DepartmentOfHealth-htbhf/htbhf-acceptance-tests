@@ -9,7 +9,7 @@ Feature: Confirm application
     When I submit an application with valid details
     Then I am shown the decision page
     And all page content is present on the decision details page
-    And my entitlement is 12.40 per week with a first payment of 49.60
+    And my entitlement is £9.30 per week with a first payment of £37.20
     And my claim is sent to the back end
 
   @RequiresWiremock

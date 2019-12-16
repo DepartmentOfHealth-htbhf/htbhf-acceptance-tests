@@ -10,7 +10,7 @@ import java.util.Random;
 public class NinoGenerator {
 
     /**
-     * Represents 1 child under 1 and 2 under 4 to make the value returned from the stub consistent
+     * Represents 1 child under 1 to make the value returned from the stub consistent
      */
     private static final String CHILDREN_NUMBER = "11";
     private static final String NINO_PREFIX_CHARS = "ABCDEFGHIJKLMNOPRSTUVWYZ";
