@@ -9,4 +9,4 @@ Feature: Complete application journey
     Then I am shown the check answers page with correct page content
     And I accept the terms and conditions and submit my application
     And I am shown a successful decision page
-    And my entitlement is 12.40 per week with a first payment of 49.60
+    And my entitlement is £9.30 per week with a first payment of £37.20

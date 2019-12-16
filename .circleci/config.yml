@@ -10,7 +10,7 @@ jobs:
       BIN_DIR: ./bin
       CLAIMANT_SERVICE_URL: http://localhost:8090
       USE_UNSECURE_COOKIE: true
-      WEB_UI_BRANCH: 'feature/address-mismatch-decision' # if empty, download & run the latest release of web-ui. If populated, download & run that branch
+      WEB_UI_BRANCH: '' # if empty, download & run the latest release of web-ui. If populated, download & run that branch
       OS_PLACES_API_KEY: os-places-key
       OS_PLACES_URI: http://localhost:8150
     steps:
