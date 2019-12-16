@@ -17,10 +17,11 @@ Feature: Enter National Insurance number
   Scenario Outline: Fill "national insurance number" with invalid format
     When I enter <invalidNino> as my national insurance number
     Then I am informed that the national insurance number is in the wrong format
-    Then I see the value <invalidNino> in the input
+    Then I see the value <invalidNino> in the input in the same format I entered it in
 
     Examples:
       | invalidNino        |
       | ab123456Q          |
       | QQ123456CQQ123456C |
       | QQ123456CQtest     |
+      | QQ 12 34 56 CQ     |

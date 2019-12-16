@@ -39,7 +39,7 @@ public class NationalInsuranceNumberSteps extends BaseSteps {
                 INVALID_NINO_MESSAGE);
     }
 
-    @Then("^I see the value (.*) in the input")
+    @Then("^I see the value (.*) in the input in the same format I entered it in")
     public void assertNationalInsuranceNumberInputValue(String nino) {
         NationalInsuranceNumberPage nationalInsuranceNumberPage = getPages().getNationalInsuranceNumberPage();
         String inputValue = nationalInsuranceNumberPage.getNinoInputValue();
