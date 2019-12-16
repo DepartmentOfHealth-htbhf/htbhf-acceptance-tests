@@ -3,11 +3,11 @@
   "eligibilityStatus": "ELIGIBLE",
   "voucherEntitlement": {
     "vouchersForChildrenUnderOne": 2,
-    "vouchersForChildrenBetweenOneAndFour": 1,
+    "vouchersForChildrenBetweenOneAndFour": 0,
     "vouchersForPregnancy": 1,
-    "totalVoucherEntitlement": 4,
+    "totalVoucherEntitlement": 3,
     "singleVoucherValueInPence": 310,
-    "totalVoucherValueInPence": 1240
+    "totalVoucherValueInPence": 930
   },
   "verificationResult": {
     "deathVerificationFlag": "n/a",
