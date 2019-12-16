@@ -13,7 +13,7 @@ Feature: Confirm application
     And my claim is sent to the back end
 
   @RequiresWiremock
-  Scenario Outline: An application where the claimant is told we'll let you know
+  Scenario Outline: An application where the claimant is told we'll let you know due to <reason>
     Given I am on the first page of the application
     When I submit an application that doesn't get an instant answer due to: <reason>
     Then I am shown the decision page saying we'll let you know
@@ -26,7 +26,7 @@ Feature: Confirm application
       | full address mismatch     |
 
   @RequiresWiremock
-  Scenario Outline: An instant fail application
+  Scenario Outline: An instant fail application due to <failureReason>
     Given I am on the first page of the application
     When I submit an application with details which fail due to <failureReason>
     Then I am shown an instant failure
