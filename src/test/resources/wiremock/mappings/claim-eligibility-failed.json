@@ -10,6 +10,7 @@
     "pregnantChildDOBMatch": "not_set",
     "qualifyingBenefits": "not_set",
     "identityOutcome": "matched",
-    "eligibilityOutcome": "not_confirmed"
+    "eligibilityOutcome": "not_confirmed",
+    "isPregnantOrAtLeast1ChildMatched": true
   }
 }
