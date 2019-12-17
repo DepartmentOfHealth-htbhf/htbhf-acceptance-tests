@@ -37,3 +37,4 @@ Feature: Confirm application
       | identity not matched      |
       | eligibility not confirmed |
       | duplicate claim           |
+      | child dob mismatch        |
