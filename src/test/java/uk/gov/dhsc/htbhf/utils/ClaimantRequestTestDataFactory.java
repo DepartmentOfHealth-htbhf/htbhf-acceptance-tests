@@ -12,16 +12,16 @@ import static uk.gov.dhsc.htbhf.utils.DateUtils.formatYearMonthDay;
 public class ClaimantRequestTestDataFactory {
 
     public static String buildClaimantRequestJson(ClaimValues claimValues) {
-        //TODO MRS 20/09/2019: Move all values used to fill out form into ClaimValues so we can assert from there rather than Constants.
         String formattedClaimantDob = formatYearMonthDay(DOB_DAY, DOB_MONTH, DOB_YEAR);
         LocalDate dueDate = LocalDate.now().plusMonths(VALID_PREGNANCY_MONTH_INCREMENT);
         List<String> formattedChildrenDobs = claimValues.getChildrenDob().stream()
                 .map(date -> "\"" + formatYearMonthDay(date) + "\"")
                 .collect(Collectors.toList());
+        String formattedDeliveryDate = claimValues.isClaimantPregnant() ? "\"" + formatYearMonthDay(dueDate) + "\"" : "null";
         return "{" +
                 "\"dateOfBirth\":\"" + formattedClaimantDob + "\"," +
                 "\"childrenDob\":[" + String.join(", ", formattedChildrenDobs) + "]," +
-                "\"expectedDeliveryDate\":\"" + formatYearMonthDay(dueDate) + "\"," +
+                "\"expectedDeliveryDate\":" + formattedDeliveryDate + "," +
                 "\"firstName\":\"" + claimValues.getFirstName() + "\"," +
                 "\"lastName\":\"" + claimValues.getLastName() + "\"," +
                 "\"nino\":\"" + claimValues.getNino() + "\"," +
