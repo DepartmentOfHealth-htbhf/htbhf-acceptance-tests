@@ -40,4 +40,8 @@ public class PostcodePage extends SubmittablePage {
     public String getPostcodeInputErrorLinkCss() {
         return postcodeInputField.getInputErrorLinkCss();
     }
+
+    public String getPostcodeInputValue() {
+        return postcodeInputField.getValue();
+    }
 }

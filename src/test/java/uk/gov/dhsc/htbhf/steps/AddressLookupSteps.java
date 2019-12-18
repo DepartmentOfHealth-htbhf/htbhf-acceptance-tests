@@ -128,6 +128,13 @@ public class AddressLookupSteps extends CommonSteps {
         assertPostcodeErrorPresent("Enter a correct postcode, like AA1 1AA");
     }
 
+    @Then("^I see the postcode: (.*) in the same format I entered it in")
+    public void assertPostcodeInputValue(String postcode) {
+        PostcodePage postcodePage = getPages().getPostcodePage();
+        String inputValue = postcodePage.getPostcodeInputValue();
+        assertThat(inputValue).isEqualTo(postcode);
+    }
+
     @Then("^I am informed that you can only apply if I live in England, Wales or Northern Ireland")
     public void assertPostcodeNotInEnglandWalesOrNorthernIreland() {
         assertPostcodeErrorPresent("You can only apply if you live in England, Wales or Northern Ireland");
