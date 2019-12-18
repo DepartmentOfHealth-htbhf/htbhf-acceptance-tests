@@ -15,6 +15,7 @@ public enum ClaimScenario {
     CHILD_DOB_MISMATCH("claim-child-dob-mismatch.json"),
     POSTCODE_MISMATCH("claim-postcode-mismatch.json"),
     FULL_ADDRESS_MISMATCH("claim-full-address-mismatch.json"),
+    FULL_ADDRESS_MISMATCH_NOT_PREGNANT("claim-full-address-mismatch-not-pregnant.json"),
     ADDRESS_LINE_ONE_MISMATCH("claim-address-line-one-mismatch.json");
 
     private String jsonFile;

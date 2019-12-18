@@ -26,6 +26,14 @@ Feature: Confirm application
       | full address mismatch     |
 
   @RequiresWiremock
+  Scenario: An application where a non-pregnant claimant is told we'll let you know due to an address mismatch
+    Given I am on the first page of the application
+    When I submit an application for a non-pregnant claimant that doesn't get an instant answer due to an address mismatch
+    Then I am shown the decision page saying we'll let you know
+    And the page content displays that my application is being considered
+    And my claim is sent to the back end
+
+  @RequiresWiremock
   Scenario Outline: An instant fail application due to <failureReason>
     Given I am on the first page of the application
     When I submit an application with details which fail due to <failureReason>
