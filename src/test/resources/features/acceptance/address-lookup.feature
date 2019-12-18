@@ -54,23 +54,28 @@ Feature: Select address
     Given I have entered my details up to the postcode page
     When I enter <postcode> as my postcode
     Then I am informed that the postcode is in the wrong format
+    And I see the postcode: <postcode> in the same format I entered it in
 
     Examples:
       | postcode |
       | AA1122BB |
       | A        |
       | 11AA21   |
+      | 11A  A21 |
+      | a1a1a1   |
 
   Scenario Outline: Entering a postcode from the Channel Islands or Isle of Man shows an error
     Given I have entered my details up to the postcode page
     When I enter <postcode> as my postcode
     Then I am informed that you can only apply if I live in England, Wales or Northern Ireland
+    And I see the postcode: <postcode> in the same format I entered it in
 
     Examples:
       | postcode |
       | GY1 1WR  |
       | JE3 1FU  |
       | IM1 3LY  |
+      | IM1  3LY |
 
   Scenario: I am shown an error response when a bad response is returned from os places and I can then enter my address manually
     Given I have entered my details up to the postcode page
