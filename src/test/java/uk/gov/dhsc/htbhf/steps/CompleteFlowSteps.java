@@ -2,6 +2,7 @@ package uk.gov.dhsc.htbhf.steps;
 
 import io.cucumber.java.en.When;
 
+import static uk.gov.dhsc.htbhf.steps.ClaimScenario.FULL_ADDRESS_MISMATCH_NOT_PREGNANT;
 import static uk.gov.dhsc.htbhf.steps.ClaimValuesTestDataFactory.*;
 
 /**
@@ -49,6 +50,12 @@ public class CompleteFlowSteps extends CommonSteps {
     @When("^I submit an application that doesn't get an instant answer due to: (.*)$")
     public void submitApplicationForPendingScenario(String scenarioString) {
         setupAndSubmitScenario(scenarioString);
+    }
+
+    @When("^I submit an application for a non-pregnant claimant that doesn't get an instant answer due to an address mismatch$")
+    public void submitPendingApplicationForNonPregnantClaimant() {
+        enterDetailsUpToCheckAnswersPage(buildClaimValuesForANonPregnantWoman());
+        acceptTermsAndConditionsSetupScenarioResponseAndSubmitApplication(FULL_ADDRESS_MISMATCH_NOT_PREGNANT);
     }
 
     private void setupAndSubmitScenario(String scenarioString) {
