@@ -11,6 +11,7 @@ public class DecisionPage extends BasePage {
 
     private static final String PANEL_TITLE_CLASS = "govuk-panel__title";
     private static final String PANEL_BODY_CLASS = "govuk-panel__body";
+    private static final String PANEL_BODY_CSS = "." + PANEL_BODY_CLASS;
     public static final String APPLICATION_SUCCESSFUL_TITLE = "GOV.UK - Application successful";
     public static final String APPLICATION_UNSUCCESSFUL_TITLE = "GOV.UK - Application not successful";
     public static final String APPLICATION_PENDING_TITLE = "GOV.UK - We’re considering your application";
@@ -42,5 +43,9 @@ public class DecisionPage extends BasePage {
     public String getPanelBodyText() {
         WebElement panelBody = findByClassName(PANEL_BODY_CLASS);
         return panelBody.getText();
+    }
+
+    public boolean isPanelBodyPresent() {
+        return findAllByCss(PANEL_BODY_CSS).size() != 0;
     }
 }

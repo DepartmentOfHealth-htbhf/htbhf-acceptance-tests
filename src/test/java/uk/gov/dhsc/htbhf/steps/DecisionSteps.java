@@ -62,9 +62,12 @@ public class DecisionSteps extends CommonSteps {
 
     @Then("^the page content displays that my application is being considered")
     public void pendingApplicationShown() {
-        DecisionPage unsuccessfulApplicationPage = getPages().getPendingDecisionPage();
-        assertThat(unsuccessfulApplicationPage.getPanelTitleText().trim())
+        DecisionPage pendingDecisionPage = getPages().getPendingDecisionPage();
+        assertThat(pendingDecisionPage.getPanelTitleText().trim())
                 .as("expected decision header to be correct")
                 .isEqualTo("We’re considering your application");
+        assertThat(pendingDecisionPage.isPanelBodyPresent())
+                .as("no panel body should be shown")
+                .isFalse();
     }
 }
