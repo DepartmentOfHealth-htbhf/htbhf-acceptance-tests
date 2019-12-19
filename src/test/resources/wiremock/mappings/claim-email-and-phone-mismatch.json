@@ -1,6 +1,14 @@
 {
   "claimStatus": "NEW",
   "eligibilityStatus": "ELIGIBLE",
+  "voucherEntitlement": {
+    "vouchersForChildrenUnderOne": 2,
+    "vouchersForChildrenBetweenOneAndFour": 0,
+    "vouchersForPregnancy": 1,
+    "totalVoucherEntitlement": 3,
+    "singleVoucherValueInPence": 310,
+    "totalVoucherValueInPence": 930
+  },
   "verificationResult": {
     "identityOutcome": "matched",
     "eligibilityOutcome": "confirmed",
@@ -10,7 +18,7 @@
     "mobilePhoneMatch": "not_matched",
     "emailAddressMatch": "not_matched",
     "qualifyingBenefits": "universal_credit",
-    "pregnantChildDOBMatch": "not_set",
+    "pregnantChildDOBMatch": "not_supplied",
     "deathVerificationFlag": "n/a"
   }
 }
