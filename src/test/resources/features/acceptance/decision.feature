@@ -24,6 +24,9 @@ Feature: Confirm application
       | postcode mismatch         |
       | address line one mismatch |
       | full address mismatch     |
+      | email mismatch            |
+      | phone mismatch            |
+      | email and phone mismatch  |
 
   @RequiresWiremock
   Scenario: An application where a non-pregnant claimant is told we'll let you know due to an address mismatch
