@@ -16,7 +16,10 @@ public enum ClaimScenario {
     POSTCODE_MISMATCH("claim-postcode-mismatch.json"),
     FULL_ADDRESS_MISMATCH("claim-full-address-mismatch.json"),
     FULL_ADDRESS_MISMATCH_NOT_PREGNANT("claim-full-address-mismatch-not-pregnant.json"),
-    ADDRESS_LINE_ONE_MISMATCH("claim-address-line-one-mismatch.json");
+    ADDRESS_LINE_ONE_MISMATCH("claim-address-line-one-mismatch.json"),
+    EMAIL_MISMATCH("claim-email-mismatch.json"),
+    PHONE_MISMATCH("claim-phone-mismatch.json"),
+    EMAIL_AND_PHONE_MISMATCH("claim-email-and-phone-mismatch.json");
 
     private String jsonFile;
 

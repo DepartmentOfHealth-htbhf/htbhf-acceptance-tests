@@ -1,0 +1,16 @@
+{
+  "claimStatus": "NEW",
+  "eligibilityStatus": "ELIGIBLE",
+  "verificationResult": {
+    "identityOutcome": "matched",
+    "eligibilityOutcome": "confirmed",
+    "addressLine1Match": "matched",
+    "postcodeMatch": "matched",
+    "isPregnantOrAtLeast1ChildMatched": true,
+    "mobilePhoneMatch": "matched",
+    "emailAddressMatch": "not_matched",
+    "qualifyingBenefits": "universal_credit",
+    "pregnantChildDOBMatch": "not_set",
+    "deathVerificationFlag": "n/a"
+  }
+}
