@@ -10,15 +10,15 @@
     "totalVoucherValueInPence": 930
   },
   "verificationResult": {
-    "deathVerificationFlag": "n/a",
-    "mobilePhoneMatch": "matched",
-    "emailAddressMatch": "matched",
-    "addressLine1Match": "matched",
-    "postcodeMatch": "matched",
-    "pregnantChildDOBMatch": "not_supplied",
-    "qualifyingBenefits": "universal_credit",
     "identityOutcome": "matched",
     "eligibilityOutcome": "confirmed",
-    "isPregnantOrAtLeast1ChildMatched": true
+    "addressLine1Match": "matched",
+    "postcodeMatch": "matched",
+    "isPregnantOrAtLeast1ChildMatched": true,
+    "mobilePhoneMatch": "matched",
+    "emailAddressMatch": "matched",
+    "qualifyingBenefits": "universal_credit",
+    "pregnantChildDOBMatch": "not_supplied",
+    "deathVerificationFlag": "n/a"
   }
 }
