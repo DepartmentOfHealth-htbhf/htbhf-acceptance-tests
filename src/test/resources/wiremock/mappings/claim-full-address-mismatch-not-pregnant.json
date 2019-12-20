@@ -1,12 +1,12 @@
 {
   "claimStatus": "REJECTED",
-  "eligibilityStatus": "INELIGIBLE",
+  "eligibilityStatus": "ELIGIBLE",
   "verificationResult": {
     "identityOutcome": "matched",
     "eligibilityOutcome": "confirmed",
     "addressLine1Match": "not_matched",
     "postcodeMatch": "not_matched",
-    "isPregnantOrAtLeast1ChildMatched": false,
+    "isPregnantOrAtLeast1ChildMatched": true,
     "mobilePhoneMatch": "not_set",
     "emailAddressMatch": "not_set",
     "qualifyingBenefits": "not_set",

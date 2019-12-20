@@ -6,7 +6,7 @@
     "eligibilityOutcome": "not_confirmed",
     "addressLine1Match": "not_set",
     "postcodeMatch": "not_set",
-    "isPregnantOrAtLeast1ChildMatched": true,
+    "isPregnantOrAtLeast1ChildMatched": false,
     "mobilePhoneMatch": "not_set",
     "emailAddressMatch": "not_set",
     "qualifyingBenefits": "not_set",
