@@ -1,6 +1,6 @@
 {
   "claimStatus": "REJECTED",
-  "eligibilityStatus": "INELIGIBLE",
+  "eligibilityStatus": "ELIGIBLE",
   "verificationResult": {
     "identityOutcome": "matched",
     "eligibilityOutcome": "confirmed",
