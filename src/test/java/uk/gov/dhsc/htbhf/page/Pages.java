@@ -72,7 +72,7 @@ public class Pages {
 
     public BasePage getAndWaitForPageByNameWithTitle(PageName name, String pageTitle) {
         BasePage page = getPageByName(name);
-        page.waitForPageToLoad(pageTitle);
+        page.waitForPageToLoadWithTitle(pageTitle);
         return page;
     }
 
@@ -105,6 +105,10 @@ public class Pages {
 
     public ManualAddressPage getManualAddressPage() {
         return (ManualAddressPage) getAndWaitForPageByName(PageName.MANUAL_ADDRESS);
+    }
+
+    public ManualAddressPage getManualAddressPageNoWait() {
+        return (ManualAddressPage) getPageByName(PageName.MANUAL_ADDRESS);
     }
 
     public NationalInsuranceNumberPage getNationalInsuranceNumberPage() {
@@ -181,6 +185,10 @@ public class Pages {
 
     public PostcodePage getPostcodePage() {
         return (PostcodePage) getAndWaitForPageByName(PageName.POSTCODE);
+    }
+
+    public PostcodePage getPostcodePageNoWait() {
+        return (PostcodePage) getPageByName(PageName.POSTCODE);
     }
 
     public SelectAddressPage getSelectAddressPage() {

@@ -26,7 +26,7 @@ Feature: Address
 
   Scenario Outline: Enter an address with an invalid postcode
     When I enter an address with postcode <postcode>
-    Then I am informed that the postcode is in the wrong format
+    Then I am informed that the postcode is in the wrong format on the manual address page
 
     Examples:
       | postcode |
@@ -36,7 +36,7 @@ Feature: Address
 
   Scenario Outline: Entering a postcode from the Channel Islands or Isle of Man shows an error
     When I enter an address with postcode <postcode>
-    Then I am informed that you can only apply if I live in England, Wales or Northern Ireland
+    Then I am informed that you can only apply if you live in England, Wales or Northern Ireland on the manual address page
 
     Examples:
       | postcode |

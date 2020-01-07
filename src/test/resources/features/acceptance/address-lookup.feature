@@ -12,6 +12,12 @@ Feature: Select address
     And I am shown a link to change my postcode
     And I am shown a button to enter my address manually
 
+  Scenario: Clicking the 'Enter address manually' button when the postcode was not found redirects to the manual address page
+    Given I have entered my details up to the postcode page
+    When I enter a postcode that returns no search results
+    And I click continue
+    Then I am shown the manual address page
+
   Scenario: Entering a postcode shows a list of matching addresses
     Given I have entered my details up to the postcode page
     When I enter a postcode that returns search results
@@ -53,7 +59,7 @@ Feature: Select address
   Scenario Outline: Enter an invalid postcode on the postcode lookup page
     Given I have entered my details up to the postcode page
     When I enter <postcode> as my postcode
-    Then I am informed that the postcode is in the wrong format
+    Then I am informed that the postcode is in the wrong format on the address lookup page
     And I see the postcode: <postcode> in the same format I entered it in
 
     Examples:
@@ -67,7 +73,7 @@ Feature: Select address
   Scenario Outline: Entering a postcode from the Channel Islands or Isle of Man shows an error
     Given I have entered my details up to the postcode page
     When I enter <postcode> as my postcode
-    Then I am informed that you can only apply if I live in England, Wales or Northern Ireland
+    Then I am informed that you can only apply if you live in England, Wales or Northern Ireland on the postcode page
     And I see the postcode: <postcode> in the same format I entered it in
 
     Examples:
