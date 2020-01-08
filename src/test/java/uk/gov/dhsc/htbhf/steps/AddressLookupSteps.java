@@ -102,7 +102,7 @@ public class AddressLookupSteps extends CommonSteps {
     @Then("^I am shown a link to change my postcode")
     public void changePostcodeLinkIsShown() {
         String changePostcodeLinkHref = getPages().getSelectAddressPage().getChangePostcodeLinkHref();
-        assertThat(changePostcodeLinkHref).isEqualTo(getPages().getPostcodePage().getFullPath());
+        assertThat(changePostcodeLinkHref).isEqualTo(getPages().getPostcodePageNoWait().getFullPath());
     }
 
     @Then("^I am shown a button to enter my address manually")
@@ -114,7 +114,7 @@ public class AddressLookupSteps extends CommonSteps {
     @Then("^I am shown an address not listed link")
     public void addressNotListedLinkShown() {
         String addressNotListedLinkHref = getPages().getSelectAddressPage().getAddressNotListedLinkHref();
-        assertThat(addressNotListedLinkHref).isEqualTo(getPages().getManualAddressPage().getFullPath());
+        assertThat(addressNotListedLinkHref).isEqualTo(getPages().getManualAddressPageNoWait().getFullPath());
     }
 
     @Then("^I am shown a continue button")
@@ -123,7 +123,7 @@ public class AddressLookupSteps extends CommonSteps {
         assertThat(buttonText).isEqualTo("Continue");
     }
 
-    @Then("^I am informed that the postcode is in the wrong format")
+    @Then("^I am informed that the postcode is in the wrong format on the address lookup page")
     public void assertPostcodeInWrongFormat() {
         assertPostcodeErrorPresent("Enter a correct postcode, like AA1 1AA");
     }
@@ -135,7 +135,7 @@ public class AddressLookupSteps extends CommonSteps {
         assertThat(inputValue).isEqualTo(postcode);
     }
 
-    @Then("^I am informed that you can only apply if I live in England, Wales or Northern Ireland")
+    @Then("^I am informed that you can only apply if you live in England, Wales or Northern Ireland on the postcode page")
     public void assertPostcodeNotInEnglandWalesOrNorthernIreland() {
         assertPostcodeErrorPresent("You can only apply if you live in England, Wales or Northern Ireland");
     }
@@ -154,7 +154,7 @@ public class AddressLookupSteps extends CommonSteps {
     @Then("^I am shown a link to enter my address manually")
     public void manualAddressLinkIsShown() {
         String manualAddressLink = getPages().getSelectAddressPage().getManualAddressLinkHref();
-        assertThat(manualAddressLink).isEqualTo(getPages().getManualAddressPage().getFullPath());
+        assertThat(manualAddressLink).isEqualTo(getPages().getManualAddressPageNoWait().getFullPath());
     }
 
     private void assertPostcodeErrorPresent(String expectedErrorMessage) {

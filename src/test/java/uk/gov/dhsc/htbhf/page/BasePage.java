@@ -56,10 +56,18 @@ public abstract class BasePage extends BaseComponent {
     }
 
     public void waitForPageToLoad() {
-        waitForPageToLoad(getPageTitle());
+        if (getPath() == null) {
+            waitForPageToLoadWithTitle(getPageTitle());
+        } else {
+            waitForPageToLoadWithPath(getPath());
+        }
     }
 
-    public void waitForPageToLoad(String title) {
+    public void waitForPageToLoadWithPath(String path) {
+        wait.until(ExpectedConditions.urlToBe(baseUrl + path));
+    }
+
+    public void waitForPageToLoadWithTitle(String title) {
         wait.until(ExpectedConditions.titleIs(title));
     }
 

@@ -120,6 +120,25 @@ public class ManualAddressSteps extends CommonSteps {
         assertTownOrCityErrorFieldAndLink(manualAddressPage, "Enter a town or city");
     }
 
+    @Then("^I am informed that you can only apply if you live in England, Wales or Northern Ireland on the manual address page")
+    public void assertPostcodeNotInEnglandWalesOrNorthernIreland() {
+        assertPostcodeErrorPresent("You can only apply if you live in England, Wales or Northern Ireland");
+    }
+
+    @Then("^I am informed that the postcode is in the wrong format on the manual address page")
+    public void assertPostcodeInWrongFormat() {
+        assertPostcodeErrorPresent("Enter a correct postcode, like AA1 1AA");
+    }
+
+    private void assertPostcodeErrorPresent(String expectedErrorMessage) {
+        ManualAddressPage manualAddressPage = getPages().getManualAddressPage();
+        assertErrorHeaderTextPresent(manualAddressPage);
+        assertFieldErrorAndLinkTextPresentAndCorrect(manualAddressPage,
+                manualAddressPage.getPostcodeInputErrorId(),
+                manualAddressPage.getPostcodeInputErrorLinkCss(),
+                expectedErrorMessage);
+    }
+
     private void assertAddressLine1ErrorFieldAndLink(ManualAddressPage manualAddressPage, String expectedErrorMessage) {
         assertFieldErrorAndLinkTextPresentAndCorrect(manualAddressPage,
                 manualAddressPage.getLine1InputErrorId(),
