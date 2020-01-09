@@ -11,10 +11,12 @@ Feature: Address
     Then I am shown the phone number page
 
     Examples:
-      | postcode |
-      | EC11BB   |
-      | M11AE    |
-      | DN55 1PT |
+      | postcode  |
+      | EC11BB    |
+      | M11AE     |
+      | DN55 1PT  |
+      | dn55 1pt  |
+      | dn55  1pt |
 
   Scenario: Enter a valid address without an optional second address line
     When I do not enter the second line of an address
