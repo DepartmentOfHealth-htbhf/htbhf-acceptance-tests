@@ -28,8 +28,8 @@ download_web_ui(){
             | cut -d'"' -f4 \
             | wget -qO web-tests-tmp.zip -i -
     else
-        branch_status=$(curl --head -s -L https://github.com/DepartmentOfHealth-htbhf/htbhf-applicant-web-ui/archive/master.zip | grep -i  "404 Not Found")
-        if [[ -z "${branch_status}" ]]; then
+        branch_status=$(curl --head -s -L https://github.com/DepartmentOfHealth-htbhf/htbhf-applicant-web-ui/archive/${WEB_UI_BRANCH}.zip | grep -i  "404 Not Found")
+        if [[ "${branch_status}" ]]; then
           echo "Web ui branch '${WEB_UI_BRANCH}' does not exist - please edit WEB_UI_BRANCH in config.yml to set a valid branch name, or '' to use the latest release"
           exit 1
         fi
