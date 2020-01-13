@@ -20,7 +20,7 @@ public class ClaimantRequestTestDataFactory {
         String formattedDeliveryDate = claimValues.isClaimantPregnant() ? "\"" + formatYearMonthDay(dueDate) + "\"" : "null";
         return "{" +
                 "\"dateOfBirth\":\"" + formattedClaimantDob + "\"," +
-                "\"childrenDob\":[" + String.join(", ", formattedChildrenDobs) + "]," +
+                "\"initiallyDeclaredChildrenDob\":[" + String.join(", ", formattedChildrenDobs) + "]," +
                 "\"expectedDeliveryDate\":" + formattedDeliveryDate + "," +
                 "\"firstName\":\"" + claimValues.getFirstName() + "\"," +
                 "\"lastName\":\"" + claimValues.getLastName() + "\"," +
