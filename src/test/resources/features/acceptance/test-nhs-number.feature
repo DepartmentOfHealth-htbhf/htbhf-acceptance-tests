@@ -6,13 +6,13 @@ Feature: Enter NHS number
   Background:
     Given I am in nhs number page
 
-#  Scenario: Enter in a valid nhs number
-#    When I enter a valid nhs number
-#    Then I am shown the test name page
-##
-#  Scenario: Do not enter in a "nhs number"
-#    When I do not enter a nhs number
-#    Then I am informed that the nhs number is blank
+  Scenario: Enter in a valid nhs number
+    When I enter a valid nhs number
+    Then I am shown the test name page
+
+  Scenario: Do not enter in a "nhs number"
+    When I do not enter a nhs number
+    Then I am informed that the nhs number is blank
 
   Scenario Outline: Fill "nhs number" with invalid format
     When I enter <invalidnhsno> as my nhs number
