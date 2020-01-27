@@ -4,7 +4,7 @@ Feature: Enter NHS number
   I want to enter my NHS number
 
   Background:
-    Given I am in nhs number page
+    Given I navigate to the nhs number page
 
   Scenario: Enter in a valid nhs number
     When I enter a valid nhs number
