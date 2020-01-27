@@ -22,6 +22,7 @@ class PageNameTest {
             "MANUAL_ADDRESS, manual address",
             "NAME, enter name",
             "NATIONAL_INSURANCE_NUMBER, enter national insurance number",
+            "NHS_NUMBER, nhs number",
             "PHONE_NUMBER, phone number",
             "SCOTLAND, do you live in Scotland",
             "IN_SCOTLAND, I live in Scotland",

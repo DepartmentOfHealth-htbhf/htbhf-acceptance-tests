@@ -38,7 +38,9 @@ public class Pages {
         pages.add(new EnterCodePage(webDriver, baseUrl, webDriverWait));
         pages.add(new ManualAddressPage(webDriver, baseUrl, webDriverWait));
         pages.add(new NamePage(webDriver, baseUrl, webDriverWait));
+        pages.add(new TestNamesPage(webDriver, baseUrl, webDriverWait));
         pages.add(new NationalInsuranceNumberPage(webDriver, baseUrl, webDriverWait));
+        pages.add(new NhsNumberPage(webDriver, baseUrl, webDriverWait));
         pages.add(new PhoneNumberPage(webDriver, baseUrl, webDriverWait));
         pages.add(new ScotlandPage(webDriver, baseUrl, webDriverWait));
         pages.add(new InScotlandPage(webDriver, baseUrl, webDriverWait));
@@ -115,8 +117,16 @@ public class Pages {
         return (NationalInsuranceNumberPage) getAndWaitForPageByName(PageName.NATIONAL_INSURANCE_NUMBER);
     }
 
+    public NhsNumberPage getNhsNumberPage() {
+        return (NhsNumberPage) getAndWaitForPageByName(PageName.NHS_NUMBER);
+    }
+
     public NamePage getNamePage() {
         return (NamePage) getAndWaitForPageByName(PageName.NAME);
+    }
+
+    public TestNamesPage getTestNamePage() {
+        return (TestNamesPage) getAndWaitForPageByName(PageName.TEST_NAMES);
     }
 
     public AreYouPregnantPage getAreYouPregnantPage() {

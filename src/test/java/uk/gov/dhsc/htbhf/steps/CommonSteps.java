@@ -197,6 +197,12 @@ public class CommonSteps extends BaseSteps {
         nationalInsuranceNumberPage.clickContinue();
     }
 
+    protected void enterNhsno(String nhsno) {
+        NhsNumberPage nhsNumberPage = getPages().getNhsNumberPage();
+        nhsNumberPage.enterNhsno(nhsno);
+        nhsNumberPage.clickContinue();
+    }
+
     protected void enterName(String firstName, String lastName) {
         NamePage namePage = getPages().getNamePage();
         namePage.enterName(firstName, lastName);

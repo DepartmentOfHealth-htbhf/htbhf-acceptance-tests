@@ -18,6 +18,12 @@ public class NavigationSteps extends CommonSteps {
         enterDetailsUpToPage(PageName.toPageName(page));
     }
 
+    @Given("^I am in (.*) page")
+    public void goToPage(String pageName) {
+        BasePage page = getPages().getPageByName(PageName.toPageName(pageName));
+        page.openDirect();
+    }
+
     @Given("^I am starting a new application")
     public void givenIAmStartingANewApplication() {
         openApplyPage();
