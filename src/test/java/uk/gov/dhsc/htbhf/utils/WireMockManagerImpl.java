@@ -71,7 +71,7 @@ public class WireMockManagerImpl implements WireMockManager {
 
     @Override
     public void verifyClaimantServiceRequestMatching(String expectedBody) {
-        claimantServiceMock.verify(postRequestedFor(urlEqualTo(CLAIMS_ENDPOINT))
+        claimantServiceMock.verify(1, postRequestedFor(urlEqualTo(CLAIMS_ENDPOINT))
                 .withRequestBody(containing(expectedBody)));
     }
 

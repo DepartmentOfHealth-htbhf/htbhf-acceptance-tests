@@ -20,6 +20,10 @@ public class SubmitButton extends BaseComponent {
         click(By.id(ID));
     }
 
+    public void doubleClick() {
+        doubleClick(By.id(ID));
+    }
+
     public String getSubmitButtonText() {
         WebElement submitButton = findById(ID);
         return submitButton.getText();

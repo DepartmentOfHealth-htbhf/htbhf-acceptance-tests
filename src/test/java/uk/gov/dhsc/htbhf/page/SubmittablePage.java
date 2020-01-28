@@ -20,6 +20,10 @@ public abstract class SubmittablePage extends BasePage {
         submitButton.click();
     }
 
+    public void doubleClickContinue() {
+        submitButton.doubleClick();
+    }
+
     public String getSubmitButtonText() {
         return submitButton.getSubmitButtonText();
     }

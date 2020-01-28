@@ -3,6 +3,7 @@ package uk.gov.dhsc.htbhf.page.component;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -58,4 +59,12 @@ public abstract class BaseComponent {
     protected String getHrefForElement(WebElement webElement) {
         return webElement.getAttribute("href");
     }
+
+    protected void doubleClick(By by) {
+        webDriverWait.until(ExpectedConditions.elementToBeClickable(by));
+        Actions action = new Actions(webDriver);
+        WebElement element = webDriver.findElement(by);
+        action.doubleClick(element).perform();
+    }
+
 }
