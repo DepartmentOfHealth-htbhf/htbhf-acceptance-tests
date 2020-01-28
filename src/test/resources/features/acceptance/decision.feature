@@ -15,7 +15,7 @@ Feature: Confirm application
   @RequiresWiremock
   Scenario: Double click on the send application button
     Given I have entered my details up to the check answers page
-    When I double click send application button in terms and conditions page
+    When I double the click send application button in terms and conditions page
     Then I am shown the decision page
     And my claim is sent to the back end
 

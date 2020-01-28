@@ -26,7 +26,7 @@ public class TermsAndConditionsSteps extends CommonSteps {
         termsAndConditionsPage.clickContinue();
     }
 
-    @When("^I double click send application button in terms and conditions page")
+    @When("^I double the click send application button in terms and conditions page")
     public void doubleClickSendApplicationButton(){
         wireMockManager.setupClaimantServiceMappingsForSuccess();
         TermsAndConditionsPage termsAndConditionsPage = checkAnswersAndAcceptTsAndCs();
