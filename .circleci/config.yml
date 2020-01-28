@@ -27,10 +27,10 @@ jobs:
           name: prepare for tests and build
           command: |
             export WEB_UI_DIR=$(pwd)/tmp-web-ui
+            google-chrome --version
             ./ci_scripts/prepare_for_tests.sh
             ./ci_scripts/download_chromedriver.sh
             ./run_tests_with_local_feature_toggles.sh
-            google-chrome --version
       - run:
           name: cat the RunAcceptanceTests logs for debugging on failure
           command: cat /home/circleci/project/build/reports/tests/test/classes/uk.gov.dhsc.htbhf.RunAcceptanceTests.html
