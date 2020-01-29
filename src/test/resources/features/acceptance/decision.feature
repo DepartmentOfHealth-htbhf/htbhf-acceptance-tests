@@ -13,6 +13,13 @@ Feature: Confirm application
     And my claim is sent to the back end
 
   @RequiresWiremock
+  Scenario: Double click on the send application button
+    Given I have entered my details up to the check answers page
+    When I double click the send application button in terms and conditions page
+    Then I am shown the decision page
+    And my claim is sent to the back end
+
+  @RequiresWiremock
   Scenario Outline: An application where the claimant is told we'll let you know due to <reason>
     Given I am on the first page of the application
     When I submit an application that doesn't get an instant answer due to: <reason>
