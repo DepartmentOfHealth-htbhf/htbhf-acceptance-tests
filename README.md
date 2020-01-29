@@ -48,7 +48,7 @@ the run configuration of that test as such, making sure to change to your local 
 -Dwebdriver.chrome.driver=/Users/mikesmith/dev/ats/bin/chromedriver`
 
  **Environment variables**:
- `FEATURE_TOGGLES={   "ADDRESS_LOOKUP_ENABLED": true } `
+ `FEATURE_TOGGLES={ "ADDRESS_LOOKUP_ENABLED": true } `
 
 ## Running Specific Scenarios
 If you want to be even more specific with the tests you run and want to run a set of specific tests, you can use tags in the feature files. For example, if you
@@ -92,9 +92,10 @@ BROWSER_STACK_USER
 BROWSER_STACK_KEY
 APP_BASE_URL
 SESSION_DETAILS_URL
+FEATURE_TOGGLES
 ```
 
-and then run `./gradlew compatibility`.
+and then run `./gradlew compatibility`. The set of feature toggles setup should match that enabled in the web-ui project (an example of this is shown above).
 
 ## Adding extra compatibility tests
 
